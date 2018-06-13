@@ -15,6 +15,15 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "NDrop": [
+        "dist/ndrop"
+      ],
+      
+      "NDrop/*": [
+        "dist/ndrop/*"
+      ]
+    }
   }
 }
