@@ -11,20 +11,20 @@
     "build_lib": "ng build --prod NDrop",
     "npm_pack": "cd dist/NDrop && npm pack",
     "package": "npm run build_lib && npm run npm_pack"
-  
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^6.0.3",
-    "@angular/core": "^6.0.3",
-    "@angular/compiler": "^6.0.3",
     "@angular/animations": "^6.0.3",
+    "@angular/common": "^6.0.3",
+    "@angular/compiler": "^6.0.3",
+    "@angular/core": "^6.0.3",
     "@angular/forms": "^6.0.3",
     "@angular/http": "^6.0.3",
     "@angular/platform-browser": "^6.0.3",
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
     "core-js": "^2.5.4",
+    "ng2-dragula": "^1.5.0",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },

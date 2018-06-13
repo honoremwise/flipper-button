@@ -3,5 +3,8 @@
   "dest": "../../dist/ndrop",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "ng2-dragula"
+  ]
 }
