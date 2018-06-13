@@ -27,9 +27,9 @@ export class NDropComponent {
 
   constructor(private dragulaService: DragulaService) {
 
-    // dragulaService.setOptions('first-bag', {
-    //   copy: true,
-    // });
+    dragulaService.setOptions('first-bag', {
+      copy: true,
+    });
     dragulaService.drag.subscribe((value) => {
       console.log(`drag: ${value[0]}`);
       this.onDrag(value.slice(1));
