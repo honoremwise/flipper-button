@@ -27,12 +27,10 @@
 
 .container {
   width: 500px;
-  height: 300px;
   border: 1px solid blue;
 }
 
 .container div {
-  height: 30px;
   width: 500px;
   border: 1px solid red;
 }
