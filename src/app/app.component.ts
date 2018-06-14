@@ -13,8 +13,8 @@ export class AppComponent {
   public activeFolder: any;
 
   constructor(dragAndDropDataService: DragAndDropDataService){
-    this.dragFolders = dragAndDropDataService.getFolders();
-    this.dragFiles = dragAndDropDataService.getFiles();
+    this.dragFolders = dragAndDropDataService.getFolders().splice(0, 10);
+    this.dragFiles = dragAndDropDataService.getFiles().splice(0, 20);
 
     //Set root folder
     this.activeFolder = undefined;

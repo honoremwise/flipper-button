@@ -5,12 +5,19 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
   selector: 'N-NDrop',
   template: `
     <div>
-      <div class='wrapper'>
+      <div>
+        Folders:
         <div class='container' [dragula]='"folders-bag"'>
-          <div *ngFor='let folder of folders'>{{folder[folderNameField]}}</div>
+          <div class="n-item n-folder-item" *ngFor='let folder of folders'>{{folder[folderNameField]}}</div>
         </div>
+      </div>
+      <div>
+        Files:
         <div class='container' [dragula]='"files-bag"'>
-          <div *ngFor='let file of files'>{{file[fileNameField]}}</div>
+          <div class="n-item n-file-item" *ngFor='let file of files'>
+            <div class="n-file-preview"></div>
+            <div class="n-file-name">{{file[fileNameField]}}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -34,27 +41,37 @@ export class NDropComponent implements OnInit {
   public levelFolders: any[];
   public levelFiles: any[];
 
+  private draggingElement: HTMLElement;
+  private dragMoveCb: (event: MouseEvent) => void;
+
   constructor(private dragulaService: DragulaService) {
 
-    // dragulaService.setOptions('folders-bag', {
-    //   copy: true,
-    // });
+    this.dragMoveCb = this.onDragMove.bind(this);
+
+    dragulaService.setOptions('folders-bag', {
+      copy: true,
+    });
     dragulaService.drag.subscribe((value) => {
-      console.log(`drag: ${value[0]}`);
-      this.onDrag(value.slice(1));
+      console.log(`drag:`, value);
+      this.draggingElement = value[1];
+      //We need to make drag move event as library does not provide one
+      document.addEventListener("mousemove", this.dragMoveCb);
+      this.onDragStart(value.slice(1));
     });
     dragulaService.drop.subscribe((value) => {
-      console.log(`drop: ${value[0]}`);
+      console.log(`drop: `, value);
+      this.draggingElement = undefined;
+      document.removeEventListener("mousemove", this.dragMoveCb);
       this.onDrop(value.slice(1));
     });
     dragulaService.over.subscribe((value) => {
-      console.log(`over: ${value[0]}`);
+      console.log(`over: `, value);
       this.onOver(value.slice(1));
     });
-    dragulaService.out.subscribe((value) => {
-      console.log(`out: ${value[0]}`);
-      this.onOut(value.slice(1));
-    });
+    // dragulaService.out.subscribe((value) => {
+    //   console.log(`out: ${value[0]}`);
+    //   this.onOut(value.slice(1));
+    // });
   }
 
   ngOnInit() {
@@ -69,9 +86,22 @@ export class NDropComponent implements OnInit {
     this.levelFiles = this.files.filter(file => file[this.parentIdField] === activeFolderId);
   }
 
-  private onDrag(args) {
+  private onDragStart(args) {
     let [e, el] = args;
     // do something
+  }
+
+  private onDragMove(event: MouseEvent) {
+    let targetElements = document.elementsFromPoint(event.pageX, event.pageY);
+    let targetElement;
+    for(let i = 0; i < targetElements.length; i++){
+      if(targetElements[i].classList.contains("n-item") && !targetElements[i].classList.contains("gu-mirror")){
+        targetElement = targetElements[i];
+        break;
+      }
+    }
+
+    console.log("targetElement", targetElement);
   }
 
   private onDrop(args) {
