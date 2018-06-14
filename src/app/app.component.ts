@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DragAndDropDataService } from "./drag-and-drop-data.service";
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
