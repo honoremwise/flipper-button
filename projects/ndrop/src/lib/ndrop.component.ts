@@ -7,17 +7,14 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
     <div>
       <div>
         Folders:
-        <div class='container' [dragula]='"folders-bag"'>
-          <div class="n-item n-folder-item" *ngFor='let folder of folders'>{{folder[folderNameField]}}</div>
+        <div class='n-items-container' [dragula]='"folders-bag"'>
+          <n-drop-item *ngFor="let folder of folders" [item]="folder" [type]="'folder'" [fileNameField]="fileNameField"></n-drop-item>
         </div>
       </div>
       <div>
         Files:
-        <div class='container' [dragula]='"files-bag"'>
-          <div class="n-item n-file-item" *ngFor='let file of files'>
-            <div class="n-file-preview"></div>
-            <div class="n-file-name">{{file[fileNameField]}}</div>
-          </div>
+        <div class='n-items-container' [dragula]='"files-bag"'>
+          <n-drop-item *ngFor="let file of files" [item]="file" [type]="'file'" [fileNameField]="fileNameField"></n-drop-item>
         </div>
       </div>
     </div>
@@ -42,30 +39,29 @@ export class NDropComponent implements OnInit {
   public levelFiles: any[];
 
   private draggingElement: HTMLElement;
+  private dragTarget: HTMLElement;
   private dragMoveCb: (event: MouseEvent) => void;
 
   constructor(private dragulaService: DragulaService) {
-
     this.dragMoveCb = this.onDragMove.bind(this);
 
-    dragulaService.setOptions('folders-bag', {
+    let dragOptions = {
       copy: true,
-    });
+    };
+
+    dragulaService.setOptions('folders-bag', dragOptions);
+    dragulaService.setOptions('files-bag', dragOptions);
+
     dragulaService.drag.subscribe((value) => {
-      console.log(`drag:`, value);
-      this.draggingElement = value[1];
-      //We need to make drag move event as library does not provide one
-      document.addEventListener("mousemove", this.dragMoveCb);
-      this.onDragStart(value.slice(1));
+      // console.log(`drag:`, value);
+      this.onDragStart(value);
     });
     dragulaService.drop.subscribe((value) => {
-      console.log(`drop: `, value);
-      this.draggingElement = undefined;
-      document.removeEventListener("mousemove", this.dragMoveCb);
-      this.onDrop(value.slice(1));
+      // console.log(`drop: `, value);
+      this.onDrop();
     });
     dragulaService.over.subscribe((value) => {
-      console.log(`over: `, value);
+      // console.log(`over: `, value);
       this.onOver(value.slice(1));
     });
     // dragulaService.out.subscribe((value) => {
@@ -86,27 +82,45 @@ export class NDropComponent implements OnInit {
     this.levelFiles = this.files.filter(file => file[this.parentIdField] === activeFolderId);
   }
 
-  private onDragStart(args) {
-    let [e, el] = args;
-    // do something
+  private onDragStart(value) {
+    this.draggingElement = value[1];
+    //We need to make drag move event as library does not provide one
+    document.addEventListener("mousemove", this.dragMoveCb);
   }
 
   private onDragMove(event: MouseEvent) {
     let targetElements = document.elementsFromPoint(event.pageX, event.pageY);
-    let targetElement;
+    let dragTarget, element;
     for(let i = 0; i < targetElements.length; i++){
-      if(targetElements[i].classList.contains("n-item") && !targetElements[i].classList.contains("gu-mirror")){
-        targetElement = targetElements[i];
+      element = targetElements[i];
+      if(element !== this.draggingElement &&
+        element.tagName === "N-DROP-ITEM" &&
+        element.classList.contains("n-type-folder") &&
+        !element.classList.contains("gu-mirror")){
+        dragTarget = <HTMLElement>targetElements[i];
         break;
       }
     }
 
-    console.log("targetElement", targetElement);
+    if(dragTarget && dragTarget !== this.dragTarget){
+      this.dragTarget = dragTarget;
+      console.log("hover target");
+    }else if(!dragTarget && this.dragTarget){
+      console.log("unhover target");
+      this.dragTarget = undefined;
+    }
   }
 
-  private onDrop(args) {
-    let [e, el] = args;
-    // do something
+  private onDrop() {
+    if(this.dragTarget){
+      console.log("draggingElement", this.draggingElement);
+      console.log("dragTarget", this.dragTarget);
+      this.dragTarget = undefined;
+    }
+
+
+    this.draggingElement = undefined;
+    document.removeEventListener("mousemove", this.dragMoveCb);
   }
 
   private onOver(args) {
