@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, QueryList,
+         ViewChildren, AfterViewChecked, OnChanges, SimpleChanges } from '@angular/core';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
+import { NdropItemComponent } from './ndrop-item/ndrop-item.component';
 
 @Component({
   selector: 'N-NDrop',
@@ -8,13 +10,26 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
       <div>
         Folders:
         <div class='n-items-container' [dragula]='"folders-bag"'>
-          <n-drop-item *ngFor="let folder of folders" [item]="folder" [type]="'folder'" [fileNameField]="fileNameField"></n-drop-item>
+          <n-drop-item *ngFor="let folder of levelFolders" 
+                       [item]="folder" [type]="'folder'" 
+                       [fileNameField]="fileNameField"
+                       [active]="selectedItems.indexOf(folder) !== -1"
+                       [hover]="hoveredFolder === folder"
+                       (selectionChange)="itemSelection($event)"
+                       (goToItem)="goToItem($event)"
+          ></n-drop-item>
         </div>
       </div>
       <div>
         Files:
         <div class='n-items-container' [dragula]='"files-bag"'>
-          <n-drop-item *ngFor="let file of files" [item]="file" [type]="'file'" [fileNameField]="fileNameField"></n-drop-item>
+          <n-drop-item *ngFor="let file of levelFiles"
+                       [item]="file" 
+                       [type]="'file'" 
+                       [fileNameField]="fileNameField"
+                       [active]="selectedItems.indexOf(file) !== -1"
+                       (selectionChange)="itemSelection($event)"
+          ></n-drop-item>
         </div>
       </div>
     </div>
@@ -23,7 +38,9 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
     'ngdrop.styles.css'
   ]
 })
-export class NDropComponent implements OnInit {
+export class NDropComponent implements OnInit, AfterViewChecked, OnChanges {
+
+  @ViewChildren(NdropItemComponent) dragItems: QueryList<NdropItemComponent>;
 
   @Input() folders: any[];
   @Input() files: any[];
@@ -35,12 +52,18 @@ export class NDropComponent implements OnInit {
   @Input() fileNameField: string = "name";
   @Input() folderNameField: string = "name";
 
+  @Output() drop = new EventEmitter<{ items: any[], target: any }>();
+  @Output() goToFolder = new EventEmitter<{ folder: any }>();
+
   public levelFolders: any[];
   public levelFiles: any[];
+  public selectedItems: any[] = [];
+  public hoveredFolder: any;
 
   private draggingElement: HTMLElement;
   private dragTarget: HTMLElement;
   private dragMoveCb: (event: MouseEvent) => void;
+  private foldersComponents: NdropItemComponent[];
 
   constructor(private dragulaService: DragulaService) {
     this.dragMoveCb = this.onDragMove.bind(this);
@@ -53,17 +76,14 @@ export class NDropComponent implements OnInit {
     dragulaService.setOptions('files-bag', dragOptions);
 
     dragulaService.drag.subscribe((value) => {
-      // console.log(`drag:`, value);
       this.onDragStart(value);
     });
     dragulaService.drop.subscribe((value) => {
-      // console.log(`drop: `, value);
       this.onDrop();
     });
-    dragulaService.over.subscribe((value) => {
-      // console.log(`over: `, value);
-      this.onOver(value.slice(1));
-    });
+    // dragulaService.over.subscribe((value) => {
+    //   this.onOver(value.slice(1));
+    // });
     // dragulaService.out.subscribe((value) => {
     //   console.log(`out: ${value[0]}`);
     //   this.onOut(value.slice(1));
@@ -71,8 +91,37 @@ export class NDropComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectItems(this.activeFolder);
+  }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes.folders || changes.files || changes.activeFolder){
+      this.selectItems(this.activeFolder);
+    }
+  }
+
+  ngAfterViewChecked() {
+    this.foldersComponents = this.dragItems.filter(item => item.type === "folder");
+  }
+
+  private getFolderFromTargetElement(targetElement: HTMLElement){
+    for(let i = 0; i < this.foldersComponents.length; i++){
+      if(this.foldersComponents[i].elementRef.nativeElement === targetElement){
+        return this.foldersComponents[i].item;
+      }
+    }
+  }
+
+  public itemSelection(item){
+    let index = this.selectedItems.indexOf(item);
+    if(index === -1){
+      this.selectedItems.splice(0, this.selectedItems.length, item);
+    }else if(this.selectedItems.length > 0){
+      this.selectedItems.splice(index, 1);
+    }
+  }
+
+  public goToItem(folder){
+    this.goToFolder.emit(folder);
   }
 
   private selectItems(activeFolder: any) {
@@ -104,32 +153,32 @@ export class NDropComponent implements OnInit {
 
     if(dragTarget && dragTarget !== this.dragTarget){
       this.dragTarget = dragTarget;
-      console.log("hover target");
+      this.hoveredFolder = this.getFolderFromTargetElement(this.dragTarget);
     }else if(!dragTarget && this.dragTarget){
-      console.log("unhover target");
+      this.hoveredFolder = undefined;
       this.dragTarget = undefined;
     }
   }
 
   private onDrop() {
     if(this.dragTarget){
-      console.log("draggingElement", this.draggingElement);
-      console.log("dragTarget", this.dragTarget);
+      this.drop.emit({items: this.selectedItems, target: this.getFolderFromTargetElement(this.dragTarget)});
       this.dragTarget = undefined;
     }
 
-
+    this.selectedItems = [];
     this.draggingElement = undefined;
+    this.hoveredFolder = undefined;
     document.removeEventListener("mousemove", this.dragMoveCb);
   }
 
-  private onOver(args) {
-    let [e, el, container] = args;
-    // do something
-  }
-
-  private onOut(args) {
-    let [e, el, container] = args;
-    // do something
-  }
+  // private onOver(args) {
+  //   let [e, el, container] = args;
+  //   // do something
+  // }
+  //
+  // private onOut(args) {
+  //   let [e, el, container] = args;
+  //   // do something
+  // }
 }

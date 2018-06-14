@@ -1,2 +1,4 @@
-<div class="n-file-preview" *ngIf="type === 'file'"></div>
-<div class="n-name-block">{{item[fileNameField]}}</div>
+<div class="n-item" (mousedown)="select()" (dblclick)="itemDoubleClick()" [ngClass]="{'n-item-hover': hover}">
+  <div class="n-file-preview" *ngIf="type === 'file'"></div>
+  <div class="n-name-block" [ngClass]="{'n-name-active': active, 'n-name-hover': hover}">{{item[fileNameField]}}</div>
+</div>
