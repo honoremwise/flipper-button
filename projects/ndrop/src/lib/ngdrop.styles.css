@@ -21,16 +21,29 @@
   filter: alpha(opacity=20);
 }
 
-.wrapper {
-  margin-top: 100px;
-}
-
 .container {
-  width: 500px;
+  display: flex;
+  flex-wrap: wrap;
   border: 1px solid blue;
 }
 
-.container div {
-  width: 500px;
-  border: 1px solid red;
+.n-folder-item, .n-file-item{
+  border-radius: 6px;
+  margin-top: 16px;
+  margin-right: 20px;
+  border: 1px solid #e8eaed;
+}
+
+.n-file-preview{
+  height: 200px;
+}
+
+.n-folder-item, .n-file-name {
+  min-width: 200px;
+  height: 48px;
+  display: flex;
+  border-top: 1px solid #e8eaed;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
 }
