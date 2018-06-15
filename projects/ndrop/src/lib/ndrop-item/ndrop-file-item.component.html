@@ -1,0 +1,4 @@
+<div class="n-item" (click)="select()" (mouseup)="$event.stopPropagation()">
+  <div class="n-file-preview"></div>
+  <div class="n-name-block" [ngClass]="{'n-name-active': active}">{{data[fileNameField]}}</div>
+</div>
