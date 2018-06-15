@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { DragAndDropDataService } from "./drag-and-drop-data.service";
+import {Component} from '@angular/core';
+import {DragAndDropDataService} from "./drag-and-drop-data.service";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ export class AppComponent {
   public dragFiles: any[];
   public activeFolder: any;
 
-  constructor(dragAndDropDataService: DragAndDropDataService){
+  constructor(dragAndDropDataService: DragAndDropDataService) {
     this.dragFolders = dragAndDropDataService.getFolders().splice(0, 10);
     this.dragFiles = dragAndDropDataService.getFiles().splice(0, 20);
 
@@ -19,7 +19,7 @@ export class AppComponent {
     this.activeFolder = undefined;
   }
 
-  public onDrop($event){
+  public onDrop($event) {
     $event.items.forEach(item => {
       item.parent_uid = $event.target.uid;
     });
@@ -28,7 +28,15 @@ export class AppComponent {
     this.dragFiles = this.dragFiles.slice();
   }
 
-  public goToFolder(folder){
+  public goToFolder(folder) {
     this.activeFolder = folder;
+  }
+
+  public goBack(activeFolder) {
+    if (activeFolder.parent_uid === "0") {
+      this.activeFolder = undefined;
+    } else {
+      this.activeFolder = this.dragFolders.find(folder => folder.uid === activeFolder.parent_uid);
+    }
   }
 }
