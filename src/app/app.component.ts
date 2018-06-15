@@ -19,4 +19,17 @@ export class AppComponent {
     //Set root folder
     this.activeFolder = undefined;
   }
+
+  public onDrop($event){
+    $event.items.forEach(item => {
+      item.parent_uid = $event.target.uid;
+    });
+
+    this.dragFolders = this.dragFolders.slice();
+    this.dragFiles = this.dragFiles.slice();
+  }
+
+  public goToFolder(folder){
+    this.activeFolder = folder;
+  }
 }
