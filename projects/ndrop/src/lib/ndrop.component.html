@@ -3,27 +3,25 @@
   <div>
     Folders:
     <div class='n-items-container' [dragula]='"folders-bag"'>
-      <n-drop-item *ngFor="let folder of levelFolders"
+      <n-drop-folder-item *ngFor="let folder of levelFolders"
                    [data]="folder"
-                   [type]="'folder'"
                    [fileNameField]="fileNameField"
                    [active]="selectedItems.indexOf(folder) !== -1"
                    [hover]="hoveredFolder === folder"
                    (selectionChange)="itemSelection($event)"
                    (goToItem)="goToItem($event)"
-      ></n-drop-item>
+      ></n-drop-folder-item>
     </div>
   </div>
   <div>
     Files:
     <div class='n-items-container' [dragula]='"files-bag"'>
-      <n-drop-item *ngFor="let file of levelFiles"
+      <n-drop-file-item *ngFor="let file of levelFiles"
                    [data]="file"
-                   [type]="'file'"
                    [fileNameField]="fileNameField"
                    [active]="selectedItems.indexOf(file) !== -1"
                    (selectionChange)="itemSelection($event)"
-      ></n-drop-item>
+      ></n-drop-file-item>
     </div>
   </div>
 </div>
