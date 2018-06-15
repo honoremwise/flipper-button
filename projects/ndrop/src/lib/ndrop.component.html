@@ -1,0 +1,29 @@
+<div>
+  <button *ngIf="activeFolder" (click)="goBackBtnClicked()">Back</button>
+  <div>
+    Folders:
+    <div class='n-items-container' [dragula]='"folders-bag"'>
+      <n-drop-item *ngFor="let folder of levelFolders"
+                   [data]="folder"
+                   [type]="'folder'"
+                   [fileNameField]="fileNameField"
+                   [active]="selectedItems.indexOf(folder) !== -1"
+                   [hover]="hoveredFolder === folder"
+                   (selectionChange)="itemSelection($event)"
+                   (goToItem)="goToItem($event)"
+      ></n-drop-item>
+    </div>
+  </div>
+  <div>
+    Files:
+    <div class='n-items-container' [dragula]='"files-bag"'>
+      <n-drop-item *ngFor="let file of levelFiles"
+                   [data]="file"
+                   [type]="'file'"
+                   [fileNameField]="fileNameField"
+                   [active]="selectedItems.indexOf(file) !== -1"
+                   (selectionChange)="itemSelection($event)"
+      ></n-drop-item>
+    </div>
+  </div>
+</div>
