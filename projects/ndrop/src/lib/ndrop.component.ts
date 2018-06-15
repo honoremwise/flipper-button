@@ -1,9 +1,9 @@
 import {
-  Component, Input, OnInit, Output, EventEmitter, QueryList,
-  ViewChildren, OnChanges, SimpleChanges
+  Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges
 } from '@angular/core';
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
-import {NdropItemComponent} from './ndrop-item/ndrop-item.component';
+import {NdropFolderItemComponent} from './ndrop-item/ndrop-folder-item.component';
+import {NdropFileItemComponent} from './ndrop-item/ndrop-file-item.component';
 
 @Component({
   selector: 'N-NDrop',
@@ -14,25 +14,19 @@ import {NdropItemComponent} from './ndrop-item/ndrop-item.component';
 })
 export class NDropComponent implements OnInit, OnChanges {
 
-  @ViewChildren(NdropItemComponent) dragItems: QueryList<NdropItemComponent>;
-
   @Input() folders: any[];
   @Input() files: any[];
   @Input() activeFolder: any;
 
-  //Application can specify keys from their items models
-  @Input() idField: string = "uid";
-  @Input() parentIdField: string = "parent_uid";
-  @Input() fileNameField: string = "name";
-  @Input() folderNameField: string = "name";
+  // Application can specify keys from their items models
+  @Input() idField: string = 'uid';
+  @Input() parentIdField: string = 'parent_uid';
+  @Input() fileNameField: string = 'name';
+  @Input() folderNameField: string = 'name';
 
   @Output() drop = new EventEmitter<{ items: any[], target: any }>();
   @Output() goToFolder = new EventEmitter<{ folder: any }>();
   @Output() goBack = new EventEmitter<{ currentFolder: any }>();
-
-  public static isMacintosh() {
-    return navigator.platform.indexOf('Mac') > -1
-  }
 
   public levelFolders: any[];
   public levelFiles: any[];
@@ -45,10 +39,14 @@ export class NDropComponent implements OnInit, OnChanges {
   private keyDownCb: (event: MouseEvent) => void;
   private keyUpCb: (event: MouseEvent) => void;
   private mouseDownCb: (event: MouseEvent) => void;
-  private foldersComponents: NdropItemComponent[] = [];
-  private filesComponents: NdropItemComponent[] = [];
+  private foldersComponents: NdropFolderItemComponent[] = [];
+  private filesComponents: NdropFileItemComponent[] = [];
   private ctrlBtnCode = NDropComponent.isMacintosh() ? 91 : 17;
   private ctrlBtnPressed: boolean = false;
+
+  public static isMacintosh() {
+    return navigator.platform.indexOf('Mac') > -1;
+  }
 
   constructor(private dragulaService: DragulaService) {
     this.dragMoveCb = this.onDragMove.bind(this);
@@ -56,7 +54,7 @@ export class NDropComponent implements OnInit, OnChanges {
     this.keyUpCb = this.onKeyUp.bind(this);
     this.mouseDownCb = this.onMouseDown.bind(this);
 
-    let dragOptions = {
+    const dragOptions = {
       copy: true,
     };
 
@@ -77,9 +75,9 @@ export class NDropComponent implements OnInit, OnChanges {
     //   this.onOut(value.slice(1));
     // });
 
-    document.addEventListener("keydown", this.keyDownCb);
-    document.addEventListener("keyup", this.keyUpCb);
-    document.addEventListener("mouseup", this.mouseDownCb);
+    document.addEventListener('keydown', this.keyDownCb);
+    document.addEventListener('keyup', this.keyUpCb);
+    document.addEventListener('mouseup', this.mouseDownCb);
   }
 
   ngOnInit() {
@@ -91,24 +89,24 @@ export class NDropComponent implements OnInit, OnChanges {
     }
   }
 
-  public registerFolder(folder: NdropItemComponent) {
+  public registerFolder(folder: NdropFolderItemComponent) {
     this.foldersComponents.push(folder);
   }
 
-  public registerFile(file: NdropItemComponent) {
+  public registerFile(file: NdropFileItemComponent) {
     this.filesComponents.push(file);
   }
 
-  public unregisterFolder(folder: NdropItemComponent) {
+  public unregisterFolder(folder: NdropFolderItemComponent) {
     this.foldersComponents.splice(this.foldersComponents.indexOf(folder), 1);
   }
 
-  public unregisterFile(file: NdropItemComponent) {
+  public unregisterFile(file: NdropFileItemComponent) {
     this.filesComponents.splice(this.filesComponents.indexOf(file), 1);
   }
 
   public itemSelection(item) {
-    let index = this.selectedItems.indexOf(item);
+    const index = this.selectedItems.indexOf(item);
     if (index === -1) {
       if (this.ctrlBtnPressed) {
         this.selectedItems.push(item);
@@ -142,7 +140,7 @@ export class NDropComponent implements OnInit, OnChanges {
     this.selectedItems.splice(0, this.selectedItems.length);
   }
 
-  private getDataFromElement(componentsList: NdropItemComponent[], element: HTMLElement) {
+  private getDataFromElement(componentsList: NdropFileItemComponent[] | NdropFolderItemComponent[], element: HTMLElement) {
     for (let i = 0; i < componentsList.length; i++) {
       if (componentsList[i].elementRef.nativeElement === element) {
         return componentsList[i].data;
@@ -151,33 +149,32 @@ export class NDropComponent implements OnInit, OnChanges {
   }
 
   private selectItemsInLevel(activeFolder: any) {
-    //parent id is 0 for the root files and folders
-    let activeFolderId = activeFolder ? activeFolder[this.idField] : "0";
+    // parent id is 0 for the root files and folders
+    const activeFolderId = activeFolder ? activeFolder[this.idField] : '0';
     this.levelFolders = this.folders.filter(folder => folder[this.parentIdField] === activeFolderId);
     this.levelFiles = this.files.filter(file => file[this.parentIdField] === activeFolderId);
   }
 
   private onDragStart(value) {
     this.draggingElement = value[1];
-    //We need to make drag move event as library does not provide one
-    document.addEventListener("mousemove", this.dragMoveCb);
+    // We need to make drag move event as library does not provide one
+    document.addEventListener('mousemove', this.dragMoveCb);
   }
 
   private onDragMove(event: MouseEvent) {
-    let draggingElementComponents = this.draggingElement.classList.contains("n-type-folder") ?
+    const draggingElementComponents = this.draggingElement.classList.contains('n-type-folder') ?
       this.foldersComponents : this.filesComponents;
-    let draggedData = this.getDataFromElement(draggingElementComponents, this.draggingElement);
+    const draggedData = this.getDataFromElement(draggingElementComponents, this.draggingElement);
     if (this.selectedItems.indexOf(draggedData) === -1) {
       this.selectedItems.splice(0, this.selectedItems.length, draggedData);
     }
-    let targetElements = document.elementsFromPoint(event.pageX, event.pageY);
+    const targetElements = document.elementsFromPoint(event.pageX, event.pageY);
     let dragTarget, element;
     for (let i = 0; i < targetElements.length; i++) {
       element = targetElements[i];
       if (element !== this.draggingElement &&
-        element.tagName === "N-DROP-ITEM" &&
-        element.classList.contains("n-type-folder") &&
-        !element.classList.contains("gu-mirror")) {
+        element.classList.contains('n-type-folder') &&
+        !element.classList.contains('gu-mirror')) {
         dragTarget = <HTMLElement>targetElements[i];
         break;
       }
@@ -204,7 +201,7 @@ export class NDropComponent implements OnInit, OnChanges {
     this.selectedItems.splice(0, this.selectedItems.length);
     this.draggingElement = undefined;
     this.hoveredFolder = undefined;
-    document.removeEventListener("mousemove", this.dragMoveCb);
+    document.removeEventListener('mousemove', this.dragMoveCb);
   }
 
   // private onOver(args) {
