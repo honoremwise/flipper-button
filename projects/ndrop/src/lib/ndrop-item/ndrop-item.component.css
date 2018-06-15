@@ -1,0 +1,34 @@
+:host{
+  display: block;
+  margin-top: 16px;
+  margin-right: 20px;
+}
+
+.n-item {
+  border-radius: 6px;
+  border: 1px solid #e8eaed;
+  overflow: hidden;
+}
+
+.n-file-preview{
+  height: 200px;
+  border-bottom: 1px solid #e8eaed;
+}
+
+.n-name-block {
+  min-width: 200px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.n-name-block.n-name-active, .n-name-block.n-name-hover{
+  background: #e8f0fe;
+  color: #1967d2;
+}
+
+.n-item.n-item-hover{
+  border-color: #1967d2;
+}
