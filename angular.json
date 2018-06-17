@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -149,6 +149,46 @@
             "tsConfig": [
               "projects/ndrop/tsconfig.lib.json",
               "projects/ndrop/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ContextMenu": {
+      "root": "projects/context-menu",
+      "sourceRoot": "projects/context-menu/src",
+      "projectType": "library",
+      "prefix": "N",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/context-menu/tsconfig.lib.json",
+            "project": "projects/context-menu/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/context-menu/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/context-menu/src/test.ts",
+            "tsConfig": "projects/context-menu/tsconfig.spec.json",
+            "karmaConfig": "projects/context-menu/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/context-menu/tsconfig.lib.json",
+              "projects/context-menu/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
