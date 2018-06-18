@@ -1,9 +1,20 @@
-<N-NDrop
-  [files]="dragFiles"
-  [folders]="dragFolders"
-  [activeFolder]="activeFolder"
-  (drop)="onDrop($event)"
-  (goToFolder)="goToFolder($event)"
-  (goBack)="goBack($event)"
+
+<N-ContextMenu
+        [menus]="['home','bin']"
+        [bounds]="context_menu_bounds"
+        [show_context]="show_context"
+        [activeFile]="activeFile"
+
+></N-ContextMenu>
+<N-NDrop id="container" oncontextmenu="return false;"
+         [files]="dragFiles"
+         [folders]="dragFolders"
+         [activeFolder]="activeFolder"
+         (drop)="onDrop($event)"
+         (goToFolder)="goToFolder($event)"
+         (goBack)="goBack($event)"
+         (activeFile)="attachContext($event)"
 >
 </N-NDrop>
+
+
