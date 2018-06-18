@@ -5,6 +5,7 @@ import {DragulaService} from 'ng2-dragula/ng2-dragula';
 import {NdropItemComponent} from './ndrop-item/ndrop-item.component';
 import {NdropFolderItemComponent} from './ndrop-item/ndrop-folder-item.component';
 import {NdropFileItemComponent} from './ndrop-item/ndrop-file-item.component';
+import {Settings} from './contracts/settings';
 
 @Component({
     selector: 'N-NDrop',
@@ -29,7 +30,7 @@ export class NDropComponent implements OnInit, OnChanges {
     @Output() goToFolder = new EventEmitter<{ folder: any }>();
     @Output() goBack = new EventEmitter<{ currentFolder: any }>();
 
-    @Output() activeFile = new EventEmitter<{ file: any, show_context: boolean}>();
+    @Output() activeFile = new EventEmitter<{ file: any, show_context: boolean, event: MouseEvent, bound: CSSStyleDeclaration}>();
     public levelFolders: any[];
     public levelFiles: any[];
     public selectedItems: any[] = [];
@@ -47,7 +48,7 @@ export class NDropComponent implements OnInit, OnChanges {
     private ctrlBtnCode = NDropComponent.isMacintosh() ? 91 : 17;
     private ctrlBtnPressed: boolean = false;
     private cursorElements: Array<{ originalElement: HTMLElement, cloneElement: HTMLElement }> = [];
-
+    public settings: Settings;
     public static isMacintosh() {
         return navigator.platform.indexOf('Mac') > -1;
     }
@@ -265,8 +266,10 @@ export class NDropComponent implements OnInit, OnChanges {
         this.cursorElements.splice(0, this.cursorElements.length);
     }
 
-    attachContextMenuOnFiles(file: any) {
-        this.activeFile.emit({file: file, show_context: true});
+    attachContextMenuOnFiles(file: any, event: MouseEvent) {
+        const file_bound = document.getElementById('bound');
+        const style = window.getComputedStyle(file_bound);
+        this.activeFile.emit({file: file, show_context: true, event: event, bound: style});
     }
 
     getFilesBounds(): HTMLElement {
@@ -282,4 +285,55 @@ export class NDropComponent implements OnInit, OnChanges {
     //   let [e, el, container] = args;
     //   // do something
     // }
+    setContainerWidth() {
+        if (this.settings && this.settings.show_property) {
+            if (window.innerWidth > 959) {
+                return {
+                    'position': 'fixed',
+                    'height.px': window.innerHeight - 160,
+                    'max-height.px': window.innerHeight - 160,
+                    'width.px': window.innerWidth - 270 - 300,
+                    'min-width.px': window.innerWidth - 270 - 300,
+                    'max-width.px': window.innerWidth - 270 - 300,
+                    'float': 'right',
+                    'overflow-x': 'hidden'
+                };
+            } else {
+                return {
+                    'position': 'fixed',
+                    'height.px': window.innerHeight - 160,
+                    'max-height.px': window.innerHeight - 160,
+                    'width.px': window.innerWidth - 320 - 24,
+                    'min-width.px': window.innerWidth - 320 - 24,
+                    'max-width.px': window.innerWidth - 320 - 24,
+                    'float': 'right',
+                    'overflow-x': 'hidden'
+                };
+            }
+        } else {
+            if (window.innerWidth > 959) {
+                return {
+                    'position': 'fixed',
+                    'height.px': window.innerHeight - 160,
+                    'max-height.px': window.innerHeight - 160,
+                    'width.px': window.innerWidth - 270,
+                    'min-width.px': window.innerWidth - 270,
+                    'max-width.px': window.innerWidth - 270,
+                    'float': 'right',
+                    'overflow-x': 'hidden'
+                };
+            } else {
+                return {
+                    'position': 'fixed',
+                    'height.px': window.innerHeight - 160,
+                    'max-height.px': window.innerHeight - 160,
+                    'width.px': window.innerWidth - 24,
+                    'min-width.px': window.innerWidth - 24,
+                    'max-width.px': window.innerWidth - 24,
+                    'float': 'right',
+                    'overflow-x': 'hidden'
+                };
+            }
+        }
+    }
 }

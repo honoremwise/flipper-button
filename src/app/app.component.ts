@@ -14,8 +14,8 @@ export class AppComponent {
     public doc: Document;
     public bound: HTMLElement;
     public activeFile: any;
-    private show_context: boolean = false;
-    private context_menu_bounds: HTMLElement | null;
+    show_context: boolean = false;
+    context_menu_bounds: HTMLElement | null;
 
     constructor(dragAndDropDataService: DragAndDropDataService) {
         this.dragFolders = dragAndDropDataService.getFolders().splice(0, 10);
@@ -49,6 +49,9 @@ export class AppComponent {
     attachContext($event) {
         this.context_menu_bounds = document.getElementById('container');
         this.show_context = !this.show_context;
-        this.activeFile = $event;
+        this.activeFile = $event.file;
+        console.log($event.event);
+        console.log('verification', window.innerWidth - 24);
+        console.log($event.bound.width);
     }
 }

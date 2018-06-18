@@ -1,4 +1,4 @@
-<div>
+<div id="bound" [ngStyle]="setContainerWidth()">
     <button *ngIf="activeFolder" (click)="goBackBtnClicked()">Back</button>
     <div>
         Folders:
@@ -10,7 +10,7 @@
                                 [hover]="hoveredFolder === folder"
                                 (selectionChange)="itemSelection($event)"
                                 (goToItem)="goToItem($event)"
-                                (contextmenu)="attachContextMenuOnFiles(folder)"
+                                (contextmenu)="attachContextMenuOnFiles(folder,$event)"
             ></n-drop-folder-item>
         </div>
     </div>
@@ -22,7 +22,7 @@
                               [fileNameField]="fileNameField"
                               [active]="selectedItems.indexOf(file) !== -1"
                               (selectionChange)="itemSelection($event)"
-                              (contextmenu)="attachContextMenuOnFiles(file)"
+                              (contextmenu)="attachContextMenuOnFiles(file,$event)"
             ></n-drop-file-item>
         </div>
     </div>

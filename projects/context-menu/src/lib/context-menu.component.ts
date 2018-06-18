@@ -12,8 +12,8 @@ export class ContextMenuComponent implements OnInit, OnChanges {
 
 
     @Input() menus: string [];
-    @Input() show_context: boolean = true;
-    @Input() activeFile: any;
+    @Input() show_context: boolean;
+    @Input() activeFile: NFile;
     @Input() bounds: any;
     doc: Document;
     constructor(public cd: ChangeDetectorRef) {
