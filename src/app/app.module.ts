@@ -4,6 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {NDropModule} from 'NDrop';
 import {ContextMenuModule} from 'ContextMenu';
+import {ChipsModule} from 'Chips';
 
 @NgModule({
     declarations: [
@@ -13,6 +14,7 @@ import {ContextMenuModule} from 'ContextMenu';
         BrowserModule,
         NDropModule,
         ContextMenuModule,
+        ChipsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

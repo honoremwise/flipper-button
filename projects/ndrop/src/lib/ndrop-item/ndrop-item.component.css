@@ -36,3 +36,9 @@
 .n-item.n-item-disabled{
   opacity: 0.4;
 }
+span{
+  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color:  rgba(0, 0, 0, 0.72);
+  font-weight: 400;
+}

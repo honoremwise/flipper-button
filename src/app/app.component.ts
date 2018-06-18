@@ -51,6 +51,7 @@ export class AppComponent {
         this.show_context = !this.show_context;
         this.activeFile = $event.file;
         console.log($event.event);
+
         console.log('verification', window.innerWidth - 24);
         console.log($event.bound.width);
     }

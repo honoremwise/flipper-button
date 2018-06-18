@@ -28,6 +28,12 @@
       ],
       "ContextMenu/*": [
         "dist/context-menu/*"
+      ],
+      "Chips": [
+        "dist/chips"
+      ],
+      "Chips/*": [
+        "dist/chips/*"
       ]
     }
   }
