@@ -1,28 +1,29 @@
-<div id="bound">
-  <button *ngIf="activeFolder" (click)="goBackBtnClicked()">Back</button>
-  <div>
-    Folders:
-    <div class='n-items-container' [dragula]='"folders-bag"' [dragulaOptions]="dragOptions">
-      <n-drop-folder-item *ngFor="let folder of levelFolders"
-                   [data]="folder"
-                   [fileNameField]="fileNameField"
-                   [active]="selectedItems.indexOf(folder) !== -1"
-                   [hover]="hoveredFolder === folder"
-                   (selectionChange)="itemSelection($event)"
-                   (goToItem)="goToItem($event)"
-
-      ></n-drop-folder-item>
+<div id="bound" [ngStyle]="setContainerWidth()">
+    <button *ngIf="activeFolder" (click)="goBackBtnClicked()">Back</button>
+    <div>
+        Folders:
+        <div class='n-items-container' [dragula]='"folders-bag"' [dragulaOptions]="dragOptions">
+            <n-drop-folder-item *ngFor="let folder of levelFolders"
+                                [data]="folder"
+                                [fileNameField]="fileNameField"
+                                [active]="selectedItems.indexOf(folder) !== -1"
+                                [hover]="hoveredFolder === folder"
+                                (selectionChange)="itemSelection($event)"
+                                (goToItem)="goToItem($event)"
+                                (contextmenu)="onContextMenu(folder, $event)"
+            ></n-drop-folder-item>
+        </div>
     </div>
-  </div>
-  <div>
-    Files:
-    <div class='n-items-container' [dragula]='"files-bag"' [dragulaOptions]="dragOptions">
-      <n-drop-file-item *ngFor="let file of levelFiles"
-                   [data]="file"
-                   [fileNameField]="fileNameField"
-                   [active]="selectedItems.indexOf(file) !== -1"
-                   (selectionChange)="itemSelection($event)"
-      ></n-drop-file-item>
-    </div>
+    <div>
+        Files:
+        <div class='n-items-container' [dragula]='"files-bag"' [dragulaOptions]="dragOptions">
+            <n-drop-file-item *ngFor="let file of levelFiles"
+                              [data]="file"
+                              [fileNameField]="fileNameField"
+                              [active]="selectedItems.indexOf(file) !== -1"
+                              (selectionChange)="itemSelection($event)"
+                              (contextmenu)="onContextMenu(file, $event)"
+            ></n-drop-file-item>
+        </div>
 
-</div>
+    </div>
