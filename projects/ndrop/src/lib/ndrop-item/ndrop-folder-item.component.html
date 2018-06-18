@@ -1,4 +1,5 @@
 <div class="n-item" (click)="select()" (mouseup)="$event.stopPropagation()" (dblclick)="itemDoubleClick()"
-     [ngClass]="{'n-item-hover': hover}">
-  <div class="n-name-block n-cursor-block" [ngClass]="{'n-name-active': active, 'n-name-hover': hover}">{{data[fileNameField]}}</div>
+     [ngClass]="{'n-item-hover': hover, 'n-item-disabled': disabled}">
+  <div class="n-name-block n-cursor-block"
+       [ngClass]="{'n-name-active': active, 'n-name-hover': hover}">{{data[fileNameField]}}</div>
 </div>
