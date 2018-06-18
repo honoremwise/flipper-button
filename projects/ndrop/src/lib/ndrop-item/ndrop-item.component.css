@@ -32,3 +32,7 @@
 .n-item.n-item-hover{
   border-color: #1967d2;
 }
+
+.n-item.n-item-disabled{
+  opacity: 0.4;
+}

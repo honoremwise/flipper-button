@@ -7,6 +7,7 @@
                    [data]="folder"
                    [fileNameField]="fileNameField"
                    [active]="selectedItems.indexOf(folder) !== -1"
+                   [disabled]="disabledItems.indexOf(folder) !== -1"
                    [hover]="hoveredFolder === folder"
                    (selectionChange)="itemSelection($event)"
                    (goToItem)="goToItem($event)"
@@ -20,6 +21,7 @@
                    [data]="file"
                    [fileNameField]="fileNameField"
                    [active]="selectedItems.indexOf(file) !== -1"
+                   [disabled]="disabledItems.indexOf(file) !== -1"
                    (selectionChange)="itemSelection($event)"
       ></n-drop-file-item>
     </div>
