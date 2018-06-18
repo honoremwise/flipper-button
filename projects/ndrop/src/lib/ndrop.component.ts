@@ -347,14 +347,4 @@ export class NDropComponent implements OnInit, OnChanges {
     this.disabledItems = [];
     document.removeEventListener('mousemove', this.dragMoveCb);
   }
-
-  // private onOver(args) {
-  //   let [e, el, container] = args;
-  //   // do something
-  // }
-  //
-  // private onOut(args) {
-  //   let [e, el, container] = args;
-  //   // do something
-  // }
 }
