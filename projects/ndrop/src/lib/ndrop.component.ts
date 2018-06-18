@@ -109,6 +109,7 @@ export class NDropComponent implements OnInit, OnChanges {
       this.deselectItems();
       if (this.returnCursoresAnimationTimer) {
         clearTimeout(this.returnCursoresAnimationTimer);
+        this.returnCursoresAnimationTimer = undefined;
         this.removeCursorClones();
         this.endDragProcess();
       }
@@ -274,7 +275,7 @@ export class NDropComponent implements OnInit, OnChanges {
       if (elements.cloneElement.style.transition === '0.15s ease-out') {
         const elementCoordinates = elements.cloneElement.getBoundingClientRect();
 
-        if (this.isElementInCursorArea(x, y, elementCoordinates.left, elementCoordinates.top)) {
+        if (this.isElementInArea(x, y, elementCoordinates.left, elementCoordinates.top, 15)) {
           styles.transition = 'unset';
         }
       }
@@ -283,12 +284,12 @@ export class NDropComponent implements OnInit, OnChanges {
     });
   }
 
-  private isElementInCursorArea(areaX: number, areaY: number, elementX: number, elementY: number): boolean {
-    const xLeftEdge = areaX - 15;
-    const xRightEdge = areaX + 15;
-    const yLeftEdge = areaY - 15;
-    const yRightEdge = areaY + 15;
-    return elementX > xLeftEdge && elementX < xRightEdge && elementY > yLeftEdge && elementY < yRightEdge;
+  private isElementInArea(areaX: number, areaY: number, elementX: number, elementY: number, areaSize: number = 0): boolean {
+    const xLeftEdge = areaX - areaSize;
+    const xRightEdge = areaX + areaSize;
+    const yLeftEdge = areaY - areaSize;
+    const yRightEdge = areaY + areaSize;
+    return elementX >= xLeftEdge && elementX <= xRightEdge && elementY >= yLeftEdge && elementY <= yRightEdge;
   }
 
   private onDrop() {
@@ -316,22 +317,33 @@ export class NDropComponent implements OnInit, OnChanges {
         const styles = {
           left: rect.left + 'px',
           top: rect.top + 'px',
-          transition: '0.15s ease-out'
+          transition: '0.15s'
         };
 
         const transitionCb = (event: TransitionEvent) => {
-          event.srcElement.removeEventListener(this.transitionEvent, transitionCb);
-          document.body.removeChild(event.srcElement);
-          this.cursorElements.splice(this.cursorElements.indexOf(elements), 1);
-          if (this.cursorElements.length === 0) {
-            resolve();
+          if (this.areCursorElementReplaced(elements.cloneElement, elements.originalElement)) {
+            event.srcElement.removeEventListener(this.transitionEvent, transitionCb);
+            document.body.removeChild(event.srcElement);
+            this.cursorElements.splice(this.cursorElements.indexOf(elements), 1);
+            if (this.cursorElements.length === 0) {
+              resolve();
+            }
+          } else {
+            elements.cloneElement.style.top = styles.top;
+            elements.cloneElement.style.left = styles.left;
           }
         };
 
-        elements.cloneElement.addEventListener(this.transitionEvent, transitionCb);
+        elements.cloneElement.addEventListener(this.transitionEvent, transitionCb, false);
         Object.assign(elements.cloneElement.style, styles);
       });
     });
+  }
+
+  private areCursorElementReplaced(element: HTMLElement, target: HTMLElement): boolean {
+    const targetRect = target.getBoundingClientRect();
+    const elementRect = element.getBoundingClientRect();
+    return this.isElementInArea(targetRect.left, targetRect.top, elementRect.left, elementRect.top);
   }
 
   private removeCursorClones() {
@@ -345,6 +357,10 @@ export class NDropComponent implements OnInit, OnChanges {
     this.draggingElement = undefined;
     this.hoveredFolder = undefined;
     this.disabledItems = [];
+    this.cursorElements.forEach(elements => {
+      document.body.removeChild(elements.cloneElement);
+    });
+    this.cursorElements.splice(0, this.cursorElements.length);
     document.removeEventListener('mousemove', this.dragMoveCb);
   }
 
