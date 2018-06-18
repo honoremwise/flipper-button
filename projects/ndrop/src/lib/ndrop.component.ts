@@ -33,6 +33,7 @@ export class NDropComponent implements OnInit, OnChanges {
   public levelFolders: any[];
   public levelFiles: any[];
   public selectedItems: any[] = [];
+  public disabledItems: any[] = [];
   public hoveredFolder: any;
   public dragOptions = {
     copy: true,
@@ -43,22 +44,42 @@ export class NDropComponent implements OnInit, OnChanges {
   private dragMoveCb: (event: MouseEvent) => void;
   private keyDownCb: (event: MouseEvent) => void;
   private keyUpCb: (event: MouseEvent) => void;
-  private mouseDownCb: (event: MouseEvent) => void;
+  private mouseupCb: (event: MouseEvent) => void;
   private foldersComponents: NdropItemComponent[] = [];
   private filesComponents: NdropItemComponent[] = [];
   private ctrlBtnCode = NDropComponent.isMacintosh() ? 91 : 17;
   private ctrlBtnPressed: boolean = false;
   private cursorElements: Array<{ originalElement: HTMLElement, cloneElement: HTMLElement }> = [];
+  private transitionEvent: string = NDropComponent.whichTransitionEvent();
+  private returnCursoresAnimationTimer: any;
 
   public static isMacintosh() {
     return navigator.platform.indexOf('Mac') > -1;
   }
 
+  public static whichTransitionEvent(): string {
+    let t;
+    const el = document.createElement('fakeelement');
+    const transitions = {
+      'transition': 'transitionend',
+      'OTransition': 'oTransitionEnd',
+      'MozTransition': 'transitionend',
+      'WebkitTransition': 'webkitTransitionEnd'
+    };
+
+    for (t in transitions) {
+      if (el.style[t] !== undefined) {
+        return transitions[t];
+      }
+    }
+  }
+
+
   constructor(private dragulaService: DragulaService) {
     this.dragMoveCb = this.onDragMove.bind(this);
     this.keyDownCb = this.onKeyDown.bind(this);
     this.keyUpCb = this.onKeyUp.bind(this);
-    this.mouseDownCb = this.onMouseDown.bind(this);
+    this.mouseupCb = this.onMouseUp.bind(this);
 
     dragulaService.drag.subscribe((value) => {
       this.onDragStart(value);
@@ -76,7 +97,7 @@ export class NDropComponent implements OnInit, OnChanges {
 
     document.addEventListener('keydown', this.keyDownCb);
     document.addEventListener('keyup', this.keyUpCb);
-    document.addEventListener('mouseup', this.mouseDownCb);
+    document.addEventListener('mouseup', this.mouseupCb);
   }
 
   ngOnInit() {
@@ -85,6 +106,12 @@ export class NDropComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.folders || changes.files || changes.activeFolder) {
       this.selectItemsInLevel(this.activeFolder);
+      this.deselectItems();
+      if (this.returnCursoresAnimationTimer) {
+        clearTimeout(this.returnCursoresAnimationTimer);
+        this.removeCursorClones();
+        this.endDragProcess();
+      }
     }
   }
 
@@ -135,7 +162,13 @@ export class NDropComponent implements OnInit, OnChanges {
     this.ctrlBtnPressed = false;
   }
 
-  private onMouseDown() {
+  private onMouseUp() {
+    if (!this.draggingElement) {
+      this.deselectItems();
+    }
+  }
+
+  private deselectItems() {
     this.selectedItems.splice(0, this.selectedItems.length);
   }
 
@@ -187,6 +220,8 @@ export class NDropComponent implements OnInit, OnChanges {
       this.hoveredFolder = undefined;
       this.dragTarget = undefined;
     }
+
+    this.disabledItems = this.selectedItems.slice();
     this.attachCursorClonesToMouse(event.clientX, event.clientY);
   }
 
@@ -265,11 +300,38 @@ export class NDropComponent implements OnInit, OnChanges {
       this.dragTarget = undefined;
     }
 
-    this.selectedItems.splice(0, this.selectedItems.length);
-    this.draggingElement = undefined;
-    this.hoveredFolder = undefined;
-    document.removeEventListener('mousemove', this.dragMoveCb);
-    this.removeCursorClones();
+    // We need to trigger this only if drop event was't applied, else we need to endDragProcess on data change
+    this.returnCursoresAnimationTimer = setTimeout(() => {
+      this.returnCursorClones().then(() => {
+        this.endDragProcess();
+      });
+    });
+  }
+
+  private returnCursorClones(): Promise<void> {
+    return new Promise(resolve => {
+      this.cursorElements.forEach(elements => {
+        const rect: ClientRect = elements.originalElement.getBoundingClientRect();
+        // Set styles to new created nodes with transition for smooth animation to mouse
+        const styles = {
+          left: rect.left + 'px',
+          top: rect.top + 'px',
+          transition: '0.15s ease-out'
+        };
+
+        const transitionCb = (event: TransitionEvent) => {
+          event.srcElement.removeEventListener(this.transitionEvent, transitionCb);
+          document.body.removeChild(event.srcElement);
+          this.cursorElements.splice(this.cursorElements.indexOf(elements), 1);
+          if (this.cursorElements.length === 0) {
+            resolve();
+          }
+        };
+
+        elements.cloneElement.addEventListener(this.transitionEvent, transitionCb);
+        Object.assign(elements.cloneElement.style, styles);
+      });
+    });
   }
 
   private removeCursorClones() {
@@ -277,6 +339,13 @@ export class NDropComponent implements OnInit, OnChanges {
       document.body.removeChild(e.cloneElement);
     });
     this.cursorElements.splice(0, this.cursorElements.length);
+  }
+
+  private endDragProcess() {
+    this.draggingElement = undefined;
+    this.hoveredFolder = undefined;
+    this.disabledItems = [];
+    document.removeEventListener('mousemove', this.dragMoveCb);
   }
 
   // private onOver(args) {

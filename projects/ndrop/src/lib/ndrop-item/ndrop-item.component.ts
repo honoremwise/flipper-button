@@ -11,6 +11,7 @@ export class NdropItemComponent implements OnInit, OnDestroy {
   @Input() fileNameField: string;
   @Input() data: any;
   @Input() active: boolean;
+  @Input() disabled: boolean;
   @Output() selectionChange = new EventEmitter<any>();
 
   constructor(public elementRef: ElementRef, protected parentDropZone: NDropComponent) {
