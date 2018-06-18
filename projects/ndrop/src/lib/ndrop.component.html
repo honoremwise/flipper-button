@@ -2,7 +2,7 @@
   <button *ngIf="activeFolder" (click)="goBackBtnClicked()">Back</button>
   <div>
     Folders:
-    <div class='n-items-container' [dragula]='"folders-bag"'>
+    <div class='n-items-container' [dragula]='"folders-bag"' [dragulaOptions]="dragOptions">
       <n-drop-folder-item *ngFor="let folder of levelFolders"
                    [data]="folder"
                    [fileNameField]="fileNameField"
@@ -15,7 +15,7 @@
   </div>
   <div>
     Files:
-    <div class='n-items-container' [dragula]='"files-bag"'>
+    <div class='n-items-container' [dragula]='"files-bag"' [dragulaOptions]="dragOptions">
       <n-drop-file-item *ngFor="let file of levelFiles"
                    [data]="file"
                    [fileNameField]="fileNameField"

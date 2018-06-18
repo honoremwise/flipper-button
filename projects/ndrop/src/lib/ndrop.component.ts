@@ -11,7 +11,8 @@ import {NdropFileItemComponent} from './ndrop-item/ndrop-file-item.component';
   templateUrl: './ndrop.component.html',
   styleUrls: [
     'ngdrop.styles.css'
-  ]
+  ],
+  viewProviders: [DragulaService]
 })
 export class NDropComponent implements OnInit, OnChanges {
 
@@ -33,6 +34,9 @@ export class NDropComponent implements OnInit, OnChanges {
   public levelFiles: any[];
   public selectedItems: any[] = [];
   public hoveredFolder: any;
+  public dragOptions = {
+    copy: true,
+  };
 
   private draggingElement: HTMLElement;
   private dragTarget: HTMLElement;
@@ -55,13 +59,6 @@ export class NDropComponent implements OnInit, OnChanges {
     this.keyDownCb = this.onKeyDown.bind(this);
     this.keyUpCb = this.onKeyUp.bind(this);
     this.mouseDownCb = this.onMouseDown.bind(this);
-
-    const dragOptions = {
-      copy: true,
-    };
-
-    dragulaService.setOptions('folders-bag', dragOptions);
-    dragulaService.setOptions('files-bag', dragOptions);
 
     dragulaService.drag.subscribe((value) => {
       this.onDragStart(value);
@@ -157,7 +154,6 @@ export class NDropComponent implements OnInit, OnChanges {
     this.levelFiles = this.files.filter(file => file[this.parentIdField] === activeFolderId);
   }
 
-  // todo check why this method calls 2 times
   private onDragStart(value) {
     this.draggingElement = value[1];
     const draggingElementComponents = this.draggingElement.classList.contains('n-type-folder') ?
@@ -201,9 +197,11 @@ export class NDropComponent implements OnInit, OnChanges {
     for (let i = 0; i < items.length; i++) {
       if (selected.indexOf(items[i].data) !== -1) {
         const cursorElement = items[i].elementRef.nativeElement.querySelector('.n-cursor-block');
+        const clone = cursorElement.cloneNode(true);
+        clone.classList.add('n-name-active');
         this.cursorElements.push({
           originalElement: cursorElement,
-          cloneElement: cursorElement.cloneNode(true)
+          cloneElement: clone
         });
         selected.splice(selected.indexOf(items[i].data), 1);
       }
@@ -212,8 +210,9 @@ export class NDropComponent implements OnInit, OnChanges {
       }
     }
 
-    this.cursorElements.forEach(e => {
-      const rect: ClientRect = e.originalElement.getBoundingClientRect();
+    this.cursorElements.forEach(elements => {
+      const rect: ClientRect = elements.originalElement.getBoundingClientRect();
+      // Set styles to new created nodes with transition for smooth animation to mouse
       const styles = {
         position: 'fixed',
         left: rect.left + 'px',
@@ -221,21 +220,40 @@ export class NDropComponent implements OnInit, OnChanges {
         width: rect.width + 'px',
         height: rect.height + 'px',
         borderRadius: '6px',
-        transition: '0.1s'
+        border: '1px solid #e8eaed',
+        transition: '0.15s ease-out'
       };
-      Object.assign(e.cloneElement.style, styles);
-      document.body.appendChild(e.cloneElement);
+      Object.assign(elements.cloneElement.style, styles);
+      document.body.appendChild(elements.cloneElement);
     });
   }
 
   private attachCursorClonesToMouse(x: number, y: number) {
-    this.cursorElements.forEach(e => {
-      const styles = {
+    this.cursorElements.forEach(elements => {
+      const styles: any = {
         left: x + 'px',
         top: y + 'px',
       };
-      Object.assign(e.cloneElement.style, styles);
+
+      // If transition is set and element is near the mouse we don't need transition any more
+      if (elements.cloneElement.style.transition === '0.15s ease-out') {
+        const elementCoordinates = elements.cloneElement.getBoundingClientRect();
+
+        if (this.isElementInCursorArea(x, y, elementCoordinates.left, elementCoordinates.top)) {
+          styles.transition = 'unset';
+        }
+      }
+
+      Object.assign(elements.cloneElement.style, styles);
     });
+  }
+
+  private isElementInCursorArea(areaX: number, areaY: number, elementX: number, elementY: number): boolean {
+    const xLeftEdge = areaX - 15;
+    const xRightEdge = areaX + 15;
+    const yLeftEdge = areaY - 15;
+    const yRightEdge = areaY + 15;
+    return elementX > xLeftEdge && elementX < xRightEdge && elementY > yLeftEdge && elementY < yRightEdge;
   }
 
   private onDrop() {

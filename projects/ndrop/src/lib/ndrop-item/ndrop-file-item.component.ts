@@ -11,12 +11,13 @@ export class NdropFileItemComponent extends NdropItemComponent implements OnInit
   public select() {
     this.selectionChange.emit(this.data);
   }
+
   ngOnInit() {
     this.elementRef.nativeElement.classList.add('n-type-file');
     this.parentDropZone.registerFile(this);
   }
 
   ngOnDestroy() {
-    this.parentDropZone.registerFile(this);
+    this.parentDropZone.unregisterFile(this);
   }
 }

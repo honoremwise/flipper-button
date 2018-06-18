@@ -15,7 +15,7 @@ export class AppComponent {
     this.dragFolders = dragAndDropDataService.getFolders().splice(0, 10);
     this.dragFiles = dragAndDropDataService.getFiles().splice(0, 20);
 
-    //Set root folder
+    // Set root folder
     this.activeFolder = undefined;
   }
 
@@ -33,7 +33,7 @@ export class AppComponent {
   }
 
   public goBack(activeFolder) {
-    if (activeFolder.parent_uid === "0") {
+    if (activeFolder.parent_uid === '0') {
       this.activeFolder = undefined;
     } else {
       this.activeFolder = this.dragFolders.find(folder => folder.uid === activeFolder.parent_uid);
