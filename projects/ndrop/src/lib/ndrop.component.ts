@@ -246,7 +246,7 @@ export class NDropComponent implements OnInit, OnChanges {
       }
     }
 
-    this.cursorElements.forEach(elements => {
+    this.cursorElements.forEach((elements, index: number) => {
       const rect: ClientRect = elements.originalElement.getBoundingClientRect();
       // Set styles to new created nodes with transition for smooth animation to mouse
       const styles = {
@@ -256,23 +256,38 @@ export class NDropComponent implements OnInit, OnChanges {
         width: rect.width + 'px',
         height: rect.height + 'px',
         borderRadius: '6px',
+        transformOrigin: 'left',
         border: '1px solid #e8eaed',
-        transition: '0.15s ease-out'
+        transition: 'left 0.15s ease-out, top 0.15s ease-out',
+        boxShadow: 'none'
       };
+
+      // Set box shadow to the top element
+      if (index === this.cursorElements.length - 1) {
+        styles.boxShadow = '0px 0px 3px 1px rgba(0,0,0,.2)';
+      }
+
       Object.assign(elements.cloneElement.style, styles);
       document.body.appendChild(elements.cloneElement);
     });
   }
 
   private attachCursorClonesToMouse(x: number, y: number) {
-    this.cursorElements.forEach(elements => {
+    this.cursorElements.forEach((elements, index: number) => {
       const styles: any = {
-        left: x + 'px',
-        top: y + 'px',
+        transform: 'scale(0.8)',
       };
+      // move last element a bit for styling
+      if (this.cursorElements.length > 1 && index === 0) {
+        styles.left = x - 3 + 'px';
+        styles.top = y - 3 + 'px';
+      } else {
+        styles.left = x + 'px';
+        styles.top = y + 'px';
+      }
 
       // If transition is set and element is near the mouse we don't need transition any more
-      if (elements.cloneElement.style.transition === '0.15s ease-out') {
+      if (elements.cloneElement.style.transition !== 'unset') {
         const elementCoordinates = elements.cloneElement.getBoundingClientRect();
 
         if (this.isElementInArea(x, y, elementCoordinates.left, elementCoordinates.top, 15)) {
@@ -312,25 +327,40 @@ export class NDropComponent implements OnInit, OnChanges {
   private returnCursorClones(): Promise<void> {
     return new Promise(resolve => {
       this.cursorElements.forEach(elements => {
-        const rect: ClientRect = elements.originalElement.getBoundingClientRect();
+        const targetRect: ClientRect = elements.originalElement.getBoundingClientRect();
         // Set styles to new created nodes with transition for smooth animation to mouse
         const styles = {
-          left: rect.left + 'px',
-          top: rect.top + 'px',
-          transition: '0.15s'
+          left: targetRect.left + 'px',
+          top: targetRect.top + 'px',
+          transform: 'scale(1)',
+          boxShadow: 'none',
+          transition: 'left 0.15s, top 0.15s'
         };
 
+        // This is browser issue - sometimes browser triggers it's 'transitioend' callback before transition happening
+        // so we can try to trigger animation one more time
+        let retrigerTransition = false;
+
         const transitionCb = (event: TransitionEvent) => {
-          if (this.areCursorElementReplaced(elements.cloneElement, elements.originalElement)) {
+
+          if (this.areCursorElementReplaced(elements.cloneElement, elements.originalElement) || retrigerTransition) {
+            if (retrigerTransition) {
+              console.log('transitionCb');
+            }
             event.srcElement.removeEventListener(this.transitionEvent, transitionCb);
             document.body.removeChild(event.srcElement);
             this.cursorElements.splice(this.cursorElements.indexOf(elements), 1);
             if (this.cursorElements.length === 0) {
+              if (retrigerTransition) {
+                console.log('resolve');
+              }
               resolve();
             }
           } else {
+            retrigerTransition = true;
             elements.cloneElement.style.top = styles.top;
             elements.cloneElement.style.left = styles.left;
+            console.log('retrigerTransition');
           }
         };
 
