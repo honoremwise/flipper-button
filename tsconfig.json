@@ -20,14 +20,9 @@
       "NDrop": [
         "dist/ndrop"
       ],
+      
       "NDrop/*": [
         "dist/ndrop/*"
-      ],
-      "ContextMenu": [
-        "dist/context-menu"
-      ],
-      "ContextMenu/*": [
-        "dist/context-menu/*"
       ]
     }
   }
