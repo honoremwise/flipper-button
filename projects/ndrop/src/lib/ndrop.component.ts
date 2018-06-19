@@ -318,48 +318,39 @@ export class NDropComponent implements OnInit, OnChanges {
 
     // We need to trigger this only if drop event was't applied, else we need to endDragProcess on data change
     this.returnCursoresAnimationTimer = setTimeout(() => {
-      this.returnCursorClones().then(() => {
-        this.endDragProcess();
-      });
+      this.returnCursorClones();
+      this.endDragProcess();
     });
   }
 
-  private returnCursorClones(): Promise<void> {
-    return new Promise(resolve => {
-      this.cursorElements.forEach(elements => {
-        const targetRect: ClientRect = elements.originalElement.getBoundingClientRect();
-        // Set styles to new created nodes with transition for smooth animation to mouse
-        const styles = {
-          left: targetRect.left + 'px',
-          top: targetRect.top + 'px',
-          transform: 'scale(1)',
-          boxShadow: 'none',
-          transition: 'left 0.15s, top 0.15s'
-        };
+  private returnCursorClones() {
+    // fallback for situations when transitionCb is not triggered - browser issue;
+    const timerId = setTimeout(() => {
+      this.removeCursorClones();
+    }, 500);
+    this.cursorElements.forEach(elements => {
+      const targetRect: ClientRect = elements.originalElement.getBoundingClientRect();
+      // Set styles to new created nodes with transition for smooth animation to mouse
+      const styles = {
+        left: targetRect.left + 'px',
+        top: targetRect.top + 'px',
+        transform: 'scale(1)',
+        boxShadow: 'none',
+        transition: 'left 0.15s, top 0.15s'
+      };
 
-        // This is browser issue - sometimes browser triggers it's 'transitioend' callback before transition happening
-        // so we can try to trigger animation one more time
-        let retrigerTransition = false;
-
-        const transitionCb = (event: TransitionEvent) => {
-
-          if (this.areCursorElementReplaced(elements.cloneElement, elements.originalElement) || retrigerTransition) {
-            event.srcElement.removeEventListener(this.transitionEvent, transitionCb);
-            document.body.removeChild(event.srcElement);
-            this.cursorElements.splice(this.cursorElements.indexOf(elements), 1);
-            if (this.cursorElements.length === 0) {
-              resolve();
-            }
-          } else {
-            retrigerTransition = true;
-            elements.cloneElement.style.top = styles.top;
-            elements.cloneElement.style.left = styles.left;
+      const transitionCb = (event: TransitionEvent) => {
+        if (this.areCursorElementReplaced(elements.cloneElement, elements.originalElement)) {
+          event.srcElement.removeEventListener(this.transitionEvent, transitionCb);
+          document.body.removeChild(event.srcElement);
+          this.cursorElements.splice(this.cursorElements.indexOf(elements), 1);
+          if (this.cursorElements.length === 0) {
+            clearTimeout(timerId);
           }
-        };
-
-        elements.cloneElement.addEventListener(this.transitionEvent, transitionCb, false);
-        Object.assign(elements.cloneElement.style, styles);
-      });
+        }
+      };
+      elements.cloneElement.addEventListener(this.transitionEvent, transitionCb, false);
+      Object.assign(elements.cloneElement.style, styles);
     });
   }
 
@@ -380,10 +371,6 @@ export class NDropComponent implements OnInit, OnChanges {
     this.draggingElement = undefined;
     this.hoveredFolder = undefined;
     this.disabledItems = [];
-    this.cursorElements.forEach(elements => {
-      document.body.removeChild(elements.cloneElement);
-    });
-    this.cursorElements.splice(0, this.cursorElements.length);
     document.removeEventListener('mousemove', this.dragMoveCb);
   }
 
