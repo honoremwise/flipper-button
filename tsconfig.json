@@ -20,6 +20,7 @@
       "NDrop": [
         "dist/ndrop"
       ],
+      
       "NDrop/*": [
         "dist/ndrop/*"
       ],

@@ -9,7 +9,6 @@
 .gu-hide {
   display: none !important;
 }
-
 .gu-unselectable {
   -webkit-user-select: none !important;
   -moz-user-select: none !important;
@@ -21,9 +20,11 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
   filter: alpha(opacity=20);
 }
+
 .n-items-container {
   display: flex;
   flex-wrap: wrap;
+  border: 1px solid blue;
 }
 #bound{
   width: 100%;
