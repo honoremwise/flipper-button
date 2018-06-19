@@ -16,6 +16,9 @@ import {NdropFileItemComponent} from './ndrop-item/ndrop-file-item.component';
 })
 export class NDropComponent implements OnInit, OnChanges {
 
+  public static FoldersCounterClass: string = 'n-folders-counter';
+  public static TypeFolderClass: string = 'n-type-folder';
+
   @Input() folders: any[];
   @Input() files: any[];
   @Input() activeFolder: any;
@@ -49,9 +52,11 @@ export class NDropComponent implements OnInit, OnChanges {
   private filesComponents: NdropItemComponent[] = [];
   private ctrlBtnCode = NDropComponent.isMacintosh() ? 91 : 17;
   private ctrlBtnPressed: boolean = false;
+  private shiftBtnPressed: boolean = false;
   private cursorElements: Array<{ originalElement: HTMLElement, cloneElement: HTMLElement }> = [];
   private transitionEvent: string = NDropComponent.whichTransitionEvent();
-  private returnCursoresAnimationTimer: any;
+  private returnCursorsAnimationTimer: any;
+  private lastSelectedItem: any;
 
   public static isMacintosh() {
     return navigator.platform.indexOf('Mac') > -1;
@@ -107,9 +112,9 @@ export class NDropComponent implements OnInit, OnChanges {
     if (changes.folders || changes.files || changes.activeFolder) {
       this.selectItemsInLevel(this.activeFolder);
       this.deselectItems();
-      if (this.returnCursoresAnimationTimer) {
-        clearTimeout(this.returnCursoresAnimationTimer);
-        this.returnCursoresAnimationTimer = undefined;
+      if (this.returnCursorsAnimationTimer) {
+        clearTimeout(this.returnCursorsAnimationTimer);
+        this.returnCursorsAnimationTimer = undefined;
         this.removeCursorClones();
         this.endDragProcess();
       }
@@ -137,11 +142,31 @@ export class NDropComponent implements OnInit, OnChanges {
     if (index === -1) {
       if (this.ctrlBtnPressed) {
         this.selectedItems.push(item);
+        this.lastSelectedItem = item;
+      } else if (this.shiftBtnPressed) {
+        const items = this.levelFolders.concat(this.levelFiles);
+        const lastSelectedIndex = items.indexOf(this.lastSelectedItem);
+        const selectedIndex = items.indexOf(item);
+        if (lastSelectedIndex < selectedIndex) {
+          this.selectedItems = items.slice(lastSelectedIndex, selectedIndex + 1);
+        } else {
+          this.selectedItems = items.slice(selectedIndex, lastSelectedIndex + 1);
+        }
       } else {
         this.selectedItems.splice(0, this.selectedItems.length, item);
+        this.lastSelectedItem = item;
       }
     } else if (this.selectedItems.length > 0) {
-      this.selectedItems.splice(this.selectedItems.indexOf(index), 1);
+
+      if (this.shiftBtnPressed) {
+        this.selectedItems.splice(0, this.selectedItems.length);
+        this.lastSelectedItem = undefined;
+      } else {
+        this.selectedItems.splice(index, 1);
+        if (item === this.lastSelectedItem) {
+          this.lastSelectedItem = this.selectedItems[this.selectedItems.length - 1];
+        }
+      }
     }
   }
 
@@ -154,13 +179,20 @@ export class NDropComponent implements OnInit, OnChanges {
   }
 
   private onKeyDown(event: MouseEvent) {
+    console.log('onKeyDown');
     if (event.which === this.ctrlBtnCode) {
       this.ctrlBtnPressed = true;
+    }
+
+    if (event.which === 16) {
+      this.shiftBtnPressed = true;
     }
   }
 
   private onKeyUp() {
+    console.log('onKeyUp');
     this.ctrlBtnPressed = false;
+    this.shiftBtnPressed = false;
   }
 
   private onMouseUp() {
@@ -190,7 +222,7 @@ export class NDropComponent implements OnInit, OnChanges {
 
   private onDragStart(value) {
     this.draggingElement = value[1];
-    const draggingElementComponents = this.draggingElement.classList.contains('n-type-folder') ?
+    const draggingElementComponents = this.draggingElement.classList.contains(NDropComponent.TypeFolderClass) ?
       this.foldersComponents : this.filesComponents;
     const draggedData = this.getDataFromElement(draggingElementComponents, this.draggingElement);
     if (this.selectedItems.indexOf(draggedData) === -1) {
@@ -207,7 +239,7 @@ export class NDropComponent implements OnInit, OnChanges {
     for (let i = 0; i < targetElements.length; i++) {
       element = targetElements[i];
       if (element !== this.draggingElement &&
-        element.classList.contains('n-type-folder') &&
+        element.classList.contains(NDropComponent.TypeFolderClass) &&
         !element.classList.contains('gu-mirror')) {
         dragTarget = <HTMLElement>targetElements[i];
         break;
@@ -265,11 +297,44 @@ export class NDropComponent implements OnInit, OnChanges {
       // Set box shadow to the top element
       if (index === this.cursorElements.length - 1) {
         styles.boxShadow = '0px 0px 3px 1px rgba(0,0,0,.2)';
+
+        // if there is multiple elements selected append folders counter
+        if (this.cursorElements.length > 1) {
+          const foldersCounter = this.createFolderCounter();
+          elements.cloneElement.appendChild(foldersCounter);
+          setTimeout(() => {
+            foldersCounter.style.opacity = '1';
+          });
+        }
       }
 
       Object.assign(elements.cloneElement.style, styles);
       document.body.appendChild(elements.cloneElement);
     });
+  }
+
+  private createFolderCounter(): HTMLElement {
+    const counter = document.createElement('SPAN');
+    const styles = {
+      position: 'absolute',
+      right: '-14px',
+      top: '-14px',
+      background: '#d64228',
+      width: '28px',
+      height: '28px',
+      borderRadius: '50%',
+      display: 'flex',
+      color: 'wheat',
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontSize: '18px',
+      opacity: '0',
+      transition: '0.5s'
+    };
+    Object.assign(counter.style, styles);
+    counter.classList.add(NDropComponent.FoldersCounterClass);
+    counter.innerText = this.selectedItems.length + '';
+    return counter;
   }
 
   private attachCursorClonesToMouse(x: number, y: number) {
@@ -317,7 +382,7 @@ export class NDropComponent implements OnInit, OnChanges {
     }
 
     // We need to trigger this only if drop event was't applied, else we need to endDragProcess on data change
-    this.returnCursoresAnimationTimer = setTimeout(() => {
+    this.returnCursorsAnimationTimer = setTimeout(() => {
       this.returnCursorClones();
       this.endDragProcess();
     });
@@ -328,7 +393,7 @@ export class NDropComponent implements OnInit, OnChanges {
     const timerId = setTimeout(() => {
       this.removeCursorClones();
     }, 500);
-    this.cursorElements.forEach(elements => {
+    this.cursorElements.forEach((elements, index) => {
       const targetRect: ClientRect = elements.originalElement.getBoundingClientRect();
       // Set styles to new created nodes with transition for smooth animation to mouse
       const styles = {
@@ -351,6 +416,12 @@ export class NDropComponent implements OnInit, OnChanges {
       };
       elements.cloneElement.addEventListener(this.transitionEvent, transitionCb, false);
       Object.assign(elements.cloneElement.style, styles);
+
+      // if there is multiple elements selected hide folders counter
+      if (this.cursorElements.length > 1 && index === this.cursorElements.length - 1) {
+        const foldersCounter = <HTMLElement>elements.cloneElement.querySelector('.' + NDropComponent.FoldersCounterClass);
+        foldersCounter.style.display = 'none';
+      }
     });
   }
 
