@@ -344,23 +344,16 @@ export class NDropComponent implements OnInit, OnChanges {
         const transitionCb = (event: TransitionEvent) => {
 
           if (this.areCursorElementReplaced(elements.cloneElement, elements.originalElement) || retrigerTransition) {
-            if (retrigerTransition) {
-              console.log('transitionCb');
-            }
             event.srcElement.removeEventListener(this.transitionEvent, transitionCb);
             document.body.removeChild(event.srcElement);
             this.cursorElements.splice(this.cursorElements.indexOf(elements), 1);
             if (this.cursorElements.length === 0) {
-              if (retrigerTransition) {
-                console.log('resolve');
-              }
               resolve();
             }
           } else {
             retrigerTransition = true;
             elements.cloneElement.style.top = styles.top;
             elements.cloneElement.style.left = styles.left;
-            console.log('retrigerTransition');
           }
         };
 
