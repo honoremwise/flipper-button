@@ -10,17 +10,9 @@ export class NdropFolderItemComponent extends NdropItemComponent implements OnIn
   @Output() goToItem = new EventEmitter<any>();
   @Input() hover: boolean;
 
-  public select() {
-    this.selectionChange.emit(this.data);
-  }
-
   ngOnInit() {
+    super.ngOnInit();
     this.elementRef.nativeElement.classList.add('n-type-folder');
-    this.parentDropZone.registerFolder(this);
-  }
-
-  ngOnDestroy() {
-    this.parentDropZone.unregisterFolder(this);
   }
 
   public itemDoubleClick() {

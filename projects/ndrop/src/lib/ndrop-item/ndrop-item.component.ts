@@ -18,9 +18,11 @@ export class NdropItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.parentDropZone.registerItemComponent(this);
   }
 
   ngOnDestroy() {
+    this.parentDropZone.unregisterItemComponent(this);
   }
 
   public select() {
