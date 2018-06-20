@@ -8,16 +8,8 @@ import {NdropItemComponent} from './ndrop-item.component';
 })
 export class NdropFileItemComponent extends NdropItemComponent implements OnInit, OnDestroy {
 
-  public select() {
-    this.selectionChange.emit(this.data);
-  }
-
   ngOnInit() {
+    super.ngOnInit();
     this.elementRef.nativeElement.classList.add('n-type-file');
-    this.parentDropZone.registerFile(this);
-  }
-
-  ngOnDestroy() {
-    this.parentDropZone.unregisterFile(this);
   }
 }
