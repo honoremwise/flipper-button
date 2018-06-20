@@ -2,7 +2,6 @@ import {
   Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges
 } from '@angular/core';
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
-import {NdropItemComponent} from './ndrop-item/ndrop-item.component';
 import {NdropFolderItemComponent} from './ndrop-item/ndrop-folder-item.component';
 import {NdropFileItemComponent} from './ndrop-item/ndrop-file-item.component';
 
@@ -18,6 +17,8 @@ export class NDropComponent implements OnInit, OnChanges {
 
   public static FoldersCounterClass: string = 'n-folders-counter';
   public static TypeFolderClass: string = 'n-type-folder';
+  public static TypeCursorClass: string = 'n-cursor-block';
+  public static ItemNameActiveStateClass: string = 'n-name-active';
 
   @Input() folders: any[];
   @Input() files: any[];
@@ -35,6 +36,7 @@ export class NDropComponent implements OnInit, OnChanges {
 
   public levelFolders: any[];
   public levelFiles: any[];
+  public levelItems: Map<any, number> = new Map(); // hash map for quick search
   public selectedItems: any[] = [];
   public disabledItems: any[] = [];
   public hoveredFolder: any;
@@ -48,8 +50,7 @@ export class NDropComponent implements OnInit, OnChanges {
   private keyDownCb: (event: MouseEvent) => void;
   private keyUpCb: (event: MouseEvent) => void;
   private mouseupCb: (event: MouseEvent) => void;
-  private foldersComponents: NdropItemComponent[] = [];
-  private filesComponents: NdropItemComponent[] = [];
+  private dragItemsDataMap: Map<HTMLElement, any> = new Map();
   private ctrlBtnCode = NDropComponent.isMacintosh() ? 91 : 17;
   private ctrlBtnPressed: boolean = false;
   private shiftBtnPressed: boolean = false;
@@ -122,28 +123,31 @@ export class NDropComponent implements OnInit, OnChanges {
   }
 
   public registerFolder(folder: NdropFolderItemComponent) {
-    this.foldersComponents.push(folder);
-  }
-
-  public registerFile(file: NdropFileItemComponent) {
-    this.filesComponents.push(file);
+    this.dragItemsDataMap.set(folder.elementRef.nativeElement, folder.data);
   }
 
   public unregisterFolder(folder: NdropFolderItemComponent) {
-    this.foldersComponents.splice(this.foldersComponents.indexOf(folder), 1);
+    this.dragItemsDataMap.delete(folder.elementRef.nativeElement);
+  }
+
+  // Left registration separation for future use
+  public registerFile(file: NdropFileItemComponent) {
+    this.dragItemsDataMap.set(file.elementRef.nativeElement, file.data);
   }
 
   public unregisterFile(file: NdropFileItemComponent) {
-    this.filesComponents.splice(this.filesComponents.indexOf(file), 1);
+    this.dragItemsDataMap.delete(file.elementRef.nativeElement);
   }
 
   public itemSelection(item) {
     const index = this.selectedItems.indexOf(item);
     if (index === -1) {
       if (this.ctrlBtnPressed) {
+        // ctrl selection
         this.selectedItems.push(item);
         this.lastSelectedItem = item;
       } else if (this.shiftBtnPressed) {
+        // shift selection
         const items = this.levelFolders.concat(this.levelFiles);
         const lastSelectedIndex = items.indexOf(this.lastSelectedItem);
         const selectedIndex = items.indexOf(item);
@@ -153,11 +157,12 @@ export class NDropComponent implements OnInit, OnChanges {
           this.selectedItems = items.slice(selectedIndex, lastSelectedIndex + 1);
         }
       } else {
+        // simple selection
         this.selectedItems.splice(0, this.selectedItems.length, item);
         this.lastSelectedItem = item;
       }
     } else if (this.selectedItems.length > 0) {
-
+      // deselection
       if (this.shiftBtnPressed) {
         this.selectedItems.splice(0, this.selectedItems.length);
         this.lastSelectedItem = undefined;
@@ -179,7 +184,6 @@ export class NDropComponent implements OnInit, OnChanges {
   }
 
   private onKeyDown(event: MouseEvent) {
-    console.log('onKeyDown');
     if (event.which === this.ctrlBtnCode) {
       this.ctrlBtnPressed = true;
     }
@@ -190,7 +194,6 @@ export class NDropComponent implements OnInit, OnChanges {
   }
 
   private onKeyUp() {
-    console.log('onKeyUp');
     this.ctrlBtnPressed = false;
     this.shiftBtnPressed = false;
   }
@@ -205,12 +208,8 @@ export class NDropComponent implements OnInit, OnChanges {
     this.selectedItems.splice(0, this.selectedItems.length);
   }
 
-  private getDataFromElement(componentsList: NdropItemComponent[], element: HTMLElement) {
-    for (let i = 0; i < componentsList.length; i++) {
-      if (componentsList[i].elementRef.nativeElement === element) {
-        return componentsList[i].data;
-      }
-    }
+  private getDataFromElement(element: HTMLElement) {
+    return this.dragItemsDataMap.get(element);
   }
 
   private selectItemsInLevel(activeFolder: any) {
@@ -218,13 +217,18 @@ export class NDropComponent implements OnInit, OnChanges {
     const activeFolderId = activeFolder ? activeFolder[this.idField] : '0';
     this.levelFolders = this.folders.filter(folder => folder[this.parentIdField] === activeFolderId);
     this.levelFiles = this.files.filter(file => file[this.parentIdField] === activeFolderId);
+    this.levelItems.clear();
+    const fillLevelItems = (item, index) => {
+      this.levelItems.set(item, index);
+    };
+    this.levelFolders.forEach(fillLevelItems);
+    this.levelFiles.forEach(fillLevelItems);
   }
 
   private onDragStart(value) {
     this.draggingElement = value[1];
-    const draggingElementComponents = this.draggingElement.classList.contains(NDropComponent.TypeFolderClass) ?
-      this.foldersComponents : this.filesComponents;
-    const draggedData = this.getDataFromElement(draggingElementComponents, this.draggingElement);
+    const draggedData = this.getDataFromElement(this.draggingElement);
+    // if drag started from element that wasn't selected, select only that element then
     if (this.selectedItems.indexOf(draggedData) === -1) {
       this.selectedItems.splice(0, this.selectedItems.length, draggedData);
     }
@@ -248,7 +252,10 @@ export class NDropComponent implements OnInit, OnChanges {
 
     if (dragTarget && dragTarget !== this.dragTarget) {
       this.dragTarget = dragTarget;
-      this.hoveredFolder = this.getDataFromElement(this.foldersComponents, this.dragTarget);
+      const hoveredFolder = this.getDataFromElement(this.dragTarget);
+      if (this.selectedItems.indexOf(hoveredFolder) === -1) {
+        this.hoveredFolder = hoveredFolder;
+      }
     } else if (!dragTarget && this.dragTarget) {
       this.hoveredFolder = undefined;
       this.dragTarget = undefined;
@@ -259,24 +266,17 @@ export class NDropComponent implements OnInit, OnChanges {
   }
 
   private createCursorClones() {
-    const selected = this.selectedItems.slice();
-    const items = this.foldersComponents.concat(this.filesComponents);
-
-    for (let i = 0; i < items.length; i++) {
-      if (selected.indexOf(items[i].data) !== -1) {
-        const cursorElement = items[i].elementRef.nativeElement.querySelector('.n-cursor-block');
-        const clone = cursorElement.cloneNode(true);
-        clone.classList.add('n-name-active');
+    this.dragItemsDataMap.forEach( (data, element) => {
+      if (this.selectedItems.indexOf(data) !== -1) {
+        const cursorElement = <HTMLElement>element.querySelector('.' + NDropComponent.TypeCursorClass);
+        const clone = <HTMLElement>cursorElement.cloneNode(true);
+        clone.classList.add(NDropComponent.ItemNameActiveStateClass);
         this.cursorElements.push({
           originalElement: cursorElement,
           cloneElement: clone
         });
-        selected.splice(selected.indexOf(items[i].data), 1);
       }
-      if (selected.length === 0) {
-        break;
-      }
-    }
+    });
 
     this.cursorElements.forEach((elements, index: number) => {
       const rect: ClientRect = elements.originalElement.getBoundingClientRect();
@@ -374,10 +374,13 @@ export class NDropComponent implements OnInit, OnChanges {
 
   private onDrop() {
     if (this.dragTarget) {
-      this.drop.emit({
-        items: this.selectedItems,
-        target: this.getDataFromElement(this.foldersComponents, this.dragTarget)
-      });
+      const targetData = this.getDataFromElement(this.dragTarget);
+      if (this.selectedItems.indexOf(targetData) === -1) {
+        this.drop.emit({
+          items: this.selectedItems,
+          target: targetData
+        });
+      }
       this.dragTarget = undefined;
     }
 
