@@ -3,8 +3,6 @@ import {
 } from '@angular/core';
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
 import {NdropItemComponent} from './ndrop-item/ndrop-item.component';
-import {NdropFolderItemComponent} from './ndrop-item/ndrop-folder-item.component';
-import {NdropFileItemComponent} from './ndrop-item/ndrop-file-item.component';
 
 @Component({
   selector: 'N-NDrop',
@@ -18,6 +16,8 @@ export class NDropComponent implements OnInit, OnChanges {
 
   public static FoldersCounterClass: string = 'n-folders-counter';
   public static TypeFolderClass: string = 'n-type-folder';
+  public static TypeCursorClass: string = 'n-cursor-block';
+  public static ItemNameActiveStateClass: string = 'n-name-active';
 
   @Input() folders: any[];
   @Input() files: any[];
@@ -48,8 +48,8 @@ export class NDropComponent implements OnInit, OnChanges {
   private keyDownCb: (event: MouseEvent) => void;
   private keyUpCb: (event: MouseEvent) => void;
   private mouseupCb: (event: MouseEvent) => void;
-  private foldersComponents: NdropItemComponent[] = [];
-  private filesComponents: NdropItemComponent[] = [];
+  private elementToDataReferenceMap: Map<HTMLElement, any> = new Map();
+  private dataToElementReferenceMap: Map<any, HTMLElement> = new Map();
   private ctrlBtnCode = NDropComponent.isMacintosh() ? 91 : 17;
   private ctrlBtnPressed: boolean = false;
   private shiftBtnPressed: boolean = false;
@@ -121,29 +121,25 @@ export class NDropComponent implements OnInit, OnChanges {
     }
   }
 
-  public registerFolder(folder: NdropFolderItemComponent) {
-    this.foldersComponents.push(folder);
+  public registerItemComponent(item: NdropItemComponent) {
+    this.elementToDataReferenceMap.set(item.elementRef.nativeElement, item.data);
+    this.dataToElementReferenceMap.set(item.data, item.elementRef.nativeElement);
   }
 
-  public registerFile(file: NdropFileItemComponent) {
-    this.filesComponents.push(file);
-  }
-
-  public unregisterFolder(folder: NdropFolderItemComponent) {
-    this.foldersComponents.splice(this.foldersComponents.indexOf(folder), 1);
-  }
-
-  public unregisterFile(file: NdropFileItemComponent) {
-    this.filesComponents.splice(this.filesComponents.indexOf(file), 1);
+  public unregisterItemComponent(item: NdropItemComponent) {
+    this.elementToDataReferenceMap.delete(item.elementRef.nativeElement);
+    this.dataToElementReferenceMap.delete(item.data);
   }
 
   public itemSelection(item) {
     const index = this.selectedItems.indexOf(item);
     if (index === -1) {
       if (this.ctrlBtnPressed) {
+        // ctrl selection
         this.selectedItems.push(item);
         this.lastSelectedItem = item;
       } else if (this.shiftBtnPressed) {
+        // shift selection
         const items = this.levelFolders.concat(this.levelFiles);
         const lastSelectedIndex = items.indexOf(this.lastSelectedItem);
         const selectedIndex = items.indexOf(item);
@@ -153,19 +149,23 @@ export class NDropComponent implements OnInit, OnChanges {
           this.selectedItems = items.slice(selectedIndex, lastSelectedIndex + 1);
         }
       } else {
+        // simple selection
         this.selectedItems.splice(0, this.selectedItems.length, item);
         this.lastSelectedItem = item;
       }
     } else if (this.selectedItems.length > 0) {
-
+      // deselection
       if (this.shiftBtnPressed) {
         this.selectedItems.splice(0, this.selectedItems.length);
         this.lastSelectedItem = undefined;
-      } else {
+      } else if (this.ctrlBtnPressed) {
         this.selectedItems.splice(index, 1);
         if (item === this.lastSelectedItem) {
           this.lastSelectedItem = this.selectedItems[this.selectedItems.length - 1];
         }
+      } else {
+        this.selectedItems.splice(0, this.selectedItems.length, item);
+        this.lastSelectedItem = item;
       }
     }
   }
@@ -179,7 +179,6 @@ export class NDropComponent implements OnInit, OnChanges {
   }
 
   private onKeyDown(event: MouseEvent) {
-    console.log('onKeyDown');
     if (event.which === this.ctrlBtnCode) {
       this.ctrlBtnPressed = true;
     }
@@ -190,7 +189,6 @@ export class NDropComponent implements OnInit, OnChanges {
   }
 
   private onKeyUp() {
-    console.log('onKeyUp');
     this.ctrlBtnPressed = false;
     this.shiftBtnPressed = false;
   }
@@ -205,12 +203,8 @@ export class NDropComponent implements OnInit, OnChanges {
     this.selectedItems.splice(0, this.selectedItems.length);
   }
 
-  private getDataFromElement(componentsList: NdropItemComponent[], element: HTMLElement) {
-    for (let i = 0; i < componentsList.length; i++) {
-      if (componentsList[i].elementRef.nativeElement === element) {
-        return componentsList[i].data;
-      }
-    }
+  private getDataFromElement(element: HTMLElement) {
+    return this.elementToDataReferenceMap.get(element);
   }
 
   private selectItemsInLevel(activeFolder: any) {
@@ -222,9 +216,8 @@ export class NDropComponent implements OnInit, OnChanges {
 
   private onDragStart(value) {
     this.draggingElement = value[1];
-    const draggingElementComponents = this.draggingElement.classList.contains(NDropComponent.TypeFolderClass) ?
-      this.foldersComponents : this.filesComponents;
-    const draggedData = this.getDataFromElement(draggingElementComponents, this.draggingElement);
+    const draggedData = this.getDataFromElement(this.draggingElement);
+    // if drag started from element that wasn't selected, select only that element then
     if (this.selectedItems.indexOf(draggedData) === -1) {
       this.selectedItems.splice(0, this.selectedItems.length, draggedData);
     }
@@ -248,7 +241,10 @@ export class NDropComponent implements OnInit, OnChanges {
 
     if (dragTarget && dragTarget !== this.dragTarget) {
       this.dragTarget = dragTarget;
-      this.hoveredFolder = this.getDataFromElement(this.foldersComponents, this.dragTarget);
+      const hoveredFolder = this.getDataFromElement(this.dragTarget);
+      if (this.selectedItems.indexOf(hoveredFolder) === -1) {
+        this.hoveredFolder = hoveredFolder;
+      }
     } else if (!dragTarget && this.dragTarget) {
       this.hoveredFolder = undefined;
       this.dragTarget = undefined;
@@ -259,27 +255,14 @@ export class NDropComponent implements OnInit, OnChanges {
   }
 
   private createCursorClones() {
-    const selected = this.selectedItems.slice();
-    const items = this.foldersComponents.concat(this.filesComponents);
 
-    for (let i = 0; i < items.length; i++) {
-      if (selected.indexOf(items[i].data) !== -1) {
-        const cursorElement = items[i].elementRef.nativeElement.querySelector('.n-cursor-block');
-        const clone = cursorElement.cloneNode(true);
-        clone.classList.add('n-name-active');
-        this.cursorElements.push({
-          originalElement: cursorElement,
-          cloneElement: clone
-        });
-        selected.splice(selected.indexOf(items[i].data), 1);
-      }
-      if (selected.length === 0) {
-        break;
-      }
-    }
+    this.selectedItems.forEach((data, index) => {
+      const selectedElement = this.dataToElementReferenceMap.get(data);
+      const cursorElement = <HTMLElement>selectedElement.querySelector('.' + NDropComponent.TypeCursorClass);
+      const cloneElement = <HTMLElement>cursorElement.cloneNode(true);
+      cloneElement.classList.add(NDropComponent.ItemNameActiveStateClass);
 
-    this.cursorElements.forEach((elements, index: number) => {
-      const rect: ClientRect = elements.originalElement.getBoundingClientRect();
+      const rect: ClientRect = cursorElement.getBoundingClientRect();
       // Set styles to new created nodes with transition for smooth animation to mouse
       const styles = {
         position: 'fixed',
@@ -295,21 +278,26 @@ export class NDropComponent implements OnInit, OnChanges {
       };
 
       // Set box shadow to the top element
-      if (index === this.cursorElements.length - 1) {
+      if (index === this.selectedItems.length - 1) {
         styles.boxShadow = '0px 0px 3px 1px rgba(0,0,0,.2)';
 
         // if there is multiple elements selected append folders counter
-        if (this.cursorElements.length > 1) {
+        if (this.selectedItems.length > 1) {
           const foldersCounter = this.createFolderCounter();
-          elements.cloneElement.appendChild(foldersCounter);
+          cloneElement.appendChild(foldersCounter);
           setTimeout(() => {
             foldersCounter.style.opacity = '1';
           });
         }
       }
 
-      Object.assign(elements.cloneElement.style, styles);
-      document.body.appendChild(elements.cloneElement);
+      Object.assign(cloneElement.style, styles);
+      document.body.appendChild(cloneElement);
+
+      this.cursorElements.push({
+        originalElement: cursorElement,
+        cloneElement: cloneElement
+      });
     });
   }
 
@@ -374,10 +362,13 @@ export class NDropComponent implements OnInit, OnChanges {
 
   private onDrop() {
     if (this.dragTarget) {
-      this.drop.emit({
-        items: this.selectedItems,
-        target: this.getDataFromElement(this.foldersComponents, this.dragTarget)
-      });
+      const targetData = this.getDataFromElement(this.dragTarget);
+      if (this.selectedItems.indexOf(targetData) === -1) {
+        this.drop.emit({
+          items: this.selectedItems,
+          target: targetData
+        });
+      }
       this.dragTarget = undefined;
     }
 
