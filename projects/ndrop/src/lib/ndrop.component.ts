@@ -1,5 +1,5 @@
 import {
-  Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges
+  Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy
 } from '@angular/core';
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
 import {NdropItemComponent} from './ndrop-item/ndrop-item.component';
@@ -12,7 +12,7 @@ import {NdropItemComponent} from './ndrop-item/ndrop-item.component';
   ],
   viewProviders: [DragulaService]
 })
-export class NDropComponent implements OnInit, OnChanges {
+export class NDropComponent implements OnInit, OnChanges, OnDestroy {
 
   public static FoldersCounterClass: string = 'n-folders-counter';
   public static TypeFolderClass: string = 'n-type-folder';
@@ -48,18 +48,24 @@ export class NDropComponent implements OnInit, OnChanges {
   private keyDownCb: (event: MouseEvent) => void;
   private keyUpCb: (event: MouseEvent) => void;
   private mouseupCb: (event: MouseEvent) => void;
+  private mousedownCb: (event: MouseEvent) => void;
   private elementToDataReferenceMap: Map<HTMLElement, any> = new Map();
   private dataToElementReferenceMap: Map<any, HTMLElement> = new Map();
-  private ctrlBtnCode = NDropComponent.isMacintosh() ? 91 : 17;
+  private ctrlBtnCode: number = NDropComponent.isMacintosh() ? 91 : 17;
   private ctrlBtnPressed: boolean = false;
   private shiftBtnPressed: boolean = false;
   private cursorElements: Array<{ originalElement: HTMLElement, cloneElement: HTMLElement }> = [];
   private transitionEvent: string = NDropComponent.whichTransitionEvent();
   private returnCursorsAnimationTimer: any;
   private lastSelectedItem: any;
+  private mouseDown: boolean = false;
 
   public static isMacintosh() {
     return navigator.platform.indexOf('Mac') > -1;
+  }
+
+  public static isFirefox(): boolean {
+    return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
   }
 
   public static whichTransitionEvent(): string {
@@ -79,33 +85,46 @@ export class NDropComponent implements OnInit, OnChanges {
     }
   }
 
-
   constructor(private dragulaService: DragulaService) {
     this.dragMoveCb = this.onDragMove.bind(this);
     this.keyDownCb = this.onKeyDown.bind(this);
     this.keyUpCb = this.onKeyUp.bind(this);
     this.mouseupCb = this.onMouseUp.bind(this);
+    this.mousedownCb = this.onMouseDown.bind(this);
 
     dragulaService.drag.subscribe((value) => {
-      this.onDragStart(value);
+      if (this.mouseDown === true) {
+        this.onDragStart(value);
+      }
     });
     dragulaService.drop.subscribe((value) => {
       this.onDrop();
     });
-    // dragulaService.over.subscribe((value) => {
-    //   this.onOver(value.slice(1));
-    // });
-    // dragulaService.out.subscribe((value) => {
-    //   console.log(`out: ${value[0]}`);
-    //   this.onOut(value.slice(1));
-    // });
+
+    if (NDropComponent.isMacintosh()) {
+      if (NDropComponent.isFirefox()) {
+        this.ctrlBtnCode = 224;
+      } else {
+        this.ctrlBtnCode = 91;
+      }
+    } else {
+      this.ctrlBtnCode = 17;
+    }
 
     document.addEventListener('keydown', this.keyDownCb);
     document.addEventListener('keyup', this.keyUpCb);
     document.addEventListener('mouseup', this.mouseupCb);
+    document.addEventListener('mousedown', this.mousedownCb);
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    document.removeEventListener('keydown', this.keyDownCb);
+    document.removeEventListener('keyup', this.keyUpCb);
+    document.removeEventListener('mouseup', this.mouseupCb);
+    document.removeEventListener('mousedown', this.mousedownCb);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -132,6 +151,7 @@ export class NDropComponent implements OnInit, OnChanges {
   }
 
   public itemSelection(item) {
+    this.mouseDown = false;
     const index = this.selectedItems.indexOf(item);
     if (index === -1) {
       if (this.ctrlBtnPressed) {
@@ -193,10 +213,25 @@ export class NDropComponent implements OnInit, OnChanges {
     this.shiftBtnPressed = false;
   }
 
-  private onMouseUp() {
-    if (!this.draggingElement) {
+  private onMouseDown() {
+    this.mouseDown = true;
+  }
+
+  private onMouseUp(event: MouseEvent) {
+    const targetElements = document.elementsFromPoint(event.pageX, event.pageY);
+    let clickedOnElement;
+    for (let i = 0; i < targetElements.length; i++) {
+      clickedOnElement = this.elementToDataReferenceMap.has(<HTMLElement>targetElements[i]);
+      if (clickedOnElement) {
+        break;
+      }
+    }
+
+    if (!clickedOnElement) {
       this.deselectItems();
     }
+
+    this.mouseDown = false;
   }
 
   private deselectItems() {
@@ -397,8 +432,8 @@ export class NDropComponent implements OnInit, OnChanges {
 
       const transitionCb = (event: TransitionEvent) => {
         if (this.areCursorElementReplaced(elements.cloneElement, elements.originalElement)) {
-          event.srcElement.removeEventListener(this.transitionEvent, transitionCb);
-          document.body.removeChild(event.srcElement);
+          elements.cloneElement.removeEventListener(this.transitionEvent, transitionCb);
+          document.body.removeChild(elements.cloneElement);
           this.cursorElements.splice(this.cursorElements.indexOf(elements), 1);
           if (this.cursorElements.length === 0) {
             clearTimeout(timerId);
@@ -435,14 +470,4 @@ export class NDropComponent implements OnInit, OnChanges {
     this.disabledItems = [];
     document.removeEventListener('mousemove', this.dragMoveCb);
   }
-
-  // private onOver(args) {
-  //   let [e, el, container] = args;
-  //   // do something
-  // }
-  //
-  // private onOut(args) {
-  //   let [e, el, container] = args;
-  //   // do something
-  // }
 }
