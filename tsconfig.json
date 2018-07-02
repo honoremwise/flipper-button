@@ -20,7 +20,6 @@
       "NDrop": [
         "dist/ndrop"
       ],
-      
       "NDrop/*": [
         "dist/ndrop/*"
       ],
@@ -30,11 +29,11 @@
       "ContextMenu/*": [
         "dist/context-menu/*"
       ],
-      "Chips": [
-        "dist/chips"
+      "NChips": [
+        "dist/nchips"
       ],
-      "Chips/*": [
-        "dist/chips/*"
+      "NChips/*": [
+        "dist/nchips/*"
       ]
     }
   }

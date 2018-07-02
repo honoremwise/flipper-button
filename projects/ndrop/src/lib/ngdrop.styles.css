@@ -24,7 +24,7 @@
 .n-items-container {
   display: flex;
   flex-wrap: wrap;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 #bound{
   width: 100%;

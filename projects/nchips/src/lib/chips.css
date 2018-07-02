@@ -9,7 +9,9 @@
     border-radius: 50%;
     border: dodgerblue;
 }
-
+.border-extra{
+    border: dodgerblue;
+}
 .btn-circle i {
     font-size: 18px;
     position: relative;
@@ -43,7 +45,7 @@
 
 .button-position {
     top: 14%;
-    left: 30%;
+    left: 36%;
     padding: 0px;
     position: fixed;
     margin: 0px;

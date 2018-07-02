@@ -42,3 +42,13 @@ span{
   color:  rgba(0, 0, 0, 0.72);
   font-weight: 400;
 }
+
+.image-fit{
+  height:150px;width: 250px; object-fit: cover;
+  object-position: center center;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: pixelated;
+}

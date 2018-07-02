@@ -1,3 +1,6 @@
+
+<A-NChips [selectedFile]="activeFile"></A-NChips>
+
 <N-NDrop
   [files]="dragFiles"
   [folders]="dragFolders"
@@ -5,5 +8,6 @@
   (drop)="onDrop($event)"
   (goToFolder)="goToFolder($event)"
   (goBack)="goBack($event)"
+  (didClick)="didCLick($event)"
 >
 </N-NDrop>
