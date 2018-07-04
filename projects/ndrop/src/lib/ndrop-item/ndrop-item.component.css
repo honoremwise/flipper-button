@@ -43,8 +43,8 @@ span{
   font-weight: 400;
 }
 .image-container{
-  max-width: 140px;
-  min-width: 140px;
+  /* max-width: 140px;
+  min-width: 140px; */
 }
 .image-fit{
   height:150px;width: 250px; object-fit: cover;

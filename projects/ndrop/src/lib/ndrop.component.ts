@@ -1,5 +1,5 @@
 import {
-    Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy
+    Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy, DoCheck, ChangeDetectorRef
 } from '@angular/core';
 import {DragulaService} from 'ng2-dragula/ng2-dragula';
 import {NdropItemComponent} from './ndrop-item/ndrop-item.component';
@@ -12,7 +12,8 @@ import {NdropItemComponent} from './ndrop-item/ndrop-item.component';
     ],
     viewProviders: [DragulaService]
 })
-export class NDropComponent implements OnInit, OnChanges, OnDestroy {
+export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
+    
 
     public static FoldersCounterClass: string = 'n-folders-counter';
     public static TypeFolderClass: string = 'n-type-folder';
@@ -86,7 +87,7 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    constructor(private dragulaService: DragulaService) {
+    constructor(private dragulaService: DragulaService,private cd: ChangeDetectorRef) {
         this.dragMoveCb = this.onDragMove.bind(this);
         this.keyDownCb = this.onKeyDown.bind(this);
         this.keyUpCb = this.onKeyUp.bind(this);
@@ -473,5 +474,11 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy {
         this.hoveredFolder = undefined;
         this.disabledItems = [];
         document.removeEventListener('mousemove', this.dragMoveCb);
+    }
+    ngDoCheck(): void {
+        //todo mark for check only if chage has been done but for now test see if it does work.
+        console.log(this.folders);
+        console.log(this.files);
+       this.cd.markForCheck();
     }
 }
