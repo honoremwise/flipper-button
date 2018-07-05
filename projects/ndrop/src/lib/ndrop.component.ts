@@ -20,6 +20,8 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     public static TypeCursorClass: string = 'n-cursor-block';
     public static ItemNameActiveStateClass: string = 'n-name-active';
 
+    //working env
+    @Input() environment: string;
     @Input() folders: any[];
     @Input() files: any[];
     @Input() activeFolder: any;
@@ -249,9 +251,16 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
     private selectItemsInLevel(activeFolder: any) {
         // parent id is 0 for the root files and folders
+        //todo set this as lazy model for testing and also set hot model for api and query the api here.
         const activeFolderId = activeFolder ? activeFolder[this.idField] : '0';
-        this.levelFolders = this.folders.filter(folder => folder[this.parentIdField] === activeFolderId);
-        this.levelFiles = this.files.filter(file => file[this.parentIdField] === activeFolderId);
+        if(this.environment === 'api'){
+            this.levelFolders = this.folders;
+            this.levelFiles = this.files;
+        }else{
+            this.levelFolders = this.folders.filter(folder => folder[this.parentIdField] === activeFolderId);
+            this.levelFiles = this.files.filter(file => file[this.parentIdField] === activeFolderId);
+        }
+        //changed algorithm, the libray only display data does not deal with navigating through files but emmit event that it want to
     }
 
     private onDragStart(value) {
@@ -477,8 +486,8 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
     ngDoCheck(): void {
         //todo mark for check only if chage has been done but for now test see if it does work.
-        console.log(this.folders);
-        console.log(this.files);
-       this.cd.markForCheck();
+    //     console.log(this.folders);
+    //     console.log(this.files);
+    //    this.cd.markForCheck();
     }
 }
