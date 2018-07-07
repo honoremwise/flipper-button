@@ -4,7 +4,7 @@ import {
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { NdropItemComponent } from './ndrop-item/ndrop-item.component';
 import { ApiService } from './api/api.service';
-
+import { ActivatedRoute } from "@angular/router";
 @Component({
     selector: 'N-NDrop',
     templateUrl: './ndrop.component.html',
@@ -94,7 +94,8 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         }
     }
 
-    constructor(private dragulaService: DragulaService, private api: ApiService) {
+    constructor(private dragulaService: DragulaService, 
+        private api: ApiService) {
         this.dragMoveCb = this.onDragMove.bind(this);
         this.keyDownCb = this.onKeyDown.bind(this);
         this.keyUpCb = this.onKeyUp.bind(this);
@@ -262,13 +263,19 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         //load real api
         if (this.environment === 'api') {
             
+            //todo if activeFolder is undefined and no router snapshoot available set folderId to '0' or if 
+            //todo router snapshot available set it to folderId
+            
             const folderId = (activeFolder)?activeFolder.uid: '0';
             this.api.bearerToken = this.bearerToken;
             this.api.postUrl = this.postUrl;
             this.api.csrfToken = this.csrfToken;
+            //if i am on 
             this.api.nextPaginationUrl = this.postUrl;
             this.api.lastPaginationUrl = this.postUrl + '/api/files/list' + '?parent_uid=' + folderId;
             this.api.nextPaginationUrl = this.postUrl + '/api/files/list' + '?parent_uid=' + folderId;
+            //console.log(this.api.nextPaginationUrl);
+            
             this.api.loadMore().subscribe(files => {
                 const { data } = files;
                 const { last_page_url } = files;
@@ -277,7 +284,7 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
                 this.api.lastPaginationUrl = last_page_url;
                 this.levelFolders = [...data.filter(file => file.kind === 'Folder')];
                 this.levelFiles = [...data.filter(file => file.kind === 'File')];
-            })
+            });
         } else {
             //fall back to mock data provide the same experience and leave room for extensibility
             // parent id is 0 for the root files and folders
