@@ -4,7 +4,7 @@ import {
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { NdropItemComponent } from './ndrop-item/ndrop-item.component';
 import { ApiService } from './api/api.service';
-import { ActivatedRoute } from "@angular/router";
+
 @Component({
     selector: 'N-NDrop',
     templateUrl: './ndrop.component.html',
