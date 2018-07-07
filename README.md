@@ -1,4 +1,5 @@
 [see it in action ](https://drive.google.com/file/d/1ZSIZOevWuzOFyJ0ngSuAr5lJ-oGtaulC/view)
+
 # DragNDrop
 - Provide cool drag and drop with animation on list of item(1) for example files and item(2) for example folders
 - inspired by google drive drag and drop
@@ -8,8 +9,9 @@
 - npm install
 - ng build --prod NDrop
 - ng serve (to see the sample app)
-#add to your project
--npm -i --save ndrop
+
+# add to your project
+- npm -i --save ndrop
 ```import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
