@@ -1,8 +1,9 @@
 import {
     Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy, DoCheck, ChangeDetectorRef
 } from '@angular/core';
-import {DragulaService} from 'ng2-dragula/ng2-dragula';
-import {NdropItemComponent} from './ndrop-item/ndrop-item.component';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
+import { NdropItemComponent } from './ndrop-item/ndrop-item.component';
+import { ApiService } from './api/api.service';
 
 @Component({
     selector: 'N-NDrop',
@@ -13,13 +14,17 @@ import {NdropItemComponent} from './ndrop-item/ndrop-item.component';
     viewProviders: [DragulaService]
 })
 export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
-    
+
 
     public static FoldersCounterClass: string = 'n-folders-counter';
     public static TypeFolderClass: string = 'n-type-folder';
     public static TypeCursorClass: string = 'n-cursor-block';
     public static ItemNameActiveStateClass: string = 'n-name-active';
 
+    //working with data api
+    @Input() csrfToken: string;
+    @Input() postUrl: string;
+    @Input() bearerToken: string;
     //working env
     @Input() environment: string;
     @Input() folders: any[];
@@ -89,7 +94,7 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         }
     }
 
-    constructor(private dragulaService: DragulaService,private cd: ChangeDetectorRef) {
+    constructor(private dragulaService: DragulaService, private api: ApiService) {
         this.dragMoveCb = this.onDragMove.bind(this);
         this.keyDownCb = this.onKeyDown.bind(this);
         this.keyUpCb = this.onKeyUp.bind(this);
@@ -198,6 +203,8 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     public goToItem(folder) {
+        // todo fetch data from remote
+        // this.api.getFiles(folder)
         this.goToFolder.emit(folder);
     }
 
@@ -250,17 +257,33 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     private selectItemsInLevel(activeFolder: any) {
-        // parent id is 0 for the root files and folders
-        //todo set this as lazy model for testing and also set hot model for api and query the api here.
+
         const activeFolderId = activeFolder ? activeFolder[this.idField] : '0';
-        if(this.environment === 'api'){
-            this.levelFolders = this.folders;
-            this.levelFiles = this.files;
-        }else{
+        //load real api
+        if (this.environment === 'api') {
+            
+            const folderId = (activeFolder)?activeFolder.uid: '0';
+            this.api.bearerToken = this.bearerToken;
+            this.api.postUrl = this.postUrl;
+            this.api.csrfToken = this.csrfToken;
+            this.api.nextPaginationUrl = this.postUrl;
+            this.api.lastPaginationUrl = this.postUrl + '/api/files/list' + '?parent_uid=' + folderId;
+            this.api.nextPaginationUrl = this.postUrl + '/api/files/list' + '?parent_uid=' + folderId;
+            this.api.loadMore().subscribe(files => {
+                const { data } = files;
+                const { last_page_url } = files;
+                const { next_page_url } = files;
+                this.api.nextPaginationUrl= next_page_url;
+                this.api.lastPaginationUrl = last_page_url;
+                this.levelFolders = [...data.filter(file => file.kind === 'Folder')];
+                this.levelFiles = [...data.filter(file => file.kind === 'File')];
+            })
+        } else {
+            //fall back to mock data provide the same experience and leave room for extensibility
+            // parent id is 0 for the root files and folders
             this.levelFolders = this.folders.filter(folder => folder[this.parentIdField] === activeFolderId);
             this.levelFiles = this.files.filter(file => file[this.parentIdField] === activeFolderId);
         }
-        //changed algorithm, the libray only display data does not deal with navigating through files but emmit event that it want to
     }
 
     private onDragStart(value) {
@@ -486,8 +509,11 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
     ngDoCheck(): void {
         //todo mark for check only if chage has been done but for now test see if it does work.
-    //     console.log(this.folders);
-    //     console.log(this.files);
-    //    this.cd.markForCheck();
+        //     console.log(this.folders);
+        //     console.log(this.files);
+        //    this.cd.markForCheck();
+    }
+    onScroll() {
+
     }
 }

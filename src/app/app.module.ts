@@ -8,8 +8,7 @@ import { HttpModule, BrowserXhr } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { ChildComponent } from './child/child.component';
 import { LoadersDirective } from './loaders.directive';
-
-import {CustExtBrowserXhr} from './cust-ext-browser-xhr';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
     declarations: [
         AppComponent,
@@ -17,6 +16,7 @@ import {CustExtBrowserXhr} from './cust-ext-browser-xhr';
         LoadersDirective
     ],
     imports: [
+        HttpClientModule,
         BrowserModule,
         NDropModule,
         NChipsModule,
