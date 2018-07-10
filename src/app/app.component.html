@@ -26,8 +26,40 @@ infiniteScroll
 
 </div> -->
 
+<style>
+  .my-drop-zone { border: dotted 3px lightgray; }
+  .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+  .another-file-over-class { border: dotted 3px green; }
+
+  html, body { height: 100%; }
+  
+</style>
 
 <input type="file" name="photo" NSelectFiles [uploader]="uploader" />
+
+<div nDropFiles
+[ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
+(fileOver)="fileOverAnother($event)"
+[uploader]="uploader"
+class="my-drop-zone">
+Another drop zone
+</div>
+
+<div class="card">
+  <!-- <header>
+    <div class="wrap">
+          <a href="#bottom-sheet">Click me</a>
+    </div>
+</header> -->
+<div class="overlay" [ngStyle]="{'display': overlay_display}">
+    <div class="social">
+          <p *ngFor="let file of fileHistory">
+            {{file}}
+          </p>
+    </div>
+
+</div>
+</div>
 
 
 

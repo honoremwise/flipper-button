@@ -16,7 +16,7 @@ export class Employee {
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
     public dragFolders: any[];
@@ -85,11 +85,44 @@ export class AppComponent implements OnInit {
     onUp(ev) {
         console.log('scrolled up!', ev);
     }
-    public uploader: FileUploader = new FileUploader({url: 'URL', itemAlias: 'photo'});
-
+    public overlay_display='none';
+    public uploader: FileUploader = new FileUploader({url: 'URL', itemAlias: 'photo',headers:[{name:'crstf', value:''}]});
+    public hasAnotherDropZoneOver:boolean = false;
+    public fileHistory:any[] = [];
     ngOnInit(){
-        this.uploader.onAfterAddingFile = (file) =>{
-            console.log(file);
+        this.uploader.onAfterAddingFile = (file:any) =>{
+            this.overlay_display='block';
+            
+            
+            this.fileHistory.push({name:file.file.name,id:file.file.rawFile.lastModified,file_error:false, progress:0});
+            this.uploader.uploadAll();
         };
+        this.uploader.onProgressItem = (file:any)=>{
+            //search in array where lastModified
+            //update status of file
+        }
+        this.uploader.onErrorItem = (file:any)=>{
+            //search in array where lastModified
+            //update status of file
+            const tmp = this.fileHistory;
+            
+            let file_to_update = tmp.filter(_file=>_file.id==file.file.rawFile.lastModified)[0];
+            file_to_update.file_error=true;
+            this.fileHistory =[...this.updateArray(this.fileHistory,0,item => (file_to_update))];
+            
+            console.log(this.fileHistory);
+            
+        }
+
+    }
+    updateArray = (array,index,updateFn) => {
+        return [
+        ...array.slice(0,index),
+        updateFn(array[index]),
+        ...array.slice(index+1)
+        ];
+      };
+    public fileOverAnother(e:any):void {
+        this.hasAnotherDropZoneOver = e;
     }
 }
