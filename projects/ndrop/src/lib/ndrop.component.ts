@@ -21,12 +21,7 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     public static TypeCursorClass: string = 'n-cursor-block';
     public static ItemNameActiveStateClass: string = 'n-name-active';
 
-    //working with data api
-    @Input() csrfToken: string;
-    @Input() postUrl: string;
-    @Input() bearerToken: string;
-    //working env
-    @Input() environment: string;
+
     @Input() folders: any[];
     @Input() files: any[];
     @Input() activeFolder: any;
@@ -41,6 +36,16 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Output() goToFolder = new EventEmitter<{ folder: any }>();
     @Output() goBack = new EventEmitter<{ currentFolder: any }>();
     @Output() didClick = new EventEmitter<{ currentFolder: any }>();
+
+    //scrolling events
+    @Input() didScroll: EventEmitter<any> = new EventEmitter();
+
+    //end scroll event
+
+    throttle = 300;
+    scrollDistance = 1;
+    scrollUpDistance = 2;
+    selector: string = '.main-panel';
 
     public levelFolders: any[];
     public levelFiles: any[];
@@ -94,7 +99,7 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         }
     }
 
-    constructor(private dragulaService: DragulaService, 
+    constructor(private dragulaService: DragulaService,
         private api: ApiService) {
         this.dragMoveCb = this.onDragMove.bind(this);
         this.keyDownCb = this.onKeyDown.bind(this);
@@ -258,39 +263,14 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     }
 
     private selectItemsInLevel(activeFolder: any) {
-
         const activeFolderId = activeFolder ? activeFolder[this.idField] : '0';
-        //load real api
-        if (this.environment === 'api') {
-            
-            //todo if activeFolder is undefined and no router snapshoot available set folderId to '0' or if 
-            //todo router snapshot available set it to folderId
-            
-            const folderId = (activeFolder)?activeFolder.uid: '0';
-            this.api.bearerToken = this.bearerToken;
-            this.api.postUrl = this.postUrl;
-            this.api.csrfToken = this.csrfToken;
-            //if i am on 
-            this.api.nextPaginationUrl = this.postUrl;
-            this.api.lastPaginationUrl = this.postUrl + '/api/files/list' + '?parent_uid=' + folderId;
-            this.api.nextPaginationUrl = this.postUrl + '/api/files/list' + '?parent_uid=' + folderId;
-            //console.log(this.api.nextPaginationUrl);
-            
-            this.api.loadMore().subscribe(files => {
-                const { data } = files;
-                const { last_page_url } = files;
-                const { next_page_url } = files;
-                this.api.nextPaginationUrl= next_page_url;
-                this.api.lastPaginationUrl = last_page_url;
-                this.levelFolders = [...data.filter(file => file.kind === 'Folder')];
-                this.levelFiles = [...data.filter(file => file.kind === 'File')];
-            });
-        } else {
-            //fall back to mock data provide the same experience and leave room for extensibility
-            // parent id is 0 for the root files and folders
-            this.levelFolders = this.folders.filter(folder => folder[this.parentIdField] === activeFolderId);
-            this.levelFiles = this.files.filter(file => file[this.parentIdField] === activeFolderId);
-        }
+        //fall back to mock data provide the same experience and leave room for extensibility
+        // parent id is 0 for the root files and folders
+        // this.levelFolders = this.folders.filter(folder => folder[this.parentIdField] === activeFolderId);
+        this.levelFolders = this.folders;
+        // this.levelFiles = this.files.filter(file => file[this.parentIdField] === activeFolderId);
+        this.levelFiles = this.files;
+
     }
 
     private onDragStart(value) {
@@ -520,7 +500,11 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         //     console.log(this.files);
         //    this.cd.markForCheck();
     }
-    onScroll() {
-
+    onScrollDown() {
+      
+        this.didScroll.emit('true');
+    }
+    onUp(ev) {
+        console.log('scrolled up!', ev);
     }
 }

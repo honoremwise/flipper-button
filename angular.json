@@ -240,6 +240,46 @@
           }
         }
       }
+    },
+    "NUpload": {
+      "root": "projects/nupload",
+      "sourceRoot": "projects/nupload/src",
+      "projectType": "library",
+      "prefix": "N",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/nupload/tsconfig.lib.json",
+            "project": "projects/nupload/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/nupload/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/nupload/src/test.ts",
+            "tsConfig": "projects/nupload/tsconfig.spec.json",
+            "karmaConfig": "projects/nupload/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/nupload/tsconfig.lib.json",
+              "projects/nupload/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "DragNDrop"

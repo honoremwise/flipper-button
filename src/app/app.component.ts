@@ -21,12 +21,13 @@ export class AppComponent {
     public dragFiles: any[];
     public activeFolder: any;
     public activeFile: any;
+    selector: string = '.main-panel';
 
     @ViewChild(LoadersDirective) v: LoadersDirective;
 
-    constructor(dragAndDropDataService: DragAndDropDataService) {
-        this.dragFolders = dragAndDropDataService.getFolders().splice(0, 10);
-        this.dragFiles = dragAndDropDataService.getFiles().splice(0, 20);
+    constructor(private dragAndDropDataService: DragAndDropDataService) {
+        this.dragFolders = dragAndDropDataService.getFolders().splice(0, 2);
+        this.dragFiles = dragAndDropDataService.getFiles().splice(0, 5);
 
         // Set root folder
         this.activeFolder = undefined;
@@ -55,7 +56,7 @@ export class AppComponent {
     }
 
     didCLick(file: NFile) {
-        // console.log(file);
+        console.log(file);
         this.activeFile = file;
     }
 
@@ -69,5 +70,17 @@ export class AppComponent {
         let name = empForm.controls['name'].value;
         let age = empForm.controls['age'].value;
         this.emp = new Employee(name, age);
+    }
+    onSroll() {
+        console.log('now we can get additional data');
+        this.dragFolders.unshift(this.dragAndDropDataService.getFolders().splice(0, 1));
+        this.dragFiles.push(this.dragAndDropDataService.getFiles().splice(0,1))
+       // this.onCrollEvent.emit(true);
+    }
+    onUpScroll(){
+        console.log('we got some intesting  scroll up');
+    }
+    onUp(ev) {
+        console.log('scrolled up!', ev);
     }
 }

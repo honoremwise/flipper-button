@@ -58,11 +58,13 @@ export class ApiService {
   }
   loadMore(): Observable<YFContract> {
     if (this.bearer_token) {
+      console.log('using token');
       return this.http.get<YFContract>(this.next_url, {
         headers: new HttpHeaders().set('authorization', this.bearer_token)
       });
     }
     if (this.csrf_token) {
+      console.log('using crrf token');
       return this.http.get<YFContract>(this.next_url, {
         headers: new HttpHeaders().set('X-CSRF-TOKEN', this.xCSRFToken)
       })

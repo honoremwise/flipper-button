@@ -34,6 +34,12 @@
       ],
       "NChips/*": [
         "dist/nchips/*"
+      ],
+      "NUpload": [
+        "dist/nupload"
+      ],
+      "NUpload/*": [
+        "dist/nupload/*"
       ]
     }
   }
