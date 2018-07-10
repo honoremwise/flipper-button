@@ -1,10 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { DragAndDropDataService } from "./drag-and-drop-data.service";
 import { NFile } from "./NFile";
 import { Http, Headers } from '@angular/http';
 import { NgForm } from '@angular/forms';
 import { LoadersDirective } from './loaders.directive';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { FileUploader } from 'NUpload';
+
 const bearer = 'Bearer  eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ0ODliYWQ1NzMzNGY4ZTVlODBjMzBjYzViYTU3ZDljNjdmZjkzNDA3ZGY4YWQxYTQ5NjI2NWQ3NjVkOWY5MDIzZjJkNDQxOTExOWViNGY5In0.eyJhdWQiOiI3IiwianRpIjoiZDQ4OWJhZDU3MzM0ZjhlNWU4MGMzMGNjNWJhNTdkOWM2N2ZmOTM0MDdkZjhhZDFhNDk2MjY1ZDc2NWQ5ZjkwMjNmMmQ0NDE5MTE5ZWI0ZjkiLCJpYXQiOjE1MzA1OTgzODAsIm5iZiI6MTUzMDU5ODM4MCwiZXhwIjoxNTYyMTM0MzgwLCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.gLkd3qAFwitEvpR5Nc37z3gWaOmcZtlU8QtQIn7WKGHhae1_OF-G8r-0ZT1bBiaaiNNdysDN-87lpy0WFtKwmnqtNxfKIMUy5QFJ4X3Iie25SB5YlUVg_VEMP-aBD5KmPhbIIJFaSChYVPU3V9sdEkZw8rMnguNjaDIYe7Z-cC-zdoAe9CHeS1WLZV78D05BquMcjW9vFjZ0QxZyZfT6Ov0UBj_PDSjbiVWEXoV7Wc0cxpW9-lXWVVVHU_ShHFvx_y6WEop102zrDFiMBDuwU7bTIrRLtHVVRT0bHDJwkQXLwJhQCzegN7i2-4boTxLTNVx-pLRPxR0Q1_L2JeikvrkzciM3L_5Rk04XXnjzQ7gHkDiP0wUO9daw8bQ-PPT7qcPh0DSFv2-srGqWpQSvKre-Mt2FYdtfPJzPSSR50dENaiiTpflth4pwuGcbugZjyCJEp4ekhlhdSa_t4mNpSFsir8Cn7F-jwdiMuTIa55A2FDTRA0WiyySF2QAnM7nQ1SY5Z-WHnkSyjXSj_yt3VOsU3stujLAl_Q-cAVhBe2_wjpsadwQfwD1y6jYfeqd56atwFx6Jv9CuQm3XQHzTHXiSqOl_kYFCZnUbvoTjpweSrg7sEaGi05iFoant9sU5IZgJoQAHTEUd-VnaSMvwyOXYTdIvY8kShR8jb_o0xA4';
 export class Employee {
     constructor(public name: string, public age: number) { }
@@ -16,7 +18,7 @@ export class Employee {
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     public dragFolders: any[];
     public dragFiles: any[];
     public activeFolder: any;
@@ -82,5 +84,12 @@ export class AppComponent {
     }
     onUp(ev) {
         console.log('scrolled up!', ev);
+    }
+    public uploader: FileUploader = new FileUploader({url: 'URL', itemAlias: 'photo'});
+
+    ngOnInit(){
+        this.uploader.onAfterAddingFile = (file) =>{
+            console.log(file);
+        };
     }
 }

@@ -2,7 +2,7 @@ import { Directive, Input, Output, ElementRef, HostListener, EventEmitter } from
 import { FileUploader } from './file-uploader.class';
 
 @Directive({
-  selector: '[nNSelectFiles]'
+  selector: '[NSelectFiles]'
 })
 export class NSelectFilesDirective {
 
