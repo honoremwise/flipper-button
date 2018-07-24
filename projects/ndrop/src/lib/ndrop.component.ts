@@ -37,14 +37,9 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
     @Output() goBack = new EventEmitter<{ currentFolder: any }>();
     @Output() didClick = new EventEmitter<{ currentFolder: any }>();
 
-    //scrolling events
-    @Input() didScroll: EventEmitter<any> = new EventEmitter();
 
-    //end scroll event
+    // end scroll event
 
-    throttle = 300;
-    scrollDistance = 1;
-    scrollUpDistance = 2;
     selector: string = '.main-panel';
 
     public levelFolders: any[];
@@ -264,7 +259,7 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
 
     private selectItemsInLevel(activeFolder: any) {
         const activeFolderId = activeFolder ? activeFolder[this.idField] : '0';
-        //fall back to mock data provide the same experience and leave room for extensibility
+        // fall back to mock data provide the same experience and leave room for extensibility
         // parent id is 0 for the root files and folders
         // this.levelFolders = this.folders.filter(folder => folder[this.parentIdField] === activeFolderId);
         this.levelFolders = this.folders;
@@ -333,7 +328,8 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
                 transformOrigin: 'left',
                 border: '1px solid #e8eaed',
                 transition: 'left 0.15s ease-out, top 0.15s ease-out',
-                boxShadow: 'none'
+                boxShadow: 'none',
+                zIndex: '1'
             };
 
             // Set box shadow to the top element
@@ -495,16 +491,10 @@ export class NDropComponent implements OnInit, OnChanges, OnDestroy, DoCheck {
         document.removeEventListener('mousemove', this.dragMoveCb);
     }
     ngDoCheck(): void {
-        //todo mark for check only if chage has been done but for now test see if it does work.
+        // todo mark for check only if chage has been done but for now test see if it does work.
         //     console.log(this.folders);
         //     console.log(this.files);
         //    this.cd.markForCheck();
     }
-    onScrollDown() {
-      
-        this.didScroll.emit('true');
-    }
-    onUp(ev) {
-        console.log('scrolled up!', ev);
-    }
+
 }
