@@ -33,6 +33,7 @@
 
 .n-name-block.n-name-active, .n-name-block.n-name-hover{
   background: #e8f0fe;
+  z-index: 1;
   color: #1967d2;
 }
 
@@ -58,7 +59,7 @@ span{
 }
 
 .image-fit{
-  height:146.73px;width: 195.73px; object-fit: cover;
+  height:147px;width: 196px; object-fit: cover;
   object-position: center center;
   -ms-interpolation-mode: nearest-neighbor;
   image-rendering: -webkit-optimize-contrast;
