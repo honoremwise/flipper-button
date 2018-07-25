@@ -142,13 +142,13 @@ export class AppComponent implements OnInit {
         };
 
     }
-    updateArray = (array,index,updateFn) => {
+    updateArray = (array, index , updateFn) => {
         return [
-        ...array.slice(0,index),
+        ...array.slice(0, index),
         updateFn(array[index]),
-        ...array.slice(index+1)
+        ...array.slice(index + 1)
         ];
-      };
+      }
     public fileOverAnother(e: any): void {
         this.hasAnotherDropZoneOver = e;
     }

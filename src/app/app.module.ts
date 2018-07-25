@@ -1,7 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
-
 import {AppComponent} from './app.component';
 import {NDropModule} from 'NDrop';
 import { HttpModule, BrowserXhr } from '@angular/http';
@@ -26,8 +24,6 @@ import { NUploadModule } from '../../projects/nupload/src/lib/nupload.module';
         InfiniteScrollModule,
         NUploadModule
     ],
-    // {provide: BrowserXhr, useClass:CustExtBrowserXhr}
-    
     providers: [],
 
     bootstrap: [AppComponent]
