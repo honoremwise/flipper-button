@@ -32,10 +32,8 @@ export class AppComponent implements OnInit {
     constructor(private dragAndDropDataService: DragAndDropDataService) {
         this.dragFolders = dragAndDropDataService.getFolders().splice(0, 2);
         this.dragFiles = dragAndDropDataService.getFiles().splice(0, 5);
-
         // Set root folder
         this.activeFolder = undefined;
-    
     }
 
     public onDrop($event) {
@@ -66,23 +64,25 @@ export class AppComponent implements OnInit {
     }
 
 
-    //experimenting angular change detection
+    // experimenting angular change detection
+    // tslint:disable-next-line:member-ordering
     emp = new Employee('Mahesh', 20);
+    // tslint:disable-next-line:member-ordering
     msg: string = 'Hello World!';
 
     onFormSubmit(empForm: NgForm) {
 
-        let name = empForm.controls['name'].value;
-        let age = empForm.controls['age'].value;
+        const name = empForm.controls['name'].value;
+        const age = empForm.controls['age'].value;
         this.emp = new Employee(name, age);
     }
     onSroll() {
         console.log('now we can get additional data');
         this.dragFolders.unshift(this.dragAndDropDataService.getFolders().splice(0, 1));
-        this.dragFiles.push(this.dragAndDropDataService.getFiles().splice(0,1))
+        this.dragFiles.push(this.dragAndDropDataService.getFiles().splice(0, 1) );
        // this.onCrollEvent.emit(true);
     }
-    onUpScroll(){
+    onUpScroll() {
         console.log('we got some intesting  scroll up');
     }
     onUp(ev) {
@@ -91,12 +91,13 @@ export class AppComponent implements OnInit {
     // tslint:disable-next-line:member-ordering
     public overlay_display = 'none';
     // tslint:disable-next-line:member-ordering
-    public uploader: FileUploader = new FileUploader({url: 'URL', itemAlias: 'photo',headers:[{name:'crstf', value:''}]});
+    public uploader: FileUploader = new FileUploader({url: 'URL', itemAlias: 'photo', headers: [{name: 'crstf', value: ''}]});
     // tslint:disable-next-line:member-ordering
     public hasAnotherDropZoneOver: boolean = false;
-    public fileHistory:any[] = [];
-    ngOnInit(){
-        this.uploader.onAfterAddingFile = (file:any) =>{
+    // tslint:disable-next-line:member-ordering
+    public fileHistory: any[] = [];
+    ngOnInit() {
+        this.uploader.onAfterAddingFile = (file: any) => {
             this.overlay_display = 'block';
           //  this.fileHistory.push({name:file.file.name,id:file.file.rawFile.lastModified,file_error:false, progress:0});
             this.uploader.uploadAll();
