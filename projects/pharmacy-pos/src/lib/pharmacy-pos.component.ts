@@ -4,10 +4,11 @@ import { Component, OnInit } from '@angular/core';
   selector: 'lib-pharmacy-pos',
   template: `
     <p>
-      pharmacy-pos works!
+      pharmacy-pos works! it should reload
     </p>
   `,
   styles: []
+
 })
 export class PharmacyPosComponent implements OnInit {
 

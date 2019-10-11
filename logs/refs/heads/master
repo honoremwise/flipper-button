@@ -1,0 +1,3 @@
+0000000000000000000000000000000000000000 77315f94f799dd44fe7fe10d6c7219f9909fac3d StreamUpBox LtdRichard <richard@yegobox.com> 1570779805 +0200	clone: from https://github.com/StreamUpBox/DragNDrop.git
+77315f94f799dd44fe7fe10d6c7219f9909fac3d d2d51d99b5c24e98a7287e362a7da521c7b14446 StreamUpBox LtdRichard <richard@yegobox.com> 1570781367 +0200	commit: attempty to upgrade to angular 8
+d2d51d99b5c24e98a7287e362a7da521c7b14446 4255d1a10e9d7a89561bb0c27b12263b32070063 StreamUpBox LtdRichard <richard@yegobox.com> 1570785955 +0200	commit: linting

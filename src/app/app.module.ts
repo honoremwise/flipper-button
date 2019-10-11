@@ -3,14 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { DropdemoComponent } from './dropdemo/dropdemo.component';
+import { PharmacyPosModule } from 'pharmacy-pos';
+import { PharmacyPosDemoComponent } from './pharmacy-pos-demo/pharmacy-pos-demo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DropdemoComponent
+    DropdemoComponent,
+    PharmacyPosDemoComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    PharmacyPosModule
   ],
   providers: [],
   bootstrap: [AppComponent]
