@@ -41,6 +41,6 @@ export interface YFContract {
     custom_name?: string;
     folder_id?: number;
     mouse_event?: string;
-    last_page_url?:string;
-    next_page_url?:string;
+    last_page_url?: string;
+    next_page_url?: string;
 }

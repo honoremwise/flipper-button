@@ -25,13 +25,13 @@ export class FileDropDirective {
 
   @HostListener('drop', [ '$event' ])
   public onDrop(event: any): void {
-    let transfer = this._getTransfer(event);
+    const transfer = this._getTransfer(event);
     if (!transfer) {
       return;
     }
 
-    let options = this.getOptions();
-    let filters = this.getFilters();
+    const options = this.getOptions();
+    const filters = this.getFilters();
     this._preventAndStop(event);
     this.uploader.addToQueue(transfer.files, options, filters);
     this.fileOver.emit(false);
@@ -40,7 +40,7 @@ export class FileDropDirective {
 
   @HostListener('dragover', [ '$event' ])
   public onDragOver(event: any): void {
-    let transfer = this._getTransfer(event);
+    const transfer = this._getTransfer(event);
     if (!this._haveFiles(transfer.types)) {
       return;
     }

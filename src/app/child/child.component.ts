@@ -7,7 +7,7 @@ import { Employee } from '../app.component';
 	styleUrls: ['./child.component.css']
 })
 export class ChildComponent implements OnInit, OnChanges {
-	
+
 	@Input() employee: Employee;
 	@Input() message: string;
 
@@ -17,12 +17,12 @@ export class ChildComponent implements OnInit, OnChanges {
 
 	ngOnChanges(changes: SimpleChanges) {
 
-		for (let propName in changes) {
-			let change = changes[propName];
+		for (const propName in changes) {
+			const change = changes[propName];
 
-			let curVal = JSON.stringify(change.currentValue);
-			let prevVal = JSON.stringify(change.previousValue);
-			let changeLog = `${propName}: currentValue = ${curVal}, previousValue = ${prevVal}`;
+			const curVal = JSON.stringify(change.currentValue);
+			const prevVal = JSON.stringify(change.previousValue);
+			const changeLog = `${propName}: currentValue = ${curVal}, previousValue = ${prevVal}`;
 
 			if (propName === 'message') {
 				this.allMsgChangeLogs.push(changeLog);
@@ -33,7 +33,7 @@ export class ChildComponent implements OnInit, OnChanges {
 	}
 
 	ngOnInit(): void {
-	
+
 	}
-	
+
 }

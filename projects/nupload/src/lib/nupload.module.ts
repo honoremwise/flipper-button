@@ -12,7 +12,7 @@ import { FileDropDirective } from './file-drop.directive';
     DragulaModule,
     BrowserModule
   ],
-  declarations: [NSelectFilesDirective,FileDropDirective],
-  exports: [NSelectFilesDirective,FileDropDirective]
+  declarations: [NSelectFilesDirective, FileDropDirective],
+  exports: [NSelectFilesDirective, FileDropDirective]
 })
 export class NUploadModule { }

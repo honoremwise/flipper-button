@@ -67,7 +67,7 @@ export class ApiService {
       console.log('using crrf token');
       return this.http.get<YFContract>(this.next_url, {
         headers: new HttpHeaders().set('X-CSRF-TOKEN', this.xCSRFToken)
-      })
+      });
     }
   }
 }

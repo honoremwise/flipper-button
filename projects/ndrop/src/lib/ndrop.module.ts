@@ -17,13 +17,13 @@ import { HttpClientModule } from '@angular/common/http';
         InfiniteScrollModule
     ],
     declarations: [
-        
+
         NDropComponent,
         NdropFileItemComponent,
         NdropFolderItemComponent,
         NdropItemComponent,
     ],
-    providers:[],
+    providers: [],
     exports: [NDropComponent]
 })
 export class NDropModule {

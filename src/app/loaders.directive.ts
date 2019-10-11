@@ -6,7 +6,7 @@ import { Directive } from '@angular/core';
 export class LoadersDirective {
 
   constructor() { }
-  canI(){
+  canI() {
     console.log('can i for sure...');
   }
 

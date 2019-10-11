@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { NChipsComponent } from './nchips.component';
-import {CommonModule} from "@angular/common";
-import {MatButtonModule, MatChipsModule, MatListModule} from "@angular/material";
+import {CommonModule} from '@angular/common';
+import {MatButtonModule, MatChipsModule, MatListModule} from '@angular/material';
 
 
 @NgModule({

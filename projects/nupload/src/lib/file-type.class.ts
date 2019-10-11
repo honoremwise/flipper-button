@@ -1,4 +1,4 @@
-import { FileLikeObject } from "./file-like-object.class";
+import { FileLikeObject } from './file-like-object.class';
 
 
 export class FileType {
@@ -90,7 +90,7 @@ export class FileType {
   }
 
   public static fileTypeDetection(inputFilename: string): string {
-    let types: { [ key: string ]: string } = {
+    const types: { [ key: string ]: string } = {
       'jpg': 'image',
       'jpeg': 'image',
       'tif': 'image',
@@ -151,11 +151,11 @@ export class FileType {
       'odp': 'ppt'
     };
 
-    let chunks = inputFilename.split('.');
+    const chunks = inputFilename.split('.');
     if (chunks.length < 2) {
       return 'application';
     }
-    let extension = chunks[ chunks.length - 1 ].toLowerCase();
+    const extension = chunks[ chunks.length - 1 ].toLowerCase();
     if (types[ extension ] === undefined) {
       return 'application';
     } else {
