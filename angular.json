@@ -136,7 +136,8 @@
           "options": {
             "tsConfig": "projects/pharmacy-pos/tsconfig.lib.json",
             "project": "projects/pharmacy-pos/ng-package.json"
-          }
+          },
+          "scripts":[ "projects/pharmacy-pos/node_modules/alasql/dist/alasql.min.js"]
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
