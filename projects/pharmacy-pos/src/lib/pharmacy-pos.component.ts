@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as alasql from 'alasql';
-const mm = alasql;
+const sql = alasql;
 
 @Component({
   selector: 'lib-pharmacy-pos',
@@ -18,12 +18,13 @@ export class PharmacyPosComponent implements OnInit {
     // window.alasql;
     console.log("hello world");
     // alasql.
-    mm("CREATE TABLE test (language INT, hello STRING)");
-    mm("INSERT INTO test VALUES (1, 'Hello!')");
-    mm("INSERT INTO test VALUES (2, 'Aloha!')");
-    mm("INSERT INTO test VALUES (3, 'Bonjour!')");
+    sql("CREATE TABLE test (language INT, hello STRING)");
+    sql("INSERT INTO test VALUES (1, 'Hello!')");
+    sql("INSERT INTO test VALUES (2, 'Aloha!')");
+    sql("INSERT INTO test VALUES (3, 'Bonjour!')");
 
-    const results = mm("SELECT * FROM test WHERE language > 1");
+
+    const results = sql("SELECT * FROM test WHERE language > 1");
     console.log(results);
    }
 
