@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { PaginationResponse } from '../../common/core/types/pagination-response';
-import { BackendResponse } from '../../common/core/types/backend-response';
-import { AppHttpClient } from '../../common/core/http/app-http-client.service';
 import { API_ROUTES } from './api-routes.enum';
-import { Orders } from '../../orders/orders';
 import { OrderItems } from '../cart/order_items';
 import { Observable } from 'rxjs';
-import { Category } from '../../admin/master/categories/api/category';
-import { CategoriesApiIndexParams } from '../../store/model/pos-category-state-model';
-import { StockApiIndexParams } from '../../store/model/pos-stock-state-model';
-import { Stock } from '../../stock/api/stock';
-import { LocalStorage } from '../../common/core/services/local-storage.service';
+import { PaginationResponse } from '../../importables/types/pagination-response';
+import { Category } from '../../importables/categories/api/category';
+import { Stock } from '../../importables/stock/api/stock';
+import { LocalStorage } from '../../importables/services/local-storage.service';
+import { AppHttpClient } from '../../importables/http/app-http-client.service';
+import { CategoriesApiIndexParams } from '../../importables/store/model/pos-category-state-model';
+import { Orders } from '../../importables/orders/orders';
+import { BackendResponse } from '../../importables/types/backend-response';
+import { StockApiIndexParams } from '../../importables/store/model/pos-stock-state-model';
 export interface CategoriesEntriesPaginationResponse extends PaginationResponse<Category> {
   categories?: Category[];
 }
