@@ -1,6 +1,6 @@
-import { TAXRATE } from '../../setup/tax-rates/api/tax-rate';
-import { Stock } from '../../stock/api/stock';
-import { CustomerTypePrices } from '../../setup/customerType/api/CustomerTypePrices';
+import { TAXRATE } from '../../importables/tax-rates/api/tax-rate';
+import { Stock } from '../../importables/stock/api/stock';
+import { CustomerTypePrices } from '../../importables/customerType/api/CustomerTypePrices';
 
 export class OrderItems {
   id?: number;
