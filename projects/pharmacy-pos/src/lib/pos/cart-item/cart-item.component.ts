@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, OnDestroy, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, Inject, OnDestroy } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
 import {
   trigger,
@@ -8,20 +8,22 @@ import {
   animate
 } from "@angular/animations";
 import { OrderItems } from "../cart/order_items";
-import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatAutocompleteSelectedEvent } from "@angular/material";
-import { Customer } from "../../customers/customer";
-import { Orders } from '../../orders/orders';
-import { CurrentUser } from '../../common/auth/current-user';
+import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
+
 import { Router } from '@angular/router';
-import { PosOrderState } from '../../store/states/PosOrderStates';
 import { Select, Store } from '@ngxs/store';
-import { CurrentOrder, UpdateOrderItems, OrderParms, CreateOrder, UpdateOrder, DeleteOrder, DeleteOrderItems } from '../../store/actions/pos-Order.action';
-import { SelectCustomerModelComponent } from '../../customers/manage-customer/select-customer-model/select-customer-model.component';
-import { OpenPosCategory } from '../../store/actions/pos-categories.action';
-import { LocalStorage } from '../../common/core/services/local-storage.service';
-import { SelectTaxrateModalComponent } from '../../setup/tax-rates/select-taxrate-modal/select-taxrate-modal.component';
-import { Modal } from '../../common/core/ui/dialogs/modal.service';
+
 import { take } from 'rxjs/operators';
+import { PosOrderState } from '../../importables/store/states/PosOrderStates';
+import { Orders } from '../../importables/orders/orders';
+import { Customer } from '../../importables/customers/customer';
+import { LocalStorage } from '../../importables/services/local-storage.service';
+import { CurrentUser } from '../../importables/auth/current-user';
+import { Modal } from '../../importables/dialogs/modal.service';
+import { CurrentOrder, DeleteOrder, UpdateOrder, OrderParms, CreateOrder, UpdateOrderItems, DeleteOrderItems } from '../../importables/store/actions/pos-Order.action';
+import { OpenPosCategory } from '../../importables/store/actions/pos-categories.action';
+import { SelectCustomerModelComponent } from '../select-customer-model/select-customer-model.component';
+import { SelectTaxrateModalComponent } from '../../importables/tax-rates/select-taxrate-modal/select-taxrate-modal.component';
 @Component({
   selector: "cart-dialog",
   templateUrl: './cart-dialog.html',

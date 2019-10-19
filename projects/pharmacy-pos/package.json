@@ -4,6 +4,15 @@
   "peerDependencies": {
     "@angular/common": "^8.2.9",
     "@angular/core": "^8.2.9",
-    "alasql": "^0.4.11"
+    "alasql": "^0.4.11",
+    "@ngrx/effects": "^8.4.0",
+    "@ngrx/store": "^8.4.0",
+    "@angular/material": "^8.2.3"
+  },
+  "devDependencies": {
+    "@ngrx/effects": "^8.4.0",
+    "@ngrx/store": "^8.4.0",
+    "@ngxs/store": "^3.5.1",
+    "@angular/material": "^8.2.3"
   }
 }
