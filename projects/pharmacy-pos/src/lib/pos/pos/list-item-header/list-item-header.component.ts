@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { PosCateoriesState } from '../../../store/states/PosCategoryStates';
 import { Observable } from 'rxjs';
-import { Category } from '../../../admin/master/categories/api/category';
-import { ClosePosCategory } from '../../../store/actions/pos-categories.action';
 import { Router } from '@angular/router';
+import { PosCateoriesState } from '../../../importables/store/states/PosCategoryStates';
+import { Category } from '../../../importables/categories/api/category';
+import { ClosePosCategory } from '../../../importables/store/actions/pos-categories.action';
 
 @Component({
   selector: 'pos-list-item-header',

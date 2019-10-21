@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
-import { GlobalVariables } from '../../common/core/global-variables';
+import { GlobalVariables } from '../../importables/global-variables';
+// import { GlobalVariables } from '../../common/core/global-variables';
 @Component({
   selector: "app-pos",
   templateUrl: "./pos.component.html",

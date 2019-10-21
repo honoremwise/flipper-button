@@ -7,12 +7,16 @@
     "alasql": "^0.4.11",
     "@ngrx/effects": "^8.4.0",
     "@ngrx/store": "^8.4.0",
-    "@angular/material": "^8.2.3"
+    "@angular/material": "^8.2.3",
+    "raven-js": "^3.27.2",
+    "ngx-model": "^6.0.2"
   },
   "devDependencies": {
+    "@angular/material": "^8.2.3",
     "@ngrx/effects": "^8.4.0",
     "@ngrx/store": "^8.4.0",
     "@ngxs/store": "^3.5.1",
-    "@angular/material": "^8.2.3"
+    "ngx-model": "^6.0.2",
+    "raven-js": "^3.27.2"
   }
 }

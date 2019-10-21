@@ -1,24 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store, Select } from '@ngxs/store';
-import { OpenPosCategory } from '../../../../store/actions/pos-categories.action';
-import { PosCateoriesState } from '../../../../store/states/PosCategoryStates';
+// import { OpenPosCategory } from '../../../../store/actions/pos-categories.action';
+// import { PosCateoriesState } from '../../../../store/states/PosCategoryStates';
 import { Observable } from 'rxjs';
-import { Category } from '../../../../admin/master/categories/api/category';
-import { LocalStorage } from '../../../../common/core/services/local-storage.service';
-import { PosStockStates } from '../../../../store/states/PosStockStates';
-import { Stock } from '../../../../stock/api/stock';
-import {  CreateOrder, OrderParms, UpdateOrderItems } from '../../../../store/actions/pos-Order.action';
-import { PosOrderState } from '../../../../store/states/PosOrderStates';
-import { Orders } from '../../../../orders/orders';
-import { Business } from '../../../../business/api/business';
-import { CurrentUser } from '../../../../common/auth/current-user';
+// import { Category } from '../../../../admin/master/categories/api/category';
+// import { LocalStorage } from '../../../../common/core/services/local-storage.service';
+// import { PosStockStates } from '../../../../store/states/PosStockStates';
+// import { Stock } from '../../../../stock/api/stock';
+// import {  CreateOrder, OrderParms, UpdateOrderItems } from '../../../../store/actions/pos-Order.action';
+// import { PosOrderState } from '../../../../store/states/PosOrderStates';
+// import { Orders } from '../../../../orders/orders';
+// import { Business } from '../../../../business/api/business';
+// import { CurrentUser } from '../../../../common/auth/current-user';
 import { BottomSheetOverviewStock } from '../../boottom-sheet-stock-movement/bottom-sheet-of-stock.componet';
 import { MatBottomSheet, MatDialog } from '@angular/material';
 import { OrderItems } from '../../../cart/order_items';
 import {  take } from 'rxjs/operators';
 import { ApiPosService } from '../../../api/api.service';
-import { Customer } from '../../../../customers/customer';
+import { PosStockStates } from 'projects/pharmacy-pos/src/lib/importables/store/states/PosStockStates';
+import { PosCateoriesState } from 'projects/pharmacy-pos/src/lib/importables/store/states/PosCategoryStates';
+import { Category } from 'projects/pharmacy-pos/src/lib/importables/categories/api/category';
+import { Stock } from 'projects/pharmacy-pos/src/lib/importables/stock/api/stock';
+import { PosOrderState } from 'projects/pharmacy-pos/src/lib/importables/store/states/PosOrderStates';
+import { Orders } from 'projects/pharmacy-pos/src/lib/importables/orders/orders';
+import { Customer } from 'projects/pharmacy-pos/src/lib/importables/customers/customer';
+import { CurrentUser } from 'projects/pharmacy-pos/src/lib/importables/auth/current-user';
+import { LocalStorage } from 'projects/pharmacy-pos/src/lib/importables/services/local-storage.service';
+import { OpenPosCategory } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-categories.action';
+import { UpdateOrderItems, OrderParms, CreateOrder } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-Order.action';
+import { Business } from 'projects/pharmacy-pos/src/lib/importables/business/api/business';
+// import { Customer } from '../../../../customers/customer';
 
 @Component({
   selector: 'app-pos-products',

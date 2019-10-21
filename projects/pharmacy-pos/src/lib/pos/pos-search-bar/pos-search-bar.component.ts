@@ -1,22 +1,27 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Observable, BehaviorSubject} from 'rxjs';
-import {map, startWith, debounceTime, distinctUntilChanged, switchMap, filter, take} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {take} from 'rxjs/operators';
 import { Select, Store } from '@ngxs/store';
-import { PosStockStates } from '../../store/states/PosStockStates';
-import { Stock } from '../../stock/api/stock';
-import { LoadSearchableStockEntries } from '../../store/actions/pos-Stock.action';
-import { PosSearchStockStates } from '../../store/states/PosSearchStockStates';
-import { CurrentUser } from '../../common/auth/current-user';
-import { Business } from '../../business/api/business';
-import { ApiPosService } from '../api/api.service';
-import { MatBottomSheet, MatAutocompleteSelectedEvent } from '@angular/material';
-import { CurrentOrder, OrderParms, CreateOrder, UpdateOrderItems } from '../../store/actions/pos-Order.action';
-import { Orders } from '../../orders/orders';
+import { MatBottomSheet } from '@angular/material';
+import { Stock } from '../../importables/stock/api/stock';
+import { PosSearchStockStates } from '../../importables/store/states/PosSearchStockStates';
+import { PosStockStates } from '../../importables/store/states/PosStockStates';
+import { PosOrderState } from '../../importables/store/states/PosOrderStates';
+import { Orders } from '../../importables/orders/orders';
+import { Customer } from '../../importables/customers/customer';
+import { Business } from '../../importables/business/api/business';
+import { CurrentUser } from '../../importables/auth/current-user';
+import { LoadSearchableStockEntries } from '../../importables/store/actions/pos-Stock.action';
 import { BottomSheetOverviewStock } from '../pos/boottom-sheet-stock-movement/bottom-sheet-of-stock.componet';
 import { OrderItems } from '../cart/order_items';
-import { PosOrderState } from '../../store/states/PosOrderStates';
-import { Customer } from '../../customers/customer';
+import { UpdateOrderItems, OrderParms, CreateOrder } from '../../importables/store/actions/pos-Order.action';
+// import { CurrentOrder, OrderParms, CreateOrder, UpdateOrderItems } from '../../store/actions/pos-Order.action';
+// import { Orders } from '../../orders/orders';
+// import { BottomSheetOverviewStock } from '../pos/boottom-sheet-stock-movement/bottom-sheet-of-stock.componet';
+// import { OrderItems } from '../cart/order_items';
+// import { PosOrderState } from '../../store/states/PosOrderStates';
+// import { Customer } from '../../customers/customer';
 
 @Component({
   selector: 'pos-search-bar',

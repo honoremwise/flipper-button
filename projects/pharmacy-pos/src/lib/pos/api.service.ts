@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
-import { AppHttpClient } from "../common/core/http/app-http-client.service";
-import { BackendResponse } from "../common/core/types/backend-response";
+// import { AppHttpClient } from "../common/core/http/app-http-client.service";
+// import { BackendResponse } from "../common/core/types/backend-response";
 import { API_ROUTES } from "./api.enum";
 import { Session } from "./sessions/sessions.component";
 import * as Raven from "raven-js";
+import { AppHttpClient } from '../importables/http/app-http-client.service';
+import { BackendResponse } from '../importables/types/backend-response';
 Raven.config(
   "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
 ).install();

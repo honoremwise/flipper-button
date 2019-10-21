@@ -1,23 +1,28 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Master } from '../../admin/master/master';
+import { Component, OnInit } from '@angular/core';
+// import { Master } from '../../admin/master/master';
 import { Observable } from 'rxjs';
-import { MasterModelService } from '../../admin/master/master-model.service';
-import { Category } from '../../admin/master/categories/api/category';
-import { Stock } from '../../stock/api/stock';
+// import { MasterModelService } from '../../admin/master/master-model.service';
+// import { Category } from '../../admin/master/categories/api/category';
+// import { Stock } from '../../stock/api/stock';
 import { Pos } from '../pos';
 import { ApiPosService } from '../api/api.service';
 import { finalize } from 'rxjs/operators';
 import { PosModelService } from '../pos-model.service';
 import { OrderItemsModelService } from '../cart/order-item-model.service';
 import { OrderItems } from '../cart/order_items';
-import { OrderModelService } from '../../orders/order-model.service';
-import { Orders } from '../../orders/orders';
-import { CurrentUser } from '../../common/auth/current-user';
-import { Business } from '../../business/api/business';
-import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
-import { SetUpModelService } from '../../setup/setup-model.service';
-import { CustomerType } from '../../setup/customerType/api/CustomerType';
-import { SetUp } from '../../setup/setup';
+import { Category } from '../../importables/categories/api/category';
+import { Stock } from '../../importables/stock/api/stock';
+import { Orders } from '../../importables/orders/orders';
+import { Business } from '../../importables/business/api/business';
+import { CurrentUser } from '../../importables/auth/current-user';
+import { CustomerType } from '../../importables/customerType/api/CustomerType';
+import { Master } from '../../importables/master';
+import { SetUp } from '../../importables/setup';
+import { SetUpModelService } from '../../importables/setup-model.service';
+import { MasterModelService } from '../../importables/master-model.service';
+// import { SetUpModelService } from '../../setup/setup-model.service';
+// import { CustomerType } from '../../setup/customerType/api/CustomerType';
+// import { SetUp } from '../../setup/setup';
 
 @Component({
   selector: 'app-sale-point',
@@ -47,7 +52,7 @@ export class SalePointComponent implements OnInit {
   accent='accent';
   primary='primary';
   mode = 'determinate';
-  constructor(private setupModelService:SetUpModelService,private bottomSheet: MatBottomSheet,private currentUser: CurrentUser, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private api: ApiPosService, private posModelService: PosModelService, private msterModelService: MasterModelService) {
+  constructor(private setupModelService:SetUpModelService,private currentUser: CurrentUser, private orderItemModelService: OrderItemsModelService, private api: ApiPosService, private posModelService: PosModelService, private msterModelService: MasterModelService) {
 
    }
 

@@ -1,18 +1,25 @@
 import { Injectable, Injector } from "@angular/core";
 import { finalize } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
-import { CurrentUser } from "../common/auth/current-user";
-import { Settings } from "../common/core/config/settings.service";
+// import { CurrentUser } from "../common/auth/current-user";
+// import { Settings } from "../common/core/config/settings.service";
 import { ApiPosService } from "./api/api.service";
 import { PosModelService } from "./pos-model.service";
-import { AppConfig } from "../../environments/environment";
+// import { AppConfig } from "../../environments/environment";
 import { API_ROUTES } from "./api/api-routes.enum";
-import { OrderModelService } from '../orders/order-model.service';
-import { Orders } from '../orders/orders';
+// import { OrderModelService } from '../orders/order-model.service';
+// import { Orders } from '../orders/orders';
 import { OrderItemsModelService } from './cart/order-item-model.service';
-import { NgxService } from '../common/ngx-db/ngx-service';
-import { Stock } from '../stock/api/stock';
+// import { NgxService } from '../common/ngx-db/ngx-service';
+// import { Stock } from '../stock/api/stock';
 import { Pos } from './pos';
+import { CurrentUser } from '../importables/auth/current-user';
+import { OrderModelService } from '../importables/orders/order-model.service';
+import { Stock } from '../importables/stock/api/stock';
+import { Orders } from '../importables/orders/orders';
+import { Settings } from '../importables/config/settings.service';
+import { NgxService } from '../importables/ngx-db/ngx-service';
+import { AppConfig } from '../environments/environment.dev';
 
 export function init_app(bootstrapper: BootstrapperPos) {
   return () => bootstrapper.bootstrap();

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewEncapsulation, ChangeDetectionStrategy } from '@angular/compiler/src/core';
 import { Observable } from 'rxjs';
-import { Category } from '../../../../admin/master/categories/api/category';
 import { Select, Store } from '@ngxs/store';
-import { PosCateoriesState } from '../../../../store/states/PosCategoryStates';
-import { LocalStorage } from '../../../../common/core/services/local-storage.service';
 import { Router } from '@angular/router';
-import { CategoriesApiIndexParams } from '../../../../store/model/pos-category-state-model';
-import { SET_POS_CAT_ORDERBY, SET_POS_CAT_ORDERDIR } from '../../../../store/model/pos-category-state';
-import { LoadCategoriesEntries, ClosePosCategory } from '../../../../store/actions/pos-categories.action';
-import { CurrentUser } from '../../../../common/auth/current-user';
+import { PosCateoriesState } from 'projects/pharmacy-pos/src/lib/importables/store/states/PosCategoryStates';
+import { Category } from 'projects/pharmacy-pos/src/lib/importables/categories/api/category';
+import { CurrentUser } from 'projects/pharmacy-pos/src/lib/importables/auth/current-user';
+import { LocalStorage } from 'projects/pharmacy-pos/src/lib/importables/services/local-storage.service';
+import { ClosePosCategory, LoadCategoriesEntries } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-categories.action';
+import { CategoriesApiIndexParams } from 'projects/pharmacy-pos/src/lib/importables/store/model/pos-category-state-model';
+import { SET_POS_CAT_ORDERBY, SET_POS_CAT_ORDERDIR } from 'projects/pharmacy-pos/src/lib/importables/store/model/pos-category-state';
 
 @Component({
   selector: 'app-item-categories',
