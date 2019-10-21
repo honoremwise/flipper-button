@@ -4,9 +4,10 @@ const sql = alasql;
 
 @Component({
   selector: 'lib-pharmacy-pos',
+
   template: `
     <p>
-      pharmacy-pos works! it should reload
+      pharmacy-pos works! it is here
     </p>
   `,
   styles: []

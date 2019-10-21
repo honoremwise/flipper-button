@@ -7,6 +7,7 @@ import { PharmacyPosModule } from 'pharmacy-pos';
 import { PharmacyPosDemoComponent } from './pharmacy-pos-demo/pharmacy-pos-demo.component';
 
 @NgModule({
+
   declarations: [
     AppComponent,
     DropdemoComponent,

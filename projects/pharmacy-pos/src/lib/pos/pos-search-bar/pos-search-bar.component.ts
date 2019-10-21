@@ -22,7 +22,6 @@ import { UpdateOrderItems, OrderParms, CreateOrder } from '../../importables/sto
 // import { OrderItems } from '../cart/order_items';
 // import { PosOrderState } from '../../store/states/PosOrderStates';
 // import { Customer } from '../../customers/customer';
-
 @Component({
   selector: 'pos-search-bar',
   templateUrl: './pos-search-bar.component.html',
