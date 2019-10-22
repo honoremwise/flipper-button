@@ -1,16 +1,11 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { GuestGuard } from 'projects/pharmacy-pos/src/lib/importables/guards/guest-guard.service';
-import { PharmacyPosDemoComponent } from './pharmacy-pos-demo/pharmacy-pos-demo.component';
-const routes: Routes = [
-  {path: '', component: PharmacyPosDemoComponent, canActivate: [GuestGuard]},
-  // {path: '',
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-  // loadChildren: ()=> import('projects/pharmacy-pos/src/lib/pos/pos.module').then(m=>m.PosModule), canLoad: [GuestGuard]},
-];
+
+const routes: Routes = [];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
