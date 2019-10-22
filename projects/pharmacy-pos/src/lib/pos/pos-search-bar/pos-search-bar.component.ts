@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 import {take} from 'rxjs/operators';
 import { Select, Store } from '@ngxs/store';
 import { MatBottomSheet } from '@angular/material';
-import { Stock } from '../../importables/stock/api/stock';
 import { PosSearchStockStates } from '../../importables/store/states/PosSearchStockStates';
 import { PosStockStates } from '../../importables/store/states/PosStockStates';
 import { PosOrderState } from '../../importables/store/states/PosOrderStates';
@@ -15,7 +14,7 @@ import { LoadSearchableStockEntries } from '../../importables/store/actions/pos-
 import { BottomSheetOverviewStock } from '../pos/boottom-sheet-stock-movement/bottom-sheet-of-stock.componet';
 import { OrderItems } from '../cart/order_items';
 import { UpdateOrderItems, OrderParms, CreateOrder } from '../../importables/store/actions/pos-Order.action';
-import { Business } from '../pos';
+import { Business, Stock } from '../pos';
 // import { CurrentOrder, OrderParms, CreateOrder, UpdateOrderItems } from '../../store/actions/pos-Order.action';
 // import { Orders } from '../../orders/orders';
 // import { BottomSheetOverviewStock } from '../pos/boottom-sheet-stock-movement/bottom-sheet-of-stock.componet';

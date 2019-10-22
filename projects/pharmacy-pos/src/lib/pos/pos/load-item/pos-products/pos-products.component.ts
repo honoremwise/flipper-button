@@ -21,7 +21,6 @@ import { ApiPosService } from '../../../api/api.service';
 import { PosStockStates } from 'projects/pharmacy-pos/src/lib/importables/store/states/PosStockStates';
 import { PosCateoriesState } from 'projects/pharmacy-pos/src/lib/importables/store/states/PosCategoryStates';
 import { Category } from 'projects/pharmacy-pos/src/lib/importables/categories/api/category';
-import { Stock } from 'projects/pharmacy-pos/src/lib/importables/stock/api/stock';
 import { PosOrderState } from 'projects/pharmacy-pos/src/lib/importables/store/states/PosOrderStates';
 import { Orders } from 'projects/pharmacy-pos/src/lib/importables/orders/orders';
 import { Customer } from 'projects/pharmacy-pos/src/lib/importables/customers/customer';
@@ -29,7 +28,7 @@ import { CurrentUser } from 'projects/pharmacy-pos/src/lib/importables/auth/curr
 import { LocalStorage } from 'projects/pharmacy-pos/src/lib/importables/services/local-storage.service';
 import { OpenPosCategory } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-categories.action';
 import { UpdateOrderItems, OrderParms, CreateOrder } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-Order.action';
-import { Business } from '../../../pos';
+import { Business, Stock } from '../../../pos';
 // import { Customer } from '../../../../customers/customer';
 
 @Component({
@@ -68,7 +67,7 @@ export class PosProductsComponent implements OnInit {
   customer:Customer=null;
   bg_img: any=null;
 
-  constructor( public dialog: MatDialog,private api: ApiPosService,private bottomSheet: MatBottomSheet,public currentUser: CurrentUser,private store:Store, private route:ActivatedRoute,private localStorage: LocalStorage) {
+  constructor( public dialog: MatDialog,private bottomSheet: MatBottomSheet,public currentUser: CurrentUser,private store:Store, private route:ActivatedRoute,private localStorage: LocalStorage) {
     this.bg_img=this.currentUser.getBusiness('category')=='Pharmacy'?this.localStorage.drug_item:this.localStorage.any_item;
   }
  

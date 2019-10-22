@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {FlipperConfig} from './flipper-config';
 import * as Dot from 'dot-object';
-import    { AppHttpClient } from '../http/app-http-client.service';
+import { AppHttpClient } from '../http/app-http-client.service';
 import { Observable } from 'rxjs';
 import { AppConfig } from '../../environments/environment';
 import * as merge from 'deepmerge';
@@ -47,8 +47,9 @@ export class Settings {
     }
 
     public merge(config: object) {
-        this.all = merge(this.all, config);
+        this.all =null //merge(this.all, config);
     }
+    
     public getAssetJson(filename) :Observable<any>{
 
       return this.http.get('assets/lists/'+filename+'.json');

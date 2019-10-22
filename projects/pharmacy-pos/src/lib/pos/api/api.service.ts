@@ -4,13 +4,13 @@ import { OrderItems } from '../cart/order_items';
 import { Observable } from 'rxjs';
 import { PaginationResponse } from '../../importables/types/pagination-response';
 import { Category } from '../../importables/categories/api/category';
-import { Stock } from '../../importables/stock/api/stock';
 import { LocalStorage } from '../../importables/services/local-storage.service';
 import { AppHttpClient } from '../../importables/http/app-http-client.service';
 import { CategoriesApiIndexParams } from '../../importables/store/model/pos-category-state-model';
 import { Orders } from '../../importables/orders/orders';
 import { BackendResponse } from '../../importables/types/backend-response';
 import { StockApiIndexParams } from '../../importables/store/model/pos-stock-state-model';
+import { Stock } from '../pos';
 export interface CategoriesEntriesPaginationResponse extends PaginationResponse<Category> {
   categories?: Category[];
 }

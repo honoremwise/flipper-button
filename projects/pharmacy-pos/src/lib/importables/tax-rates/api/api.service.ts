@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { API_ROUTES_TAXRATE } from './api-routes.enum';
 import { Observable } from 'rxjs';
 import { TAXRATE } from './tax-rate';
-import { PaginationResponse } from '../../../common/core/types/pagination-response';
-import { AppHttpClient } from '../../../common/core/http/app-http-client.service';
-import { BackendResponse } from '../../../common/core/types/backend-response';
+import { PaginationResponse } from '../../types/pagination-response';
+import { AppHttpClient } from '../../http/app-http-client.service';
+import { BackendResponse } from '../../types/backend-response';
 export interface TAXRATEEntriesPaginationResponse extends PaginationResponse<TAXRATE> {
   TAXRATE?: TAXRATE;
 }

@@ -4,9 +4,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { Toast } from '../../../common/core/ui/toast.service';
 import { TAXRATE } from '../api/tax-rate';
 import { ApiTaxRateService } from '../api/api.service';
+import { Toast } from '../../ui/toast.service';
 
 export interface CrupdatTaxRateModalData {
   taxrate?: TAXRATE;

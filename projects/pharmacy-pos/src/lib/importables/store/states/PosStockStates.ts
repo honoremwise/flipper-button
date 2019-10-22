@@ -4,8 +4,8 @@ import { tap } from 'rxjs/internal/operators/tap';
 import { POS_STOCK_STATE_MODEL_DEFAULTS } from '../model/pos-stock-state';
 import { LoadStockEntries, LoadMoreStockEntries, LoadStockEntriesAction } from '../actions/pos-Stock.action';
 import { PosStockState, StockApiIndexParams } from '../model/pos-stock-state-model';
-import { Stock } from '../../stock/api/stock';
 import { ApiPosService } from '../../../pos/api/api.service';
+import { Stock } from '../../../pos/pos';
 
 @State<PosStockState>({
   name: 'STOCK',

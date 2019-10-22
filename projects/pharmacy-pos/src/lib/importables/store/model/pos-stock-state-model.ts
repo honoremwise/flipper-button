@@ -1,4 +1,4 @@
-import { Stock } from '../../stock/api/stock';
+import { Stock } from '../../../pos/pos';
 
 export interface PosStockState {
   data: Stock[];

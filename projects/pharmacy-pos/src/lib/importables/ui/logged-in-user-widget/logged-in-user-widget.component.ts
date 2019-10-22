@@ -15,7 +15,6 @@ export class LoggedInUserWidgetComponent  {
   loading:boolean=false;
   ipcRenderer: any;
     constructor(private bootstrapper: Bootstrapper,
-       @Inject(DOCUMENT) private document: Document,
       private router: Router, public currentUser: CurrentUser, public auth: AuthService) {
        
       }

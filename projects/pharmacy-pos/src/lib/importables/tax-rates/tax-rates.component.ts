@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import {  MatSort } from '@angular/material';
 import { ApiTaxRateService } from './api/api.service';
-import { UrlAwarePaginator } from '../../common/pagination/url-aware-paginator.service';
-import { PaginatedDataTableSource } from '../../data-table/data/paginated-data-table-source';
-import { Modal } from '../../common/core/ui/dialogs/modal.service';
 import { TAXRATE } from './api/tax-rate';
-import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
 import { CrupdateTaxRateModalComponent } from './crupdate-tax-rate-modal/crupdate-tax-rate-modal.component';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { GlobalVariables } from '../../common/core/global-variables';
+import { UrlAwarePaginator } from '../pagination/url-aware-paginator.service';
+import { PaginatedDataTableSource } from '../data-table/data/paginated-data-table-source';
+import { GlobalVariables } from '../global-variables';
+import { Modal } from '../dialogs/modal.service';
+import { ConfirmModalComponent } from '../ui/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-tax-rate',

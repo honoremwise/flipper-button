@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { GlobalVariables } from '../../importables/global-variables';
-// import { GlobalVariables } from '../../common/core/global-variables';
 @Component({
-  selector: "flipper-retail-pos",
+  selector: "standard-pos",
   templateUrl: "./pos.component.html",
   styleUrls: ["./pos.component.scss"],
-    // encapsulation: ViewEncapsulation.None,
-    // changeDetection: ChangeDetectionStrategy.OnPush
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PosComponent implements OnInit {
   public appearance;

@@ -4,14 +4,13 @@ import { Observable } from 'rxjs';
 // import { MasterModelService } from '../../admin/master/master-model.service';
 // import { Category } from '../../admin/master/categories/api/category';
 // import { Stock } from '../../stock/api/stock';
-import { Pos, Business } from '../pos';
+import { Pos, Business, Stock } from '../pos';
 import { ApiPosService } from '../api/api.service';
 import { finalize } from 'rxjs/operators';
 import { PosModelService } from '../pos-model.service';
 import { OrderItemsModelService } from '../cart/order-item-model.service';
 import { OrderItems } from '../cart/order_items';
 import { Category } from '../../importables/categories/api/category';
-import { Stock } from '../../importables/stock/api/stock';
 import { Orders } from '../../importables/orders/orders';
 import { CurrentUser } from '../../importables/auth/current-user';
 import { CustomerType } from '../../importables/customerType/api/CustomerType';
@@ -174,9 +173,9 @@ if(stocks.length > 0){
     const cats = [];
     if (cat.length > 0) {
       for (let i = 0; i < cat.length; i++) {
-        if (!cats.includes(cat[i])) {
-          cats.push(cat[i]);
-        }
+        // if (!cats.includes(cat[i])) {
+        //   cats.push(cat[i]);
+        // }
       }
     }
     return cats;
@@ -262,9 +261,9 @@ saveToCartWithOrder(cart,stock:Stock){
                           if (item.id===order_item.id){
                                ordered_items[i] = order_item;
                           }else{
-                            if (!ordered_items.includes(order_item)) {
-                                    ordered_items.unshift(order_item);
-                            }
+                            // if (!ordered_items.includes(order_item)) {
+                            //         ordered_items.unshift(order_item);
+                            // }
                           }
                     });
 

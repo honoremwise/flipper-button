@@ -1,5 +1,5 @@
-import { Stock } from '../../stock/api/stock';
 import { StockApiIndexParams } from '../model/pos-stock-state-model';
+import { Stock } from '../../../pos/pos';
 
 export class LoadStockEntries implements LoadStockEntriesAction{
   static readonly type = '[STOCK] Load Stock Entries';
