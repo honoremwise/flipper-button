@@ -1,4 +1,4 @@
-import { Category } from '../../admin/master/categories/api/category';
+import { Category } from '../../categories/api/category';
 
 export interface PosCategoryState {
   data: Category[];

@@ -1,12 +1,12 @@
 import { Directive, ElementRef } from '@angular/core';
-import { InfiniteScroll } from '../../common/core/ui/infinite-scroll/infinite.scroll';
-import { Store } from '@ngxs/store';
-import { PosCateoriesState } from '../../store/states/PosCategoryStates';
-import { LoadMoreCategoriesEntries } from '../../store/actions/pos-categories.action';
 import { ActivatedRoute } from '@angular/router';
-import { LocalStorage } from '../../common/core/services/local-storage.service';
-import { PosStockStates } from '../../store/states/PosStockStates';
-import { LoadMoreStockEntries } from '../../store/actions/pos-Stock.action';
+import { InfiniteScroll } from '../../importables/ui/infinite-scroll/infinite.scroll';
+import { Store } from '@ngxs/store';
+import { LocalStorage } from '../../importables/services/local-storage.service';
+import { PosCateoriesState } from '../../importables/store/states/PosCategoryStates';
+import { LoadMoreCategoriesEntries } from '../../importables/store/actions/pos-categories.action';
+import { PosStockStates } from '../../importables/store/states/PosStockStates';
+import { LoadMoreStockEntries } from '../../importables/store/actions/pos-Stock.action';
 
 @Directive({
   selector: '[posInfiniteScroll]'

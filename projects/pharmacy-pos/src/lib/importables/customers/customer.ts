@@ -1,4 +1,4 @@
-import { CustomerType } from '../setup/customerType/api/CustomerType';
+import { CustomerType } from '../customerType/api/CustomerType';
 
 export interface Customer {
   full_name?: string;

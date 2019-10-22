@@ -2,16 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
-import { UiModule } from '../common/core/ui/ui.module';
 import { CrupdateCustomerModelComponent } from './manage-customer/manage-customer.component';
-import { HttpModule } from '../common/core/http/http.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomerRoutingModule } from './customer-routing.module';
 import { DataTableModule } from '../data-table/data-table/data-table.module';
 import { SelectCustomerModelComponent } from './manage-customer/select-customer-model/select-customer-model.component';
 import { CustomersComponent } from './customer/customer.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
-import { SetupModule } from '../setup/setup.module';
+import { UiModule } from '../ui/ui.module';
+import { HttpModule } from '../http/http.module';
+import { CustomerTypeComponent } from '../customerType/customertype.component';
+import { AttachItemCustomerTypesModelComponent } from '../customerType/attach-item-customer-types-model/attach-item-customer-types-model.component';
+import { CrupdateCustomerTypeModalComponent } from '../customerType/crupdate-customet-type-modal/crupdate-customer-type-modal.component';
+import { SelectCustomerTypeModelComponent } from '../customerType/select-customer-type-model/select-customer-type-model.component';
 
 @NgModule({
   imports: [
@@ -23,12 +26,17 @@ import { SetupModule } from '../setup/setup.module';
     HttpClientModule,
     HttpModule,
     CustomerRoutingModule,
-    DataTableModule,
-    SetupModule
+    DataTableModule
   ],
-  declarations: [CustomersComponent, CrupdateCustomerModelComponent, SelectCustomerModelComponent],
-  exports: [CustomersComponent,CrupdateCustomerModelComponent,SelectCustomerModelComponent],
-  entryComponents: [CrupdateCustomerModelComponent,SelectCustomerModelComponent],
+  declarations: [CustomersComponent, CrupdateCustomerModelComponent, SelectCustomerModelComponent,CustomerTypeComponent,
+    AttachItemCustomerTypesModelComponent,CrupdateCustomerTypeModalComponent,SelectCustomerTypeModelComponent],
+  exports: [
+    CustomersComponent,
+    CrupdateCustomerModelComponent,
+    SelectCustomerModelComponent,
+    CustomerTypeComponent,
+    AttachItemCustomerTypesModelComponent,CrupdateCustomerTypeModalComponent,SelectCustomerTypeModelComponent],
+  entryComponents: [CrupdateCustomerModelComponent,SelectCustomerModelComponent,AttachItemCustomerTypesModelComponent,CrupdateCustomerTypeModalComponent,SelectCustomerTypeModelComponent],
   bootstrap: [CustomersComponent],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}

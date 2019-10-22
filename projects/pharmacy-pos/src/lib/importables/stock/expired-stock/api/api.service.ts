@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { PaginationResponse } from '../../../common/core/types/pagination-response';
-import { AppHttpClient } from '../../../common/core/http/app-http-client.service';
-import { BackendResponse } from '../../../common/core/types/backend-response';
 import { StockExpired } from './expired-stock';
 import { API_ROUTES_EXPITEDITEM } from './api-routes.enum';
 import { StockApiIndexParams } from '../../../store/model/pos-stock-expired-state-model';
-import { LocalStorage } from '../../../common/core/services/local-storage.service';
-import { ExpirationSetting } from '../../../setup/expiration_setting/api/expiration_setting';
+import { PaginationResponse } from '../../../types/pagination-response';
+import { AppHttpClient } from '../../../http/app-http-client.service';
+import { LocalStorage } from '../../../services/local-storage.service';
+import { BackendResponse } from '../../../types/backend-response';
 export interface StockEntriesPaginationResponse extends PaginationResponse<StockExpired> {
   stocks?: StockExpired[];
 }
-export interface ExpirationSettingEntriesPaginationResponse extends PaginationResponse<ExpirationSetting> {
-  period?: ExpirationSetting[];
+export interface ExpirationSettingEntriesPaginationResponse extends PaginationResponse<any> {
+  period?: any[];
 }
 @Injectable({
     providedIn: 'root'

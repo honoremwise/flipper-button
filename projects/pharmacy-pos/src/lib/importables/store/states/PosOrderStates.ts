@@ -6,8 +6,6 @@ import { POS_ORDER_STATE_MODEL_DEFAULTS } from '../model/pos-order-state';
 import { LoadOrderEntriesAction, LoadMoreOrderEntries, LoadOrderEntries, OrderAction, CurrentOrder, LoadCurrentOrder, CustomerOrder, CustomerAction, CreateInvoice, InvoiceAction, InvoiceDetails, UpdateCurrentOrder, CreateOrder, OrderParmsAction, UpdateOrderItems, OrderItemsAction, UpdateOrder, DeleteOrder, DeleteOrderItems } from '../actions/pos-Order.action';
 import { ApiOrderService } from '../../orders/orders/api/api.service';
 import { Orders } from '../../orders/orders';
-import { finalize } from 'rxjs/operators';
-import { Invoice } from '../../invoices/invoice';
 
 @State<PosOrdersState>({
   name: 'ORDER',
@@ -101,7 +99,7 @@ export class PosOrderState {
     ctx.patchState({ loading: true });
 
    return this.api.createInvoice(action.invoice).pipe(tap(response => {
-        this.store.dispatch(new InvoiceDetails(response as Invoice));
+        this.store.dispatch(new InvoiceDetails(response as any));
          this.store.dispatch(new CurrentOrder());
         return this;
     }));

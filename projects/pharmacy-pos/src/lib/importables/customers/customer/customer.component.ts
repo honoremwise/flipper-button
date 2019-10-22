@@ -4,13 +4,13 @@ import { Customer } from '../customer';
 import { MatSort } from '@angular/material';
 import { PaginatedDataTableSource } from '../../data-table/data/paginated-data-table-source';
 import { BehaviorSubject } from 'rxjs';
-import { UrlAwarePaginator } from '../../common/pagination/url-aware-paginator.service';
-import { Modal } from '../../common/core/ui/dialogs/modal.service';
 import { finalize } from 'rxjs/operators';
-import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
 import { CrupdateCustomerModelComponent } from '../manage-customer/manage-customer.component';
-import { GlobalVariables } from '../../common/core/global-variables';
-import { LocalStorage } from '../../common/core/services/local-storage.service';
+import { UrlAwarePaginator } from '../../pagination/url-aware-paginator.service';
+import { GlobalVariables } from '../../global-variables';
+import { Modal } from '../../ui/dialogs/modal.service';
+import { ConfirmModalComponent } from '../../ui/confirm-modal/confirm-modal.component';
+import { LocalStorage } from '../../services/local-storage.service';
 @Component({
   selector: 'app-customers',
   templateUrl: './customer.component.html',

@@ -1,12 +1,13 @@
 import { PosCategoryState, CategoriesApiIndexParams } from '../model/pos-category-state-model';
-import { ApiPosService } from '../../pos/api/api.service';
 import { POS_CATEGORY_STATE_MODEL_DEFAULTS } from '../model/pos-category-state';
  import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { LoadCategoriesEntriesAction, LoadMoreCategoriesEntries, LoadCategoriesEntries, OpenPosCategory, CategoryIdAction, ClosePosCategory } from '../actions/pos-categories.action';
-import { tap } from 'rxjs/internal/operators/tap';import { Category } from '../../admin/master/categories/api/category';
 import { LoadStockEntries } from '../actions/pos-Stock.action';
 import { SET_POS_STOCK_ORDERBY, SET_POS_STOCK_ORDERDIR } from '../model/pos-stock-state';
 import { StockApiIndexParams } from '../model/pos-stock-state-model';
+import { ApiPosService } from '../../../pos/api/api.service';
+import { tap } from 'rxjs/operators';
+import { Category } from '../../categories/api/category';
 ;
 @State<PosCategoryState>({
   name: 'CATEGORY',

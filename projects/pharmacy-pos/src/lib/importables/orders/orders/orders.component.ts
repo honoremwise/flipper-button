@@ -2,15 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Orders } from '../orders';
 import { Observable, Subject } from 'rxjs';
 import { OrderModelService } from '../order-model.service';
-import { PosModelService } from '../../pos/pos-model.service';
-import { Pos } from '../../pos/pos';
-import { OrderItemsModelService } from '../../pos/cart/order-item-model.service';
-import { OrderItems } from '../../pos/cart/order_items';
-import { ApiPosService } from '../../pos/api/api.service';
-import { NgxService } from '../../common/ngx-db/ngx-service';
-import { CurrentUser } from '../../common/auth/current-user';
-import { Business } from '../../business/api/business';
 import { Router } from '@angular/router';
+import { Pos } from '../../../pos/pos';
+import { OrderItems } from '../../../pos/cart/order_items';
+import { CurrentUser } from '../../auth/current-user';
+import { ApiPosService } from '../../../pos/api/api.service';
+import { OrderItemsModelService } from '../../../pos/cart/order-item-model.service';
+import { PosModelService } from '../../../pos/pos-model.service';
+import { NgxService } from '../../ngx-db/ngx-service';
 
 @Component({
   selector: 'app-orders',
@@ -27,7 +26,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   ordered_orders: Orders[] = [];
   panelOpenState = false;
   order_items$: Observable<OrderItems[]>;
-  business: Business;
+  business: any;
   routeLinks: any[];
   activeLinkIndex = -1;
   constructor(public currentUser: CurrentUser,private api: ApiPosService, private orderItemModelService: OrderItemsModelService, private orderModelService: OrderModelService, private posModelService: PosModelService, private db: NgxService,private router: Router) {

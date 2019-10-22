@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
 import { HttpErrorHandler } from "./errors/http-error-handler.service";
 import { catchError } from "rxjs/operators";
 import { Settings } from "../config/settings.service";
-import { AppConfig } from "../../../../environments/environment";
+import { AppConfig } from '../../environments/environment';
 
 @Injectable({
   providedIn: "root"

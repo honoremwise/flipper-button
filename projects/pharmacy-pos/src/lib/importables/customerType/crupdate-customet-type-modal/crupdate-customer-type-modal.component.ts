@@ -6,7 +6,7 @@ import { ApiCustomerTypeService } from '../api/api.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { CustomerType } from '../api/CustomerType';
-import { Toast } from '../../../common/core/ui/toast.service';
+import { Toast } from '../../ui/toast.service';
 
 export interface CrupdatCustomerTypeModalData {
   customertype?: CustomerType;

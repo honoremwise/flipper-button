@@ -6,13 +6,12 @@ import { RequestExtraCredentialsModalComponent } from "./request-extra-credentia
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Router } from "@angular/router";
-import { UiModule } from "../core/ui/ui.module";
-import { MaterialModule } from "../../material/material.module";
 import { ChangePasswordComponent } from "./reset-password/change-password/change-password.component";
 import { EmailVerifyComponent } from "./login/email-verify/email-verify.component";
 import { PasswordVerifyComponent } from "./login/password-verify/password-verify.component";
-import { TitleBarModule } from '../../title-bar/title-bar.module';
-import { GlobalVariables } from '../core/global-variables';
+import { UiModule } from '../ui/ui.module';
+import { MaterialModule } from '../material/material.module';
+import { GlobalVariables } from '../global-variables';
 
 @NgModule({
   imports: [

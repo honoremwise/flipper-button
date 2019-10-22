@@ -1,9 +1,6 @@
 import { Social } from './Social';
 import { SocialProfile } from './SocialProfile';
 import { Role } from './Role';
-import { Business } from '../../../../business/api/business';
-import { Branch } from '../../../../admin/master/branch/api/branch';
-import { NavItem } from '../../../../nav-menu-bar/nav-item';
 
 export class Plan {
     id: number;
@@ -81,8 +78,8 @@ export class User {
     is_subscribed?: boolean;
     confirmed?: true;
     roles?: Role[]=[];
-    business?: Business[]=[];
-    branches?: Branch[]=[];
+    business?: any[]=[];
+    branches?: any[]=[];
     has_business_belongs?: boolean;
     social_profiles?: SocialProfile[];
     has_password?: boolean;
@@ -110,16 +107,16 @@ export class User {
     }
 }
     export class UserData {
-        business?:Business;
+        business?:any;
         roles?: Role[]=[];
         user_logged_in?:User;
         user_logged_role?:Role;
-        switched_branch?:Branch;
+        switched_branch?:any;
         permissions?:any;
         has_business_belongs?: boolean;
-        menus?:NavItem[]=[];
+        menus?:any[]=[];
         social_profiles?: SocialProfile[];
-        user_branches?:Branch[];
+        user_branches?:any[];
         constructor(params: Object = {}) {
             for (let name in params) {
                 this[name] = params[name];

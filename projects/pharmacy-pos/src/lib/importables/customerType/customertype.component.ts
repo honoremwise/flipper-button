@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ApiCustomerTypeService } from './api/api.service';
 import { CustomerType } from './api/CustomerType';
-import { UrlAwarePaginator } from '../../common/pagination/url-aware-paginator.service';
-import { Modal } from '../../common/core/ui/dialogs/modal.service';
-import { PaginatedDataTableSource } from '../../data-table/data/paginated-data-table-source';
-import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
 import { CrupdateCustomerTypeModalComponent } from './crupdate-customet-type-modal/crupdate-customer-type-modal.component';
 import { MatSort } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { GlobalVariables } from '../../common/core/global-variables';
+import { GlobalVariables } from '../global-variables';
+import { Modal } from '../ui/dialogs/modal.service';
+import { ConfirmModalComponent } from '../ui/confirm-modal/confirm-modal.component';
+import { UrlAwarePaginator } from '../pagination/url-aware-paginator.service';
+import { PaginatedDataTableSource } from '../data-table/data/paginated-data-table-source';
 
 @Component({
   selector: 'app-customertype',

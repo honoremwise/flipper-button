@@ -3,11 +3,10 @@
 import { tap } from 'rxjs/internal/operators/tap';
 import { StockApiIndexParams } from '../model/pos-stock-state-model';
 import { PosStockExpiredState } from '../model/pos-stock-expired-state-model';
-import { PosStockStates } from './PosStockStates';
 import { POS_STOCK_EXPIRED_STATE_MODEL_DEFAULTS } from '../model/pos-stock-expired-state';
 import { LoadStockExpiredEntries, LoadMoreStockExpiredEntries, LoadStockEntriesAction } from '../actions/pos-Stock-Expired.action';
-import { ApiExpiredItemService } from '../../stock/expired-stock/api/api.service';
 import { StockExpired } from '../../stock/expired-stock/api/expired-stock';
+import { ApiExpiredItemService } from '../../stock/expired-stock/api/api.service';
 
 @State<PosStockExpiredState>({
   name: 'STOCKEXPIRED',

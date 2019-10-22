@@ -3,13 +3,13 @@ import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material';
 import { RequestExtraCredentialsModalComponent } from './request-extra-credentials-modal/request-extra-credentials-modal.component';
 import { CurrentUser } from './current-user';
-import { Settings } from '../core/config/settings.service';
-import { Toast } from '../core/ui/toast.service';
+import { AppHttpClient } from '../http/app-http-client.service';
+import { Toast } from '../ui/toast.service';
 import { AuthService } from './auth.service';
-import { Translations } from '../core/translations/translations.service';
-import { Modal } from '../core/ui/dialogs/modal.service';
-import { User } from '../core/types/models/User';
-import { AppHttpClient } from '../core/http/app-http-client.service';
+import { Translations } from '../translations/translations.service';
+import { Modal } from '../ui/dialogs/modal.service';
+import { User } from '../types/models/User';
+import { Settings } from '../config/settings.service';
 
 @Injectable({
     providedIn: 'root',

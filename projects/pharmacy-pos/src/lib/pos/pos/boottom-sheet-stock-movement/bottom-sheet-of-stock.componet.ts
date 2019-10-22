@@ -3,7 +3,7 @@ import { Component, Inject } from '@angular/core';
 @Component({
   selector: 'bottom-sheet-of-stock',
   templateUrl: 'bottom-sheet-of-stock.componet.html',
-  styleUrls: ['sale-point/sale-point.component.scss'],
+  styleUrls: ['sale-point.component.scss'],
 })
 export class BottomSheetOverviewStock {
 stocks:any[]=[];

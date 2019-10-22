@@ -1,10 +1,7 @@
 import { EventEmitter, Injectable } from "@angular/core";
-import { User, UserData } from "../core/types/models/User";
-import { Branch } from '../../admin/master/branch/api/branch';
-import { Role } from '../core/types/models/Role';
-import { Business } from '../../business/api/business';
-import { LocalStorage } from '../core/services/local-storage.service';
-import { NavItem } from '../../nav-menu-bar/nav-item';
+import { User, UserData } from '../types/models/User';
+import { Branch, Business, NavItem } from '../../pos/pos';
+import { Role } from '../types/models/Role';
 
 @Injectable({
   providedIn: "root"
@@ -55,7 +52,7 @@ export class CurrentUser {
    * Get property of currently logged in user model.
    */
   user: User;
-  branch:Branch;
+  branch:Branch[];
   user_role:Role[];
   business:Business;
   receipt:any;

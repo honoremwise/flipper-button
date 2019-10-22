@@ -2,12 +2,10 @@ import { Injectable, Injector, EventEmitter } from "@angular/core";
 import { Customer } from "./customer";
 import { ModelFactory, Model } from "ngx-model";
 import { Observable } from "rxjs";
-import { Sqlite3Service } from '../common/sqlit3/sqlite3.service';
 // import { ElectronService } from 'ngx-electron';
 import { Orders } from '../orders/orders';
-import { catchError } from 'rxjs/operators';
-import { PaginationResponse } from '../common/core/types/pagination-response';
-import { HttpCacheClient } from '../common/core/http/http-cache-client';
+import { HttpCacheClient } from '../http/http-cache-client';
+import { PaginationResponse } from '../types/pagination-response';
 
 
 @Injectable({

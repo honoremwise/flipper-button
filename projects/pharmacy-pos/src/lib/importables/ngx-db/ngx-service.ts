@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Model, ModelFactory } from 'ngx-model';
 import { Observable, from } from 'rxjs';
-import { Customer } from '../../customers/customer';
 // import PouchDB from 'pouchdb';
 import { EventEmitter } from '@angular/core';
-import { Orders } from '../../orders/orders';
+import { Customer } from '../customers/customer';
+import { Orders } from '../orders/orders';
 @Injectable({
   providedIn: 'root'
 })

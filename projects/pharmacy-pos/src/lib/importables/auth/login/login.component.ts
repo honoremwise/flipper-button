@@ -7,8 +7,7 @@ import {
   OnInit
 } from "@angular/core";
 import * as Raven from "raven-js";
-// import { ElectronService } from 'ngx-electron';
-import { GlobalVariables } from '../../core/global-variables';
+import { GlobalVariables } from '../../global-variables';
 Raven.config(
   "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
 ).install();
@@ -43,6 +42,6 @@ export class LoginComponent implements OnInit {
     this.rest_password = $event.rest_password;
   }
   isElectron = () => {
-    return window && window.process && window.process.type;
+    return false; //window && window.process && window.process.type;
   };
 }

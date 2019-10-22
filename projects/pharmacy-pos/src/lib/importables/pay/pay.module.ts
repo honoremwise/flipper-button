@@ -7,8 +7,10 @@ import { PayComponent } from './pay/pay.component';
 // import { PayRoutingModule } from '../routing/pay-routing.module';
 import { NgxsModule } from '@ngxs/store';
 import { PosOrderState } from '../store/states/PosOrderStates';
-// import { PrintOutModule } from '../print-out/print-out.module';
-// import { PipeModuleModule } from '../../pipe-module/pipe-module.module';
+import { UiModule } from '../ui/ui.module';
+import { PrintOutModule } from '../print-out/print-out.module';
+import { PipeModuleModule } from '../pipe-module/pipe-module.module';
+import { PayRoutingModule } from './pay-routing.module';
 
 @NgModule({
   declarations: [PayComponent],

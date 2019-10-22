@@ -1,10 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, Inject } from "@angular/core";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
-import { GlobalVariables } from "../../../core/global-variables";
-import { AuthService } from "../../auth.service";
-import { Settings } from "../../../core/config/settings.service";
-import { ElectronService } from '../../../core/config/electron.service';
 import { DOCUMENT } from '@angular/common';
+import { Settings } from '../../../config/settings.service';
+import { AuthService } from '../../auth.service';
+import { GlobalVariables } from '../../../global-variables';
 
 // import { ElectronService } from "ngx-electron";
 @Component({
@@ -24,7 +23,6 @@ export class EmailVerifyComponent {
     public settings: Settings,
     private auth: AuthService,
     public v: GlobalVariables,
-    public electronService: ElectronService,
     @Inject(DOCUMENT) private document: Document,
   ) {
     this.emailForm = new FormGroup({
@@ -77,10 +75,7 @@ export class EmailVerifyComponent {
     }
   }
   public openRegister() {
-    if (this.electronService.isElectron) {
-       this.electronService.shell.openExternal("https://yegobox.com/register");
-    } else{
-      this.document.location.href="https://yegobox.com/register";
-    }
+      return window.location.href="https://yegobox.com/register";
+  
   }
 }

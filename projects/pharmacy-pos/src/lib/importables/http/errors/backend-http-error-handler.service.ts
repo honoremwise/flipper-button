@@ -4,7 +4,7 @@ import {Toast} from '../../ui/toast.service';
 import {Translations} from '../../translations/translations.service';
 import {HttpErrorHandler} from './http-error-handler.service';
 import { BackendErrorResponse } from '../../types/backend-error-response';
-import { CurrentUser } from '../../../auth/current-user';
+import { CurrentUser } from '../../auth/current-user';
 
 @Injectable({
     providedIn: 'root'

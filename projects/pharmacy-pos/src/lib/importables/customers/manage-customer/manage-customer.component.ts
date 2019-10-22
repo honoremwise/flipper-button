@@ -5,9 +5,9 @@ import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { CustomerService } from '../customer.service';
-import { Toast } from '../../common/core/ui/toast.service';
-import { Modal } from '../../common/core/ui/dialogs/modal.service';
-import { SelectCustomerTypeModalComponent } from '../../setup/select-customer-type-modal/select-customer-type-modal.component';
+import { Toast } from '../../ui/toast.service';
+import { Modal } from '../../ui/dialogs/modal.service';
+import { SelectCustomerTypeModalComponent } from '../../select-customer-type-modal/select-customer-type-modal.component';
 export interface CrupdatCustomerModalData {
   customer?: Customer;
 }

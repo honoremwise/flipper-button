@@ -1,5 +1,5 @@
-@import "../../app_sass/variables";
-@import "../../app_sass/modal.scss";
+@import "../../importables/app_sass/variables";
+@import "../../importables/app_sass/modal.scss";
 
 .isactive {
   color: $site-primary-color-100;

@@ -1,14 +1,14 @@
-import { Item } from '../../admin/master/items/api/item';
-import { Category } from '../../admin/master/categories/api/category';
-import { Reason } from '../../setup/reasons/api/reason';
-import { TAXRATE } from '../../setup/tax-rates/api/tax-rate';
-import { CustomerTypePrices } from '../../setup/customerType/api/CustomerTypePrices';
-import { CustomerType } from '../../setup/customerType/api/CustomerType';
+import { CustomerTypePrices } from '../../customerType/api/CustomerTypePrices';
+import { CustomerType } from '../../customerType/api/CustomerType';
+import { TAXRATE } from '../../tax-rates/api/tax-rate';
+import { Category } from '../../categories/api/category';
+import { Item } from '../../../pos/api/item';
+
 
 
 export class Stock {
   id?: number;
-  stock_transctions: [{ id: number, stock_id: number, quantity: number,batch_no?:string, unit_price?:any;currency?:string;type: string, transaction: string, comments: string, transction_date: string, branch_id: number, created_at: string, updated_at: string,reason_id?:number;reason?:Reason }];
+  stock_transctions: [{ id: number, stock_id: number, quantity: number,batch_no?:string, unit_price?:any;currency?:string;type: string, transaction: string, comments: string, transction_date: string, branch_id: number, created_at: string, updated_at: string,reason_id?:number;reason?:any }];
   customer_type_items?:CustomerTypePrices[]=[];
   customer_price?:CustomerTypePrices;
   customer_type?:CustomerType;
@@ -63,7 +63,7 @@ export class StockMovements {
        created_at: string;
         updated_at: string;
         reason_id?:number;
-        reason?:Reason;
+        reason?:any;
         transction_date?:Date;
         manufacture_date?:Date;
         expired_date?:Date;

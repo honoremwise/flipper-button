@@ -1,9 +1,9 @@
-import { OrderItems } from '../pos/cart/order_items';
+
 import { Customer } from '../customers/customer';
-import { CustomerType } from '../setup/customerType/api/CustomerType';
-import { Invoice } from '../invoices/invoice';
-import { Supplier } from '../admin/master/suppliers/api/supplier';
-import { Branch } from '../admin/master/branch/api/branch';
+import { CustomerType } from '../customerType/api/CustomerType';
+import { OrderItems } from '../../pos/cart/order_items';
+import { Invoice } from '../pay/pay';
+import { Branch } from '../../pos/pos';
 
 export class Orders {
 
@@ -31,7 +31,7 @@ export class Orders {
   transfer_from_id?:number;
   order_from_id?:number;
   delicerTo?:Branch;
-  supplier?:Supplier;
+  supplier?:any;
 
   constructor(params: Object = {}) {
     for (let name in params) {

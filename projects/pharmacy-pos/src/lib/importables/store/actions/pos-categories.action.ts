@@ -1,6 +1,6 @@
 import{Action} from'@ngrx/store';
-import { Category } from '../../admin/master/categories/api/category';
 import { CategoriesApiIndexParams } from '../model/pos-category-state-model';
+import { Category } from '../../categories/api/category';
 
 export class LoadCategoriesEntries implements LoadCategoriesEntriesAction{
   static readonly type = '[CATEGORY] Load Categories Entries';

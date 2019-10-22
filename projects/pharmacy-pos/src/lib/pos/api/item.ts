@@ -1,6 +1,6 @@
-import { CustomerType } from '../../setup/customerType/api/CustomerType';
-import { Brand } from '../../admin/master/brands/api/brand';
-import { TAXRATE } from '../../setup/tax-rates/api/tax-rate';
+import { CustomerType } from '../../importables/customerType/api/CustomerType';
+
+
 
 export class Item {
   id?:number;
@@ -17,8 +17,8 @@ export class Item {
   unit_sale?:number;
   currency?:string;
   customer_type_items?:CustomerType;
-  brand?:Brand;
-  tax_rate?:TAXRATE;
+  brand?:any;
+  tax_rate?:any;
   cost_price_excluding_tax?:number;
   cost_price_including_tax?:number;
   margin?:number;

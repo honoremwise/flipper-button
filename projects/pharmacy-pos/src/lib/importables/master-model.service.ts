@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Model, ModelFactory } from 'ngx-model';
-import { Master } from './master';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MasterModelService {
 
-  master$: Observable<Master>;
-  private model: Model<Master>;
-  constructor(private modelFactory: ModelFactory<Master>) {
+  master$: Observable<any>;
+  private model: Model<any>;
+  constructor(private modelFactory: ModelFactory<any>) {
     this.create();
     this.master$ = this.model.data$;
    }
-   public create(stateCreation:Master={loading:false,items:[],categories:[],brands:[],branchs:[]}){
+   public create(stateCreation:any={loading:false,items:[],categories:[],brands:[],branchs:[]}){
     this.model = this.modelFactory.create(stateCreation);
    }
 

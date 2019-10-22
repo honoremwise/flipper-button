@@ -1,10 +1,10 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {FlipperConfig} from './flipper-config';
 import * as Dot from 'dot-object';
-import merge from 'deepmerge';
-import { AppHttpClient } from '../http/app-http-client.service';
+import    { AppHttpClient } from '../http/app-http-client.service';
 import { Observable } from 'rxjs';
-import { AppConfig } from '../../../../environments/environment';
+import { AppConfig } from '../../environments/environment';
+import * as merge from 'deepmerge';
 
 @Injectable({
     providedIn: 'root',

@@ -29,7 +29,7 @@ import { CurrentUser } from 'projects/pharmacy-pos/src/lib/importables/auth/curr
 import { LocalStorage } from 'projects/pharmacy-pos/src/lib/importables/services/local-storage.service';
 import { OpenPosCategory } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-categories.action';
 import { UpdateOrderItems, OrderParms, CreateOrder } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-Order.action';
-import { Business } from 'projects/pharmacy-pos/src/lib/importables/business/api/business';
+import { Business } from '../../../pos';
 // import { Customer } from '../../../../customers/customer';
 
 @Component({

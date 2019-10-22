@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { CurrentUser } from '../auth/current-user';
-import { Settings } from '../core/config/settings.service';
+import { Settings } from '../config/settings.service';
 
 @Injectable({
     providedIn: 'root',

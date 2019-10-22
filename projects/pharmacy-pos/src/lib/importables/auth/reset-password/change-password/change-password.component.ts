@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Validators, FormGroup, FormControl } from "@angular/forms";
 import { AuthService } from "../../auth.service";
-import { Settings } from "../../../core/config/settings.service";
-import { CurrentUser } from "../../current-user";
-import { Toast } from "../../../core/ui/toast.service";
-import { GlobalVariables } from "../../global-variables";
-import { BootstrapData, Bootstrapper } from '../../../core/bootstrapper.service';
+import { Settings } from '../../../config/settings.service';
+import { Toast } from '../../../ui/toast.service';
+import { CurrentUser } from '../../current-user';
+import { GlobalVariables } from '../../../global-variables';
+import { Bootstrapper } from '../../../bootstrapper.service';
 
 @Component({
   selector: "app-change-password",

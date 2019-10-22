@@ -1,8 +1,8 @@
 import { Orders } from '../../orders/orders';
 import {OrdersApiIndexParams} from '../model/pos-order-state-model';
 import { Customer } from '../../customers/customer';
-import { Invoice } from '../../invoices/invoice';
-import { OrderItems } from '../../pos/cart/order_items';
+import { Invoice } from '../../pay/pay';
+import { OrderItems } from '../../../pos/cart/order_items';
 
 export class LoadOrderEntries implements LoadOrderEntriesAction{
   static readonly type = '[ORDER] Load Order Entries';

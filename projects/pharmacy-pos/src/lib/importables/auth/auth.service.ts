@@ -1,15 +1,13 @@
 import { Injectable, NgZone } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { CurrentUser } from "./current-user";
-import { Toast } from "../core/ui/toast.service";
-import { User } from "../core/types/models/User";
 import { Observable } from "rxjs";
-import { Settings } from "../core/config/settings.service";
-import { AppHttpClient } from "../core/http/app-http-client.service";
-import { ApiService } from "../../api/api.service";
-import { YLocalStorage } from "../classes/local-storage";
-import { GlobalVariables } from "../core/global-variables";
-import { BootstrapData } from '../core/bootstrapper.service';
+import { AppHttpClient } from '../http/app-http-client.service';
+import { Toast } from '../ui/toast.service';
+import { GlobalVariables } from '../global-variables';
+import { Settings } from '../config/settings.service';
+import { User } from '../types/models/User';
+import { LocalStorage } from '../services/local-storage.service';
 
 @Injectable({
   providedIn: "root"
@@ -36,8 +34,7 @@ export class AuthService {
     protected toast: Toast = null,
     protected zone: NgZone = null,
     private v: GlobalVariables = null,
-    private api: ApiService = null,
-    private localstorage: YLocalStorage = null,
+    private localstorage: LocalStorage = null,
     protected config: Settings = null
   ) {
     this.redirectUri = this.config.get("vebto.auth.redirectUri");
@@ -111,13 +108,13 @@ export class AuthService {
   //TOO: i kept their login and tried to embed our own logic too! try to find common ground
 
   sendToken(token: string) {
-    this.localstorage.save("auth_token", token);
+   // this.localstorage.save("auth_token", token);
     return true;
   }
 
   setRedirectUrl(url) {
     if (url) {
-      this.localstorage.save("redirect_url", url);
+     // this.localstorage.save("redirect_url", url);
     }
   }
   getRedirectUrl() {
@@ -138,7 +135,7 @@ export class AuthService {
     }
   }
   getLoggedUser() {
-    return this.api.getLoggedUser(this.getToken());
+   // return this.api.getLoggedUser(this.getToken());
   }
   // logout() {
   //   this.clearAll();

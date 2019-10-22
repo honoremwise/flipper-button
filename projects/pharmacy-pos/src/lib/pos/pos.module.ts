@@ -1,79 +1,110 @@
 import {
-  NgModule,
+  NgModule, CUSTOM_ELEMENTS_SCHEMA,
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SalePointComponent } from "./sale-point/sale-point.component";
 import { SessionsComponent } from "./sessions/sessions.component";
-import { MaterialModule } from "../material/material.module";
 import { PosComponent } from "./pos/pos.component";
 import { PosRoutingModule } from "./pos-routing.module";
-import { UiModule } from "../common/core/ui/ui.module";
 
 import { CartItemComponent, CartDialog } from "./cart-item/cart-item.component";
 import { ApiPosService } from "./api/api.service";
 
 import {  HttpClientModule } from "@angular/common/http";
-import { CustomersModule } from '../customers/customers.module';
-import { InvoicesModule } from '../invoices/invoices.module';
 import { PosInfiniteScrollDirective } from './pos/pos-infinite-scroll.directive';
-import { HttpModule } from '../common/core/http/http.module';
-import { NgxsModule } from '@ngxs/store';
+import { NgxsModule, NgxsModuleOptions, NoopNgxsExecutionStrategy } from '@ngxs/store';
 import { ItemCategoriesComponent } from './pos/load-item/item-categories/item-categories.component';
-import { PosCateoriesState } from '../store/states/PosCategoryStates';
 import { PosProductsComponent } from './pos/load-item/pos-products/pos-products.component';
-import { PosStockStates } from '../store/states/PosStockStates';
 import { ListItemHeaderComponent } from './pos/list-item-header/list-item-header.component';
-import { PosOrderState } from '../store/states/PosOrderStates';
 import { BottomSheetOverviewStock } from './pos/boottom-sheet-stock-movement/bottom-sheet-of-stock.componet';
 import { SelectCustomerModelComponent } from './select-customer-model/select-customer-model.component';
-import { PipeModuleModule } from '../../pipe-module/pipe-module.module';
 import { PosSearchBarComponent } from './pos-search-bar/pos-search-bar.component';
-import { PosSearchStockStates } from '../store/states/PosSearchStockStates';
-import { GlobalVariables } from '../common/core/global-variables';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from '../importables/material/material.module';
+import { HttpModule } from '../importables/http/http.module';
+import { PipeModuleModule } from '../importables/pipe-module/pipe-module.module';
+import { GlobalVariables } from '../importables/global-variables';
+import { DataTableModule } from '../importables/data-table/data-table/data-table.module';
+import { environment } from 'src/environments/environment';
+import { UiModule } from '../importables/ui/ui.module';
+import { RouterModule } from '@angular/router';
+import { CoreModule } from '../importables/core.module';
+import { PrintOutModule } from '../importables/print-out/print-out.module';
+import { CustomersModule } from '../importables/customers/customers.module';
+import { TranslationsModule } from '../importables/translations/translations.module';
+import { PosCateoriesState } from '../importables/store/states/PosCategoryStates';
+import { PosStockStates } from '../importables/store/states/PosStockStates';
+import { PosSearchStockStates } from '../importables/store/states/PosSearchStockStates';
+import { PosOrderState } from '../importables/store/states/PosOrderStates';
+
+export const ngxsConfig: NgxsModuleOptions = {
+  developmentMode: !environment.production,
+  selectorOptions: {
+    // These Selector Settings are recommended in preparation for NGXS v4
+    // (See above for their effects)
+    suppressErrors: false, 
+    injectContainerState: false
+  },
+  compatibility: {
+    strictContentSecurityPolicy: true
+  },
+  // Execution strategy overridden for illustrative purposes 
+  // (only do this if you know what you are doing)
+  executionStrategy: NoopNgxsExecutionStrategy
+};
+
 @NgModule({
   declarations: [
-    SalePointComponent,
-    SessionsComponent,
+    // SalePointComponent,
+    // SessionsComponent,
     PosComponent,
-    CartItemComponent,
-    ItemCategoriesComponent,
-    CartDialog,
-    BottomSheetOverviewStock,
-    PosInfiniteScrollDirective,
-    PosProductsComponent,
-    ListItemHeaderComponent,
-    SelectCustomerModelComponent,
-    PosSearchBarComponent
+  //   CartItemComponent,
+  //    ItemCategoriesComponent,
+  //    CartDialog,
+  //    BottomSheetOverviewStock,
+  //    PosInfiniteScrollDirective,
+  //   PosProductsComponent,
+  //   ListItemHeaderComponent,
+  //   SelectCustomerModelComponent,
+  //   PosSearchBarComponent
   ],
   imports: [
-    CommonModule,
-     MaterialModule,
-      PosRoutingModule,
-      UiModule,
-      InvoicesModule,
-      CustomersModule,
-      HttpClientModule,
-      HttpModule,
-      PipeModuleModule,
-      FlexLayoutModule,
-      NgxsModule.forFeature([PosCateoriesState,PosStockStates,PosSearchStockStates,PosOrderState]),
+     CommonModule,
+     HttpClientModule,
+      //  MaterialModule,
+    //    //PosRoutingModule,
+    // // CoreModule.forRoot(),
+    // //   PrintOutModule,
+    // //   CustomersModule,
+    //    UiModule,
+    // //   HttpModule,
+      // PipeModuleModule,
+      //  FlexLayoutModule,
+    //   DataTableModule,
+      // TranslationsModule,
+      // NgxsModule.forFeature([
+      //     PosCateoriesState,
+      //    PosStockStates,
+      //    PosSearchStockStates,
+      //    PosOrderState
+      //   ])
     ],
   exports: [
-    SessionsComponent,
-    SalePointComponent,
+    //  SessionsComponent,
+    // SalePointComponent,
     PosComponent,
-    CartDialog,
-    ItemCategoriesComponent,
-    BottomSheetOverviewStock,
-    PosInfiniteScrollDirective
+    // CartDialog,
+    // ItemCategoriesComponent,
+    // BottomSheetOverviewStock,
+    // PosInfiniteScrollDirective
   ],
-  entryComponents: [CartDialog,BottomSheetOverviewStock],
-  providers: [ApiPosService]
+  // entryComponents: [CartDialog,BottomSheetOverviewStock],
+  // providers: [ApiPosService],
+  bootstrap: [PosComponent]
 })
 
 export class PosModule {
-  constructor(public g: GlobalVariables) {
-    this.g.checkInternet();
-   }
+      constructor(public g: GlobalVariables) {
+        this.g.checkInternet();
+      }
 }

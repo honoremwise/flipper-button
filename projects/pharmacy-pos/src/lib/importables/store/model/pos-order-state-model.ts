@@ -1,7 +1,7 @@
 
 import { Orders } from '../../orders/orders';
 import { Customer } from '../../customers/customer';
-import { Invoice } from '../../invoices/invoice';
+import { Invoice } from '../../pay/pay';
 export interface PosOrdersState {
   data: Orders[];
   loaded: boolean;

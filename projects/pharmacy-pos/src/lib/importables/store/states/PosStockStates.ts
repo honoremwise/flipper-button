@@ -1,4 +1,3 @@
-import { ApiPosService } from '../../pos/api/api.service';
  import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 
 import { tap } from 'rxjs/internal/operators/tap';
@@ -6,6 +5,7 @@ import { POS_STOCK_STATE_MODEL_DEFAULTS } from '../model/pos-stock-state';
 import { LoadStockEntries, LoadMoreStockEntries, LoadStockEntriesAction } from '../actions/pos-Stock.action';
 import { PosStockState, StockApiIndexParams } from '../model/pos-stock-state-model';
 import { Stock } from '../../stock/api/stock';
+import { ApiPosService } from '../../../pos/api/api.service';
 
 @State<PosStockState>({
   name: 'STOCK',

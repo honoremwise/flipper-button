@@ -1,22 +1,22 @@
 import { Component, OnInit, ViewChild, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import {  Router } from '@angular/router';
-import { UrlAwarePaginator } from '../../../common/pagination/url-aware-paginator.service';
 import { Orders } from '../../orders';
 import { MatSort, MatDialog } from '@angular/material';
 import { PaginatedDataTableSource } from '../../../data-table/data/paginated-data-table-source';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Business } from '../../../business/api/business';
-import { CurrentUser } from '../../../common/auth/current-user';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { OrdersApiIndexParams } from '../../../store/model/pos-order-state-model';
 import { SET_POS_ORDER_ORDERBY, SET_POS_ORDER_ORDERDIR } from '../../../store/model/pos-order-state';
 import { Store, Select } from '@ngxs/store';
 import { LoadOrderEntries, UpdateOrder, DeleteOrder } from '../../../store/actions/pos-Order.action';
 import { PosOrderState } from '../../../store/states/PosOrderStates';
-import { ApiPosService } from '../../../pos/api/api.service';
-import { Invoice } from '../../../invoices/invoice';
 import { PreviewOrderInvoiceComponent } from '../preview-order-invoice/preview-order-invoice.component';
 import { PrintReceiptModelComponent } from '../../../print-out/print-receipt-model/print-receipt-model.component';
+import { UrlAwarePaginator } from '../../../pagination/url-aware-paginator.service';
+import { Business } from 'projects/pharmacy-pos/src/lib/pos/pos';
+import { ApiPosService } from 'projects/pharmacy-pos/src/lib/pos/api/api.service';
+import { CurrentUser } from '../../../auth/current-user';
+import { Invoice } from '../../../pay/pay';
 @Component({
   selector: 'order-list',
   templateUrl: './order-list.component.html',

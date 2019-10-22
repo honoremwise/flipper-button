@@ -1,6 +1,6 @@
-import {AppConfig} from '../../../../environments/environment';
 import {InjectionToken} from '@angular/core';
 import { Appearance } from '../types/models/User';
+import { AppConfig } from '../../environments/environment';
 
 export const APP_CONFIG = new InjectionToken<FlipperConfig[]>('APP_CONFIG');
 

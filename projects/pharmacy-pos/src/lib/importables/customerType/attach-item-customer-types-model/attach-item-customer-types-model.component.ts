@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { Modal } from '../../../common/core/ui/dialogs/modal.service';
 import { SelectCustomerTypeModelComponent } from '../select-customer-type-model/select-customer-type-model.component';
+import { Modal } from '../../ui/dialogs/modal.service';
 export interface enableSelectButtonModalData {
   enabled?: boolean;
   updated:boolean;

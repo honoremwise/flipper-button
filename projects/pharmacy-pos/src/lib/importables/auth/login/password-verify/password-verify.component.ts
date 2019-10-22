@@ -7,15 +7,13 @@ import {
   FormGroup,
   FormControl
 } from "@angular/forms";
-
-import { AuthService } from "../../auth.service";
-import { SocialAuthService } from "../../social-auth.service";
-import { Bootstrapper } from "../../../core/bootstrapper.service";
-import { Settings } from "../../../core/config/settings.service";
-
-import { ElectronService } from '../../../core/config/electron.service';
+import { SocialAuthService } from '../../social-auth.service';
+import { Bootstrapper } from '../../../bootstrapper.service';
+import { GlobalVariables } from '../../../global-variables';
+import { AuthService } from '../../auth.service';
 import { DOCUMENT } from '@angular/common';
-import { GlobalVariables } from '../../../core/global-variables';
+import { Settings } from '../../../config/settings.service';
+
 
 @Component({
   selector: "app-password-verify",
@@ -46,7 +44,6 @@ export class PasswordVerifyComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private auth: AuthService,
-    public electronService: ElectronService,
     @Inject(DOCUMENT) private document: Document,
   ) {
     this.v.loading = false;
@@ -108,13 +105,11 @@ export class PasswordVerifyComponent implements OnInit {
     );
   }
   isElectron = () => {
-    return window && window.process && window.process.type;
+    return false;//window && window.process && window.process.type;
   };
   public openForgetPassword() {
-    if (this.electronService.isElectron) {
-       this.electronService.shell.openExternal("https://yegobox.com/login");
-    }else{
-      this.document.location.href="https://yegobox.com/login";
-    }
+   
+      return window.location.href="https://yegobox.com/login";
+   
   }
 }

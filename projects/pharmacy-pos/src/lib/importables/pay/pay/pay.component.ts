@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Business } from '../../business/api/business';
-import { CurrentUser } from '../../common/auth/current-user';
-import { OrderItems } from '../../pos/cart/order_items';
 import { Orders } from '../../orders/orders';
-import { Invoice, Status, PaymentMethod } from '../../invoices/invoice';
-import { randomString } from '../../common/core/utils/random-string';
 import { Select, Store } from '@ngxs/store';
 import { PosOrderState } from '../../store/states/PosOrderStates';
 import { CurrentOrder, CreateInvoice, InvoiceDetails } from '../../store/actions/pos-Order.action';
 import { Customer } from '../../customers/customer';
 import { MatDialog } from '@angular/material';
 import { PrintReceiptModelComponent } from '../../print-out/print-receipt-model/print-receipt-model.component';
-import { Modal } from '../../common/core/ui/dialogs/modal.service';
-import { ConfirmModalComponent } from '../../common/core/ui/confirm-modal/confirm-modal.component';
-import { PosCateoriesState } from '../../store/states/PosCategoryStates';
-import { Category } from '../../admin/master/categories/api/category';
+
 import { Router } from '@angular/router';
 import { ClosePosCategory } from '../../store/actions/pos-categories.action';
+import { Business } from '../../../pos/pos';
+import { OrderItems } from '../../../pos/cart/order_items';
+import { Invoice, Status, PaymentMethod } from '../pay';
+import { PosCateoriesState } from '../../store/states/PosCategoryStates';
+import { Category } from '../../categories/api/category';
+import { CurrentUser } from '../../auth/current-user';
+import { Modal } from '../../ui/dialogs/modal.service';
+import { randomString } from '../../utils/random-string';
+import { ConfirmModalComponent } from '../../ui/confirm-modal/confirm-modal.component';
 @Component({
   selector: 'app-pay',
   templateUrl: './pay.component.html',

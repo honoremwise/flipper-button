@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Orders } from '../../orders';
-import { PaginationResponse } from '../../../common/core/types/pagination-response';
-import { AppHttpClient } from '../../../common/core/http/app-http-client.service';
 import { OrdersApiIndexParams } from '../../../store/model/pos-order-state-model';
 import { Observable } from 'rxjs';
-import { Invoice } from '../../../invoices/invoice';
+import { PaginationResponse } from '../../../types/pagination-response';
+import { AppHttpClient } from '../../../http/app-http-client.service';
 import { OrderParms } from '../../../store/actions/pos-Order.action';
-import { OrderItems } from '../../../pos/cart/order_items';
+import { OrderItems } from 'projects/pharmacy-pos/src/lib/pos/cart/order_items';
 export interface OrderEntriesPaginationResponse extends PaginationResponse<Orders> {
   orders?: Orders[];
 }
@@ -30,7 +29,7 @@ export class ApiOrderService {
     public getCurrentOrder(): Observable<Orders> {
       return this.http.get('order/'+parseInt(localStorage.getItem('active_branch')));
     }
-    public createInvoice(params: Invoice = {}): Observable<Invoice> {
+    public createInvoice(params: any = {}): Observable<any> {
       return this.http.post('invoice', params);
     }
     public createOrder(params: OrderParms): Observable<Orders> {

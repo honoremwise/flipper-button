@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 // import { MasterModelService } from '../../admin/master/master-model.service';
 // import { Category } from '../../admin/master/categories/api/category';
 // import { Stock } from '../../stock/api/stock';
-import { Pos } from '../pos';
+import { Pos, Business } from '../pos';
 import { ApiPosService } from '../api/api.service';
 import { finalize } from 'rxjs/operators';
 import { PosModelService } from '../pos-model.service';
@@ -13,10 +13,8 @@ import { OrderItems } from '../cart/order_items';
 import { Category } from '../../importables/categories/api/category';
 import { Stock } from '../../importables/stock/api/stock';
 import { Orders } from '../../importables/orders/orders';
-import { Business } from '../../importables/business/api/business';
 import { CurrentUser } from '../../importables/auth/current-user';
 import { CustomerType } from '../../importables/customerType/api/CustomerType';
-import { Master } from '../../importables/master';
 import { SetUp } from '../../importables/setup';
 import { SetUpModelService } from '../../importables/setup-model.service';
 import { MasterModelService } from '../../importables/master-model.service';
@@ -30,7 +28,7 @@ import { MasterModelService } from '../../importables/master-model.service';
   styleUrls: ['./sale-point.component.scss']
 })
 export class SalePointComponent implements OnInit {
-  master$: Observable<Master>;
+  master$: Observable<any>;
   categories: Category[] = [];
   currently_stocks: Stock[] = [];
   pos$: Observable<Pos>;
