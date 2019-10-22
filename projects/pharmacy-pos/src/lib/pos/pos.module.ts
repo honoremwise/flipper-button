@@ -22,61 +22,77 @@ import { BottomSheetOverviewStock } from './pos/boottom-sheet-stock-movement/bot
 import { SelectCustomerModelComponent } from '../importables/customers/manage-customer/select-customer-model/select-customer-model.component';
 import { SelectCustomerTypeModalComponent } from '../importables/select-customer-type-modal/select-customer-type-modal.component';
 import { DataTableModule } from '../importables/data-table/data-table/data-table.module';
-
+import { PipeModuleModule } from '../importables/pipe-module/pipe-module.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpModule } from '../importables/http/http.module';
+import { TranslationsModule } from '../importables/translations/translations.module';
+import { NgxsModule } from '@ngxs/store';
+import { PosCateoriesState } from '../importables/store/states/PosCategoryStates';
+import { PosStockStates } from '../importables/store/states/PosStockStates';
+import { PosOrderState } from '../importables/store/states/PosOrderStates';
+import { PosSearchBarComponent } from './pos-search-bar/pos-search-bar.component';
+import { PosSearchStockStates } from '../importables/store/states/PosSearchStockStates';
+import { CommonModule } from '@angular/common';
+import { PosComponent } from './pos/pos.component';
+import { CartItemComponent, CartDialog } from './cart-item/cart-item.component';
+import { TaxRatesComponent } from '../importables/tax-rates/tax-rates.component';
+import { CrupdateTaxRateModalComponent } from '../importables/tax-rates/crupdate-tax-rate-modal/crupdate-tax-rate-modal.component';
+import { SelectTaxrateModalComponent } from '../importables/tax-rates/select-taxrate-modal/select-taxrate-modal.component';
+import { CustomerTypeComponent } from '../importables/customerType/customertype.component';
+import { PosInfiniteScrollDirective } from './pos/pos-infinite-scroll.directive';
+import { ListItemHeaderComponent } from './pos/list-item-header/list-item-header.component';
+import { ApiPosService } from './api/api.service';
 
 
 @NgModule({
   declarations: [
     SalePointComponent,
     SessionsComponent,
-    // PosComponent,
-    // CartItemComponent,
+    PosComponent,
+    CartItemComponent,
     ItemCategoriesComponent,
-    // CartDialog,
+    CartDialog,
     BottomSheetOverviewStock,
-    // PosInfiniteScrollDirective,
+    PosInfiniteScrollDirective,
     PosProductsComponent,
-    // ListItemHeaderComponent,
-    
-    // PosSearchBarComponent,
-    // SelectTaxrateModalComponent,
-    SelectCustomerTypeModalComponent,
-    // TaxRatesComponent,
-    // CrupdateTaxRateModalComponent
+     ListItemHeaderComponent,
+    PosSearchBarComponent,
+     SelectTaxrateModalComponent,
+     TaxRatesComponent,
+    CrupdateTaxRateModalComponent
   ],
   imports: [
-    // CommonModule,
+     CommonModule,
      HttpClientModule,
     MaterialModule,
     PosRoutingModule,
-    // PrintOutModule,
+    PrintOutModule,
     CustomersModule,
     UiModule,
-    // HttpModule,
-    // PipeModuleModule,
-    // FlexLayoutModule,
+    HttpModule,
+    PipeModuleModule,
+    FlexLayoutModule,
     DataTableModule,
-    // TranslationsModule,
-    // NgxsModule.forRoot([
-    //   PosCateoriesState,
-    //   PosStockStates,
-    //   PosSearchStockStates,
-    //   PosOrderState
-    // ])
+    TranslationsModule,
+    NgxsModule.forRoot([
+      PosCateoriesState,
+      PosStockStates,
+      PosSearchStockStates,
+      PosOrderState
+    ])
   ],
   exports: [
-    // SessionsComponent,
-    // SalePointComponent,
-    // PosComponent,
-    // CartDialog,
-    // ItemCategoriesComponent,
-    // BottomSheetOverviewStock,
-    // PosInfiniteScrollDirective
+    SessionsComponent,
+    SalePointComponent,
+    PosComponent,
+    CartDialog,
+    ItemCategoriesComponent,
+    BottomSheetOverviewStock,
+    PosInfiniteScrollDirective
   ],
-  // entryComponents: [CartDialog, BottomSheetOverviewStock, SelectTaxrateModalComponent, SelectCustomerTypeModalComponent, CrupdateTaxRateModalComponent],
-  // providers: [ApiPosService],
-  // schemas:[CUSTOM_ELEMENTS_SCHEMA]
-  // bootstrap: [PosComponent]
+  entryComponents: [CartDialog, BottomSheetOverviewStock, SelectTaxrateModalComponent, SelectCustomerTypeModalComponent, CrupdateTaxRateModalComponent],
+   providers: [ApiPosService],
+  bootstrap: [PosComponent]
 })
 
 export class PosModule {
