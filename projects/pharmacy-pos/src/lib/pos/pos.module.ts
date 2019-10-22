@@ -56,11 +56,11 @@ export const ngxsConfig: NgxsModuleOptions = {
 @NgModule({
   declarations: [
     // SalePointComponent,
-    // SessionsComponent,
+    SessionsComponent,
     PosComponent,
-  //   CartItemComponent,
-  //    ItemCategoriesComponent,
-  //    CartDialog,
+    // CartItemComponent,
+    //  ItemCategoriesComponent,
+    //  CartDialog,
   //    BottomSheetOverviewStock,
   //    PosInfiniteScrollDirective,
   //   PosProductsComponent,
@@ -70,10 +70,10 @@ export const ngxsConfig: NgxsModuleOptions = {
   ],
   imports: [
      CommonModule,
-     HttpClientModule,
-      //  MaterialModule,
-    //    //PosRoutingModule,
-    // // CoreModule.forRoot(),
+    //  HttpClientModule,
+    //    MaterialModule,
+    //    PosRoutingModule,
+    // CoreModule.forRoot(),
     // //   PrintOutModule,
     // //   CustomersModule,
     //    UiModule,
@@ -92,7 +92,7 @@ export const ngxsConfig: NgxsModuleOptions = {
   exports: [
     //  SessionsComponent,
     // SalePointComponent,
-    PosComponent,
+    // PosComponent,
     // CartDialog,
     // ItemCategoriesComponent,
     // BottomSheetOverviewStock,
@@ -104,7 +104,8 @@ export const ngxsConfig: NgxsModuleOptions = {
 })
 
 export class PosModule {
-      constructor(public g: GlobalVariables) {
-        this.g.checkInternet();
-      }
+  //FIXME: when you uncomment me I error out!
+      // constructor(public g: GlobalVariables) {
+      //   this.g.checkInternet();
+      // }
 }

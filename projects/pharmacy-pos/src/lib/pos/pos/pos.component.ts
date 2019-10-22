@@ -5,8 +5,8 @@ import { GlobalVariables } from '../../importables/global-variables';
   selector: "flipper-retail-pos",
   templateUrl: "./pos.component.html",
   styleUrls: ["./pos.component.scss"],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    // encapsulation: ViewEncapsulation.None,
+    // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PosComponent implements OnInit {
   public appearance;
