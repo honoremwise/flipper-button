@@ -6,6 +6,7 @@ import { PharmacyPosComponent } from './pharmacy-pos.component';
 @NgModule({
   declarations: [PharmacyPosComponent],
   imports: [
+    
   ],
   exports: [PharmacyPosComponent]
 })

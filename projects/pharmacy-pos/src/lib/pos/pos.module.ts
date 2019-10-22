@@ -3,7 +3,6 @@ import {
   ModuleWithProviders,
   APP_INITIALIZER,
   ErrorHandler,
-  CUSTOM_ELEMENTS_SCHEMA,
 } from "@angular/core";
 import {
   CommonModule
@@ -115,9 +114,9 @@ import {
 import {
   BackendHttpErrorHandler
 } from '../importables/http/errors/backend-http-error-handler.service';
-import {
-  ravenErrorHandlerFactory
-} from '../importables/errors/raven-error-handler';
+// import {
+//   ravenErrorHandlerFactory
+// } from '../importables/errors/raven-error-handler';
 import {
   Settings
 } from '../importables/config/settings.service';
@@ -213,7 +212,7 @@ export class PosModule {
         },
         {
           provide: ErrorHandler,
-          useFactory: ravenErrorHandlerFactory,
+          // useFactory: ravenErrorHandlerFactory,
           deps: [Settings, CurrentUser],
         },
       ]

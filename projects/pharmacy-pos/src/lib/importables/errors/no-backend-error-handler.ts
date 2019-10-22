@@ -1,5 +1,5 @@
 import {ErrorHandler} from '@angular/core';
-import * as Raven from 'raven-js';
+// import * as Raven from 'raven-js';
 import {Settings} from '../config/settings.service';
 import {ignoredErrors} from './ingored-errors';
 // import {RavenOptions} from 'raven-js';
