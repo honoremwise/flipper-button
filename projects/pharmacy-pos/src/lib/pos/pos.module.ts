@@ -133,6 +133,7 @@ import {
 import {
   CrupdateTaxRateModalComponent
 } from '../importables/tax-rates/crupdate-tax-rate-modal/crupdate-tax-rate-modal.component';
+import { NgxModelModule } from 'ngx-model';
 
 @NgModule({
   declarations: [
@@ -166,6 +167,7 @@ import {
     FlexLayoutModule,
     DataTableModule,
     TranslationsModule,
+    NgxModelModule,
     NgxsModule.forRoot([
       PosCateoriesState,
       PosStockStates,

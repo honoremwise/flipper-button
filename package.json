@@ -24,9 +24,19 @@
     "@ngxs/store": "^3.5.1",
     "alasql": "^0.4.11",
     "hammerjs": "^2.0.8",
+    "ngx-model": "^6.0.2",
+    "raven-js": "^3.27.2",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "@angular/cli": "^8.3.8",
+    "@angular/flex-layout": "^8.0.0-beta.26",
+    "@ngrx/effects": "^8.4.0",
+    "@ngrx/store": "^8.4.0",
+    "@ngx-translate/http-loader": "^4.0.0",
+    "bootstrap": "^4.3.1",
+    "deepmerge": "^4.0.0",
+    "dot-object": "^1.9.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.9",

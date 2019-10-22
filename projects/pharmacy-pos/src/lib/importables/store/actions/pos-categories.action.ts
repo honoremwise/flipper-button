@@ -1,4 +1,3 @@
-import{Action} from'@ngrx/store';
 import { CategoriesApiIndexParams } from '../model/pos-category-state-model';
 import { Category } from '../../categories/api/category';
 
