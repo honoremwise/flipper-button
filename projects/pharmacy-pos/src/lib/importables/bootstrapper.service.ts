@@ -55,7 +55,7 @@ export class Bootstrapper {
       return new Promise(resolve => resolve());
     }
     // this.URL.defineAppUrl();
-  
+  return;
     
     if (this.settings.getBaseUrl() != "http://localhost:4200/") {
       url = AppConfig.url + "secure/bootstrap-data";

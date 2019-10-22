@@ -19,19 +19,18 @@ import { ravenErrorHandlerFactory } from './errors/raven-error-handler';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        RouterModule,
         HttpClientModule,
-        UiModule,
-        HttpModule,
-        TranslationsModule
+    //     UiModule,
+    //     HttpModule,
+    //     TranslationsModule
     ],
     exports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        RouterModule,
-        HttpClientModule,
-        UiModule
+        // RouterModule,
+        // HttpClientModule,
+        // UiModule
     ],
 })
 export class CoreModule {

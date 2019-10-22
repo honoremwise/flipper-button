@@ -1,5 +1,5 @@
 import {
-  NgModule, CUSTOM_ELEMENTS_SCHEMA,
+  NgModule, CUSTOM_ELEMENTS_SCHEMA, ModuleWithProviders, APP_INITIALIZER, ErrorHandler,
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SalePointComponent } from "./sale-point/sale-point.component";
@@ -36,6 +36,13 @@ import { PosCateoriesState } from '../importables/store/states/PosCategoryStates
 import { PosStockStates } from '../importables/store/states/PosStockStates';
 import { PosSearchStockStates } from '../importables/store/states/PosSearchStockStates';
 import { PosOrderState } from '../importables/store/states/PosOrderStates';
+import { Bootstrapper, init_app } from '../importables/bootstrapper.service';
+import { CurrentUser } from '../importables/auth/current-user';
+import { APP_CONFIG, DEFAULT_FLIPPER_CONFIG } from '../importables/config/flipper-config';
+import { HttpErrorHandler } from '../importables/http/errors/http-error-handler.service';
+import { BackendHttpErrorHandler } from '../importables/http/errors/backend-http-error-handler.service';
+import { ravenErrorHandlerFactory } from '../importables/errors/raven-error-handler';
+import { Settings } from '../importables/config/settings.service';
 
 export const ngxsConfig: NgxsModuleOptions = {
   developmentMode: !environment.production,
@@ -55,55 +62,84 @@ export const ngxsConfig: NgxsModuleOptions = {
 
 @NgModule({
   declarations: [
-    // SalePointComponent,
+    SalePointComponent,
     SessionsComponent,
     PosComponent,
-    // CartItemComponent,
-    //  ItemCategoriesComponent,
-    //  CartDialog,
-  //    BottomSheetOverviewStock,
-  //    PosInfiniteScrollDirective,
-  //   PosProductsComponent,
-  //   ListItemHeaderComponent,
-  //   SelectCustomerModelComponent,
-  //   PosSearchBarComponent
+     CartItemComponent,
+     ItemCategoriesComponent,
+      CartDialog,
+      BottomSheetOverviewStock,
+     PosInfiniteScrollDirective,
+    PosProductsComponent,
+    ListItemHeaderComponent,
+    SelectCustomerModelComponent,
+   PosSearchBarComponent
   ],
   imports: [
      CommonModule,
-    //  HttpClientModule,
-    //    MaterialModule,
-    //    PosRoutingModule,
-    // CoreModule.forRoot(),
-    // //   PrintOutModule,
-    // //   CustomersModule,
-    //    UiModule,
-    // //   HttpModule,
-      // PipeModuleModule,
-      //  FlexLayoutModule,
-    //   DataTableModule,
-      // TranslationsModule,
-      // NgxsModule.forFeature([
-      //     PosCateoriesState,
-      //    PosStockStates,
-      //    PosSearchStockStates,
-      //    PosOrderState
-      //   ])
+    HttpClientModule,
+    MaterialModule,
+    PosRoutingModule,
+      PrintOutModule,
+      CustomersModule,
+        UiModule,
+       HttpModule,
+      PipeModuleModule,
+      FlexLayoutModule,
+      DataTableModule,
+       TranslationsModule,
+       NgxsModule.forRoot([
+          PosCateoriesState,
+         PosStockStates,
+         PosSearchStockStates,
+         PosOrderState
+        ])
     ],
   exports: [
-    //  SessionsComponent,
-    // SalePointComponent,
-    // PosComponent,
-    // CartDialog,
-    // ItemCategoriesComponent,
-    // BottomSheetOverviewStock,
-    // PosInfiniteScrollDirective
+     SessionsComponent,
+     SalePointComponent,
+    PosComponent,
+   CartDialog,
+   ItemCategoriesComponent,
+     BottomSheetOverviewStock,
+    PosInfiniteScrollDirective
   ],
-  // entryComponents: [CartDialog,BottomSheetOverviewStock],
-  // providers: [ApiPosService],
+   entryComponents: [CartDialog,BottomSheetOverviewStock],
+   providers: [ApiPosService],
   bootstrap: [PosComponent]
 })
 
 export class PosModule {
+
+  static forRoot(): ModuleWithProviders {
+    return {
+        ngModule: CoreModule,
+        providers: [
+            Bootstrapper,
+            CurrentUser,
+            {
+                provide: APP_CONFIG,
+                useValue: DEFAULT_FLIPPER_CONFIG,
+                multi: true,
+            },
+            {
+                provide: HttpErrorHandler,
+                useClass: BackendHttpErrorHandler,
+            },
+            {
+                provide: APP_INITIALIZER,
+                useFactory: init_app,
+                deps: [Bootstrapper],
+                multi: true,
+            },
+            {
+                provide: ErrorHandler,
+                useFactory: ravenErrorHandlerFactory,
+                deps: [Settings, CurrentUser],
+            },
+        ]
+    };
+}
   //FIXME: when you uncomment me I error out!
       // constructor(public g: GlobalVariables) {
       //   this.g.checkInternet();

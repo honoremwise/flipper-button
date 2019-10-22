@@ -14,7 +14,7 @@ import { InvoicePreviewComponent } from './invoice-preview/invoice-preview.compo
     CommonModule,
     MaterialModule,
     PipeModuleModule,
-    NgxsModule.forFeature([PosOrderState]),
+    NgxsModule.forRoot([PosOrderState]),
   ],
   entryComponents: [PrintReceiptModelComponent,InvoicePreviewComponent],
   exports: [PrintInvoiceComponent,PrintReceiptModelComponent],

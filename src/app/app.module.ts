@@ -12,7 +12,7 @@ import { PosModule } from 'projects/pharmacy-pos/src/lib/pos/pos.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PosModule
+    PosModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
