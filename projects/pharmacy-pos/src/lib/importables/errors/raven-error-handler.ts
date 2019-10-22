@@ -1,4 +1,4 @@
-import * as Raven from 'raven-js';
+// import * as Raven from 'raven-js';
 import {Settings} from '../config/settings.service';
 import {NoBackendErrorHandler} from './no-backend-error-handler';
 import { CurrentUser } from '../auth/current-user';
@@ -34,18 +34,18 @@ export class RavenErrorHandler extends NoBackendErrorHandler {
         // if there's no error, or it's a validation error, bail
         if ( ! err || (err.type === 'http' && this.dontReport.indexOf(err.status) > -1)) return;
 
-        super.handleError(err, {
-            extra: {user: this.currentUser.getModel()},
-        });
+        // super.handleError(err, {
+        //     extra: {user: this.currentUser.getModel()},
+        // });
     }
 
     private setUserContext() {
         if (this.currentUser.isLoggedIn()) {
-            Raven.setUserContext({
-                id: this.currentUser.get('id'),
-                username: this.currentUser.get('display_name'),
-                email: this.currentUser.get('email')
-            });
+            // Raven.setUserContext({
+            //     id: this.currentUser.get('id'),
+            //     username: this.currentUser.get('display_name'),
+            //     email: this.currentUser.get('email')
+            // });
         }
     }
 }

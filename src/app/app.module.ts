@@ -3,7 +3,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PosModule } from 'projects/pharmacy-pos/src/lib/pos/pos.module';
+import { PharmacyPosModule } from 'pharmacy-pos';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,8 @@ import { PosModule } from 'projects/pharmacy-pos/src/lib/pos/pos.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PosModule.forRoot()
+    // PosModule.forRoot()
+    PharmacyPosModule
   ],
   providers: [],
   bootstrap: [AppComponent]
