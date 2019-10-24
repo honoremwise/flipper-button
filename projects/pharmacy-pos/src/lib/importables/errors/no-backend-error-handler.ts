@@ -1,8 +1,8 @@
 import {ErrorHandler} from '@angular/core';
-import * as Raven from 'raven-js';
+// import * as Raven from 'raven-js';
 import {Settings} from '../config/settings.service';
 import {ignoredErrors} from './ingored-errors';
-import {RavenOptions} from 'raven-js';
+// import {RavenOptions} from 'raven-js';
 
 export function noBackendErrorHandlerFactory (settings: Settings) {
     return new NoBackendErrorHandler(settings);
@@ -24,7 +24,9 @@ export class NoBackendErrorHandler extends ErrorHandler {
     /**
      * Handle specified error.
      */
-    public handleError(err: any, options?: RavenOptions): void {
+    public handleError(err: any, 
+        // options?: RavenOptions
+        ): void {
         if ( ! err) return;
 
         super.handleError(err);
@@ -32,7 +34,7 @@ export class NoBackendErrorHandler extends ErrorHandler {
         // sentry did not install properly
         if ( ! this.installSentry()) return;
 
-        Raven.captureException(err.originalError || err, options);
+        // Raven.captureException(err.originalError || err, options);
     }
 
     /**
@@ -45,10 +47,10 @@ export class NoBackendErrorHandler extends ErrorHandler {
         if ( ! this.settings.has('logging.sentry_public')) return false;
 
         // install
-        Raven.config(this.settings.get('logging.sentry_public'), {
-            release: this.settings.get('version'),
-            ignoreErrors: ignoredErrors,
-        }).install();
+        // Raven.config(this.settings.get('logging.sentry_public'), {
+        //     release: this.settings.get('version'),
+        //     ignoreErrors: ignoredErrors,
+        // }).install();
 
         return this.installed = true;
     }

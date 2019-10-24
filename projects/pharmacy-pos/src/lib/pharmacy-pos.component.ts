@@ -5,11 +5,7 @@ const sql = alasql;
 @Component({
   selector: 'lib-pharmacy-pos',
 
-  template: `
-    <p>
-      pharmacy-pos works! it is here
-    </p>
-  `,
+  template: `<standard-pos></standard-pos>`,
   styles: []
 
 })
