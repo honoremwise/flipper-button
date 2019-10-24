@@ -22,8 +22,8 @@ import { CurrentUser } from '../../importables/auth/current-user';
 import { Modal } from '../../importables/dialogs/modal.service';
 import { CurrentOrder, DeleteOrder, UpdateOrder, OrderParms, CreateOrder, UpdateOrderItems, DeleteOrderItems } from '../../importables/store/actions/pos-Order.action';
 import { OpenPosCategory } from '../../importables/store/actions/pos-categories.action';
-import { SelectCustomerModelComponent } from '../select-customer-model/select-customer-model.component';
 import { SelectTaxrateModalComponent } from '../../importables/tax-rates/select-taxrate-modal/select-taxrate-modal.component';
+import { SelectCustomerModelComponent } from '../../importables/customers/manage-customer/select-customer-model/select-customer-model.component';
 @Component({
   selector: "cart-dialog",
   templateUrl: './cart-dialog.html',

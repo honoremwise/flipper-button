@@ -1,13 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 // import { CurrentUser } from "../../common/auth/current-user";
 import { ApiService } from "../api.service";
-import * as Raven from "raven-js";
+// import * as Raven from "raven-js";
 import { CurrentUser } from '../../importables/auth/current-user';
 import { Stock } from '../pos';
 // import { Stock } from "../../stock/api/stock";
-Raven.config(
-  "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
-).install();
+// Raven.config(
+//   "https://dff6a3f171414762ac4f1c7e084289c3@sentry.io/1323436"
+// ).install();
 
 export interface Session {
   branch_id: number;

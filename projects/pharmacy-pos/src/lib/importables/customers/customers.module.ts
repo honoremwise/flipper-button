@@ -15,6 +15,7 @@ import { CustomerTypeComponent } from '../customerType/customertype.component';
 import { AttachItemCustomerTypesModelComponent } from '../customerType/attach-item-customer-types-model/attach-item-customer-types-model.component';
 import { CrupdateCustomerTypeModalComponent } from '../customerType/crupdate-customet-type-modal/crupdate-customer-type-modal.component';
 import { SelectCustomerTypeModelComponent } from '../customerType/select-customer-type-model/select-customer-type-model.component';
+import { SelectCustomerTypeModalComponent } from '../select-customer-type-modal/select-customer-type-modal.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,7 @@ import { SelectCustomerTypeModelComponent } from '../customerType/select-custome
     CustomerRoutingModule,
     DataTableModule
   ],
-  declarations: [CustomersComponent, CrupdateCustomerModelComponent, SelectCustomerModelComponent,CustomerTypeComponent,
+  declarations: [SelectCustomerTypeModalComponent,CustomersComponent, CrupdateCustomerModelComponent, SelectCustomerModelComponent,CustomerTypeComponent,
     AttachItemCustomerTypesModelComponent,CrupdateCustomerTypeModalComponent,SelectCustomerTypeModelComponent],
   exports: [
     CustomersComponent,
