@@ -24,6 +24,12 @@
       ],
       "pharmacy-pos/*": [
         "dist/pharmacy-pos/*"
+      ],
+      "yegobox-login": [
+        "dist/yegobox-login"
+      ],
+      "yegobox-login/*": [
+        "dist/yegobox-login/*"
       ]
     }
   },
