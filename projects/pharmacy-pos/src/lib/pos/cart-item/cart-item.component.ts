@@ -21,7 +21,7 @@ import { LocalStorage } from '../../importables/services/local-storage.service';
 import { CurrentUser } from '../../importables/auth/current-user';
 import { Modal } from '../../importables/dialogs/modal.service';
 import { CurrentOrder, DeleteOrder, UpdateOrder, OrderParms, CreateOrder, UpdateOrderItems, DeleteOrderItems } from '../../importables/store/actions/pos-Order.action';
-import { OpenPosCategory } from '../../importables/store/actions/pos-categories.action';
+// import { OpenPosCategory } from '../../importables/store/actions/pos-categories.action';
 import { SelectTaxrateModalComponent } from '../../importables/tax-rates/select-taxrate-modal/select-taxrate-modal.component';
 import { SelectCustomerModelComponent } from '../../importables/customers/manage-customer/select-customer-model/select-customer-model.component';
 @Component({
@@ -274,7 +274,8 @@ goto(r){
 
           const customer_type_id=customer.customer_type?customer.customer_type.id:null;
           this.localStorage.set('pos-customerTypeId', customer_type_id);
-          this.store.dispatch(new OpenPosCategory(this.localStorage.get('pos-categoryId'),null));
+          //TODO:fix bellow line
+          // this.store.dispatch(new OpenPosCategory(this.localStorage.get('pos-categoryId'),null));
     });
   }
 

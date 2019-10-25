@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store, Select } from '@ngxs/store';
 // import { OpenPosCategory } from '../../../../store/actions/pos-categories.action';
+ //TODO: FIXME:
 // import { PosCateoriesState } from '../../../../store/states/PosCategoryStates';
 import { Observable } from 'rxjs';
 // import { Category } from '../../../../admin/master/categories/api/category';
@@ -26,7 +27,7 @@ import { Orders } from 'projects/pharmacy-pos/src/lib/importables/orders/orders'
 import { Customer } from 'projects/pharmacy-pos/src/lib/importables/customers/customer';
 import { CurrentUser } from 'projects/pharmacy-pos/src/lib/importables/auth/current-user';
 import { LocalStorage } from 'projects/pharmacy-pos/src/lib/importables/services/local-storage.service';
-import { OpenPosCategory } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-categories.action';
+// import { OpenPosCategory } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-categories.action';
 import { UpdateOrderItems, OrderParms, CreateOrder } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-Order.action';
 import { Business, Stock } from '../../../pos';
 // import { Customer } from '../../../../customers/customer';
@@ -74,7 +75,8 @@ export class PosProductsComponent implements OnInit {
 
   ngOnInit() {
       //pos-categoryId
-     this.store.dispatch(new OpenPosCategory(this.localStorage.get('pos-categoryId'),null));
+      //TODO:fix this line bellow make sure the the filename is equal to imported OpenPosCategory seehttps://stackoverflow.com/questions/47826611/angular-5-upgrade-module-build-failed-custompackage-is-not-part-of-the-compil
+    //  this.store.dispatch(new OpenPosCategory(this.localStorage.get('pos-categoryId'),null));
 
   }
   openBottomSheet(stock_movemts,stock_name): any {

@@ -2,13 +2,14 @@ import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@
 import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { Router } from '@angular/router';
-import { PosCateoriesState } from 'projects/pharmacy-pos/src/lib/importables/store/states/PosCategoryStates';
+ //TODO: FIXME:
+// import { PosCateoriesState } from 'projects/pharmacy-pos/src/lib/importables/store/states/PosCategoryStates';
 import { Category } from 'projects/pharmacy-pos/src/lib/importables/categories/api/category';
 import { CurrentUser } from 'projects/pharmacy-pos/src/lib/importables/auth/current-user';
 import { LocalStorage } from 'projects/pharmacy-pos/src/lib/importables/services/local-storage.service';
-import { ClosePosCategory, LoadCategoriesEntries } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-categories.action';
+// import { ClosePosCategory, LoadCategoriesEntries } from 'projects/pharmacy-pos/src/lib/importables/store/actions/pos-categories.action';
 import { CategoriesApiIndexParams } from 'projects/pharmacy-pos/src/lib/importables/store/model/pos-category-state-model';
-import { SET_POS_CAT_ORDERBY, SET_POS_CAT_ORDERDIR } from 'projects/pharmacy-pos/src/lib/importables/store/model/pos-category-state';
+// import { SET_POS_CAT_ORDERBY, SET_POS_CAT_ORDERDIR } from 'projects/pharmacy-pos/src/lib/importables/store/model/pos-category-state';
 
 @Component({
   selector: 'app-item-categories',
@@ -29,9 +30,10 @@ export class ItemCategoriesComponent implements OnInit {
   primary='primary';
   mode = 'determinate';
 
-  @Select(PosCateoriesState.entries) entries$: Observable<Category[]>;
-  @Select(PosCateoriesState.meta) meta$: Observable<any>;
-  @Select(PosCateoriesState.loading) loading$: Observable<boolean>;
+  //TODO: FIXME:
+  // @Select(PosCateoriesState.entries) entries$: Observable<Category[]>;
+  // @Select(PosCateoriesState.meta) meta$: Observable<any>;
+  // @Select(PosCateoriesState.loading) loading$: Observable<boolean>;
   bg_img: any=null;
   
   constructor(public currentUser:CurrentUser,private localStorage: LocalStorage,  private router: Router,private store:Store) {
@@ -40,17 +42,20 @@ this.bg_img=this.currentUser.getBusiness('category')=='Pharmacy'?this.localStora
  
   ngOnInit() {
     this.localStorage.set('pos-load-data', 'ofCategories');
-    this.store.dispatch(new ClosePosCategory());
+    //TODO:fix me
+    // this.store.dispatch(new ClosePosCategory());
     const queryParams:Partial<CategoriesApiIndexParams>={
-      order_by:SET_POS_CAT_ORDERBY?SET_POS_CAT_ORDERBY:'updated_at',
-      order_dir: SET_POS_CAT_ORDERDIR?SET_POS_CAT_ORDERDIR:'desc',
+      //TODO: FIXME: fixme
+      // order_by:SET_POS_CAT_ORDERBY?SET_POS_CAT_ORDERBY:'updated_at',
+      // order_dir: SET_POS_CAT_ORDERDIR?SET_POS_CAT_ORDERDIR:'desc',
       categoryId:  '0',
       query: null,
       type: null,
       per_page: 30,
       page: 0
       };
-      this.store.dispatch(new LoadCategoriesEntries(queryParams));
+      //TODO: fix me
+      // this.store.dispatch(new LoadCategoriesEntries(queryParams));
   }
   loadItemsOfCategory(category:Category){
     this.localStorage.set('pos-categoryId', category.id);

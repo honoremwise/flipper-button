@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { InfiniteScroll } from '../../importables/ui/infinite-scroll/infinite.scroll';
 import { Store } from '@ngxs/store';
 import { LocalStorage } from '../../importables/services/local-storage.service';
-import { PosCateoriesState } from '../../importables/store/states/PosCategoryStates';
-import { LoadMoreCategoriesEntries } from '../../importables/store/actions/pos-categories.action';
+ //TODO: FIXME:
+// import { PosCateoriesState } from '../../importables/store/states/PosCategoryStates';
+// import { LoadMoreCategoriesEntries } from '../../importables/store/actions/pos-categories.action';
 import { PosStockStates } from '../../importables/store/states/PosStockStates';
 import { LoadMoreStockEntries } from '../../importables/store/actions/pos-Stock.action';
 
@@ -25,8 +26,10 @@ export class PosInfiniteScrollDirective extends InfiniteScroll {
   protected loadMoreItems() {
     const loadData= this.localStorage.get('pos-load-data');
     if(loadData=='ofCategories'){
-      const page = this.store.selectSnapshot(PosCateoriesState.currentPage) + 1;
-      this.store.dispatch(new LoadMoreCategoriesEntries({page}));
+       //TODO: FIXME:
+      // const page = this.store.selectSnapshot(PosCateoriesState.currentPage) + 1;
+      //TODO:fix the bellow line see https://stackoverflow.com/questions/47826611/angular-5-upgrade-module-build-failed-custompackage-is-not-part-of-the-compil
+      // this.store.dispatch(new LoadMoreCategoriesEntries({page}));
     }else{
       const page = this.store.selectSnapshot(PosStockStates.currentPage) + 1;
       this.store.dispatch(new LoadMoreStockEntries({page}));
@@ -37,7 +40,8 @@ export class PosInfiniteScrollDirective extends InfiniteScroll {
   protected isLoading(): boolean {
     const loadData= this.localStorage.get('pos-load-data');
     if(loadData=='ofCategories'){
-      return this.store.selectSnapshot(PosCateoriesState.loading);
+       //TODO: FIXME:
+      // return this.store.selectSnapshot(PosCateoriesState.loading);
     }else{
       return this.store.selectSnapshot(PosStockStates.loading);
     }
@@ -47,7 +51,8 @@ export class PosInfiniteScrollDirective extends InfiniteScroll {
   protected canLoadMore(): boolean {
     const loadData= this.localStorage.get('pos-load-data');
     if(loadData=='ofCategories'){
-      return this.store.selectSnapshot(PosCateoriesState.canLoadMoreEntries);
+       //TODO: FIXME:
+      // return this.store.selectSnapshot(PosCateoriesState.canLoadMoreEntries);
     }else{
       return this.store.selectSnapshot(PosStockStates.canLoadMoreEntries);
     }

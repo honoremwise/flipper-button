@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'lib-yegobox-login',
   template: `
     <p>
-      yegobox-login works!
+      yegobox-login works! here sir
     </p>
   `,
   styles: []

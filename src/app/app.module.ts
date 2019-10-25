@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { PharmacyPosModule } from 'pharmacy-pos';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PharmacyPosModule } from 'pharmacy-pos';
+// import { PharmacyPosModule } from 'pharmacy-pos';
+import { YegoboxLoginModule } from 'yegobox-login';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,8 @@ import { PharmacyPosModule } from 'pharmacy-pos';
     BrowserModule,
     AppRoutingModule,
     // PosModule.forRoot()
-    PharmacyPosModule
+    // PharmacyPosModule,
+    YegoboxLoginModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -6,7 +6,8 @@ import { PaginationResponse } from '../../importables/types/pagination-response'
 import { Category } from '../../importables/categories/api/category';
 import { LocalStorage } from '../../importables/services/local-storage.service';
 import { AppHttpClient } from '../../importables/http/app-http-client.service';
-import { CategoriesApiIndexParams } from '../../importables/store/model/pos-category-state-model';
+//TODO: FIXME:
+// import { CategoriesApiIndexParams } from '../../importables/store/model/pos-category-state-model';
 import { Orders } from '../../importables/orders/orders';
 import { BackendResponse } from '../../importables/types/backend-response';
 import { StockApiIndexParams } from '../../importables/store/model/pos-stock-state-model';
@@ -28,10 +29,10 @@ export class ApiPosService {
 
     }
 
-    public getCategoriesEntries(params: CategoriesApiIndexParams = {}): Observable<CategoriesEntriesPaginationResponse> {
-      params.branch_id=parseInt(this.localStorage.get('active_branch'));
-      return this.http.get('stock-categories', params);
-    }
+    // public getCategoriesEntries(params: CategoriesApiIndexParams = {}): Observable<CategoriesEntriesPaginationResponse> {
+    //   params.branch_id=parseInt(this.localStorage.get('active_branch'));
+    //   return this.http.get('stock-categories', params);
+    // }
 
     public getMostSoldStockEntries(params: StockApiIndexParams = {}): Observable<StockEntriesPaginationResponse> {
       params.categoryId= this.localStorage.get('pos-categoryId');
