@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'fli';
+  textBtnConfig = {
+    text:'honore',
+    buttonStyle:{
+      fp_btn:'yellow',
+      shape:'',
+      width:'',   
+      height:'', 
+    }
+  };
+
 }

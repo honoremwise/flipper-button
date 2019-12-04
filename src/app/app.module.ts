@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// import { PharmacyPosModule } from 'pharmacy-pos';
-import { YegoboxLoginModule } from 'yegobox-login';
+import {FlipperButtonModule} from 'flipper-button';
+
+
 
 @NgModule({
   declarations: [
@@ -11,10 +11,8 @@ import { YegoboxLoginModule } from 'yegobox-login';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    // PosModule.forRoot()
-    // PharmacyPosModule,
-    YegoboxLoginModule,
+   
+    FlipperButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

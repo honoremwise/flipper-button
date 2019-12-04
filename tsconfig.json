@@ -30,6 +30,12 @@
       ],
       "yegobox-login/*": [
         "dist/yegobox-login/*"
+      ],
+      "flipper-button": [
+        "dist/flipper-button"
+      ],
+      "flipper-button/*": [
+        "dist/flipper-button/*"
       ]
     }
   },
