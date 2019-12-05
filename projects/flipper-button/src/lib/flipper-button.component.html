@@ -1,23 +1,31 @@
-<ng-container *ngTemplateOutlet="buttonConfig['text'] ? text : image">
-</ng-container>
-
+<!-- <ng-container [*ngTemplateOutlet]="buttonConfig['text'] ? text : image">
+</ng-container> -->
+{{buttonConfig['text']}}
 <!-- Text Button -->
-<ng-template #text>
+<div *ngIf="buttonConfig['text']!='' && buttonConfig['src']==''">
   <button type="button"
-          [ngStyle]="styleConfig.danger">
+          [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
     {{buttonConfig.text | uppercase}}
   </button>
-</ng-template>
+</div>
 
 
-<ng-template #image>
+<div  *ngIf="buttonConfig['src']!='' && buttonConfig['text']==''">
     <button type="button"
-    [ngStyle]="styleConfig.white">
+    [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
     <img alt="image button"
     [src]="'./assets/icons/'+buttonConfig.src"
    >
 </button>
+</div>
+<div *ngIf="buttonConfig['text']!='' && buttonConfig['src']!=''">
+    <button type="button"
+    [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
+     <img alt="image button"
+    [src]="'./assets/icons/'+buttonConfig.src"
+   > {{buttonConfig.text | uppercase}}
+</button>
   
-</ng-template>
+</div>
 
 

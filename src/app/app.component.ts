@@ -7,13 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   textBtnConfig = {
-    text:'',
+    text:'Test',
     src:'check.svg',
     buttonStyle:{
-      fp_btn_type:'danger',
+      fp_btn_type:'info',
       shape:'circle',
-      width:'52px',   
-      height:'52px',
+      width:'',   
+      height:'',
     
           }
   };

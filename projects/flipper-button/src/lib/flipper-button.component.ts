@@ -14,19 +14,16 @@ export class FlipperButtonComponent implements OnInit {
 styleConfig={
   success: {
     position: 'relative',
-    width: '150px',
-    height: '60px',
-    backgroundColor: '#28a745',
-    color: '#fff',
-    fontFamily: 'sans-serif',
-    fontSize: '20px',
-    borderRadius: '10px',
-    marginTop: '30px',
-    webkitTransitionDuration:'0.4s', 
-    transitionDuration: '0.4s',
-    textDecoration: 'none',
-    overflow: 'hidden',
-    cursor: 'pointer',
+    width: '65px',
+    height: '22px',
+    fontFamily: 'Heebo',
+    fontSize: '15px',
+    fontWeight: 'normal',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    color: '#ffffff',
   },
   danger:{
     position: 'relative',
@@ -79,21 +76,24 @@ styleConfig={
   },
   info:{
     position: 'relative',
-    width: '150px',
-    height: '60px',
-    border: '',
-    backgroundColor: '#c5d9e8',
+    width: '95px',
+    height: '42px',
+    fontFamily: 'Heebo',
+    fontSize: '15px',
+    fontStretch: 'normal',
+    fontStyle: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
     color: '#0093ee',
-    fontFamily: 'sans-serif',
-    fontSize: '20px',
-    borderRadius: '10px',
-    marginTop: '30px',
-    webkitTransitionDuration:'0.4s', 
-    transitionDuration: '0.4s',
-    textDecoration: 'none',
-    overflow: 'hidden',
-    cursor: 'pointer',
+    borderRadius: '6px',
+    border: 'solid 1px #0093ee',
+    backgroundColor: '#e1ebf5',
+    fontWeight: '500',
+    padding :'5px',
   },
+  // info_Img:{
+  // width:'300%',
+  // },
   white:{
     position: 'relative',
     width: '150px',
@@ -111,6 +111,7 @@ styleConfig={
     overflow: 'hidden',
     cursor: 'pointer',
   },
+  
 }
   constructor() { }
 
@@ -118,6 +119,12 @@ styleConfig={
 if(this.buttonConfig.buttonStyle.shape=='circle' && this.buttonConfig.buttonStyle.width=='' && this.buttonConfig.buttonStyle.height==''){
       this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].borderRadius="50%";
       this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].width ="60px";
+      this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].height="60px";
+         
+    }
+    if(this.buttonConfig.buttonStyle.shape=='circle' && this.buttonConfig.buttonStyle.width!='' && this.buttonConfig.buttonStyle.height!=''){
+      this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].borderRadius="50%";
+            this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].width ="60px";
       this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].height="60px";      
     }
   if(this.buttonConfig.buttonStyle.width!='' ){
