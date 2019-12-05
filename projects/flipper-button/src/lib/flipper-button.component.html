@@ -4,18 +4,20 @@
 <!-- Text Button -->
 <ng-template #text>
   <button type="button"
-          [ngStyle]="styleConfig.info">
-    {{buttonConfig.buttonStyle.fp_btn | lowercase}}
+          [ngStyle]="styleConfig.danger">
+    {{buttonConfig.text | uppercase}}
   </button>
 </ng-template>
 
 
-<!-- Image Button -->
 <ng-template #image>
-  <img alt="image button"
-       [src]="buttonConfig.src"
-       [ngStyle]="buttonConfig.styles"
-      >
+    <button type="button"
+    [ngStyle]="styleConfig.white">
+    <img alt="image button"
+    [src]="'./assets/icons/'+buttonConfig.src"
+   >
+</button>
+  
 </ng-template>
-<!-- image with Button -->
+
 

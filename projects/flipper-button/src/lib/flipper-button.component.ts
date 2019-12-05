@@ -21,19 +21,29 @@ styleConfig={
     fontFamily: 'sans-serif',
     fontSize: '20px',
     borderRadius: '10px',
-    marginTop: '30px'
+    marginTop: '30px',
+    webkitTransitionDuration:'0.4s', 
+    transitionDuration: '0.4s',
+    textDecoration: 'none',
+    overflow: 'hidden',
+    cursor: 'pointer',
   },
   danger:{
     position: 'relative',
     width: '150px',
     height: '60px',
-    border: 'solid 1px #8b0404',
+    border: 'solid 1px #dc3545',
     backgroundColor: '#dc3545',
     color: '#fff',
     fontFamily: 'sans-serif',
-    fontSize: '20px',
-    borderRadius: '10px',
-    marginTop: '30px'
+    boxShadow: 'inset 1px 1px 0 0 rgba(255, 255, 255, 0.2)',
+    borderRadius: '100px',
+    marginTop: '30px',
+    webkitTransitionDuration:'0.4s', 
+    transitionDuration: '0.4s',
+    textDecoration: 'none',
+    overflow: 'hidden',
+    cursor: 'pointer',
   },
   primary:{
     position: 'relative',
@@ -43,8 +53,13 @@ styleConfig={
     color: '#fff',
     fontFamily: 'sans-serif',
     fontSize: '20px',
-    borderRadius: '10px',
-    marginTop: '30px'
+    borderRadius: '',
+    marginTop: '30px',
+    webkitTransitionDuration:'0.4s', 
+    transitionDuration: '0.4s',
+    textDecoration: 'none',
+    overflow: 'hidden',
+    cursor: 'pointer',
   },
   warning:{
     position: 'relative',
@@ -54,20 +69,30 @@ styleConfig={
     color: '#fff', 
     fontFamily: 'sans-serif',
     fontSize: '20px',
-    borderRadius: '10px',
-    marginTop: '30px'
+    borderRadius: '',
+    marginTop: '30px',
+    webkitTransitionDuration:'0.4s', 
+    transitionDuration: '0.4s',
+    textDecoration: 'none',
+    overflow: 'hidden',
+    cursor: 'pointer',
   },
   info:{
     position: 'relative',
     width: '150px',
     height: '60px',
-    border: 'solid 1px #0093ee',
+    border: '',
     backgroundColor: '#c5d9e8',
     color: '#0093ee',
     fontFamily: 'sans-serif',
     fontSize: '20px',
     borderRadius: '10px',
-    marginTop: '30px'
+    marginTop: '30px',
+    webkitTransitionDuration:'0.4s', 
+    transitionDuration: '0.4s',
+    textDecoration: 'none',
+    overflow: 'hidden',
+    cursor: 'pointer',
   },
   white:{
     position: 'relative',
@@ -79,41 +104,43 @@ styleConfig={
     fontFamily: 'sans-serif',
     fontSize: '20px',
     borderRadius: '10px',
-    marginTop: '30px'
+    marginTop: '30px',
+    webkitTransitionDuration:'0.4s', 
+    transitionDuration: '0.4s',
+    textDecoration: 'none',
+    overflow: 'hidden',
+    cursor: 'pointer',
   },
 }
-//blue 1
-//red 2
   constructor() { }
 
   ngOnInit() {
-// getting the button shape from the input
-this.btn_shape=this.buttonConfig.buttonStyle.fp_btn_type;
-if(this.buttonConfig && this.buttonConfig.buttonStyle.shape=='circle' && this.buttonConfig.buttonStyle.width=='' && this.buttonConfig.buttonStyle.height==''){
-      this.styleConfig[this.btn_shape].borderRadius="50%";
-      this.styleConfig[this.btn_shape].width ="60px";
-      this.styleConfig[this.btn_shape].height="60px";
-    
-      
+if(this.buttonConfig.buttonStyle.shape=='circle' && this.buttonConfig.buttonStyle.width=='' && this.buttonConfig.buttonStyle.height==''){
+      this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].borderRadius="50%";
+      this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].width ="60px";
+      this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].height="60px";      
     }
-  if(this.buttonConfig.buttonStyle.width!=''){
-      this.styleConfig[this.btn_shape].width=this.buttonConfig.buttonStyle.width;
+  if(this.buttonConfig.buttonStyle.width!='' ){
+      this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].width=
+      this.buttonConfig.buttonStyle.width;
          }
-    if(this.buttonConfig.buttonStyle.height!=''){
-      this.styleConfig[this.btn_shape].height=this.buttonConfig.buttonStyle.height;
-   
+  if(this.buttonConfig.buttonStyle.height!=''){
+      this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].height=
+      this.buttonConfig.buttonStyle.height; 
   } 
-  if( this.buttonConfig.buttonStyle.shape!='' && this.buttonConfig.buttonStyle.height!='') {
-    this.styleConfig[this.btn_shape].borderRadius="50%";
-    this.styleConfig[this.btn_shape].height=this.buttonConfig.buttonStyle.height;
-    this.styleConfig[this.btn_shape].width=this.buttonConfig.buttonStyle.height;
+  if( this.buttonConfig.buttonStyle.shape!='' && 
+  this.buttonConfig.buttonStyle.height!='') 
+  {
+    this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].borderRadius="50%";
+    this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].height=this.buttonConfig.buttonStyle.height;
+    this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].width=this.buttonConfig.buttonStyle.height;
   } 
-  if( this.buttonConfig.buttonStyle.shape=='circle' && this.buttonConfig.buttonStyle.width!='') {
-    this.styleConfig[this.btn_shape].borderRadius="50%";
-    this.styleConfig[this.btn_shape].width=this.buttonConfig.buttonStyle.width;
-    this.styleConfig[this.btn_shape].height=this.buttonConfig.buttonStyle.width;
-    
-      } 
-  }
+  if(this.buttonConfig.buttonStyle.shape=='circle' 
+  && this.buttonConfig.buttonStyle.width!='') 
+{
+ this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].borderRadius="50%";
+ this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].width=this.buttonConfig.buttonStyle.width;
+ this.styleConfig[this.buttonConfig.buttonStyle.fp_btn_type].height=this.buttonConfig.buttonStyle.width;
+ }
 
-}
+}}
