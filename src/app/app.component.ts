@@ -9,8 +9,8 @@ export class AppComponent {
   textBtnConfig = {
     text:'honore',
     buttonStyle:{
-      fp_btn_type:'yellow',
-      shape:'',
+      fp_btn_type:'info',
+      shape:'circle',
       width:'',   
       height:'', 
     }

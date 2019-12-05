@@ -9,6 +9,7 @@ export class FlipperButtonComponent implements OnInit {
 @Input() buttonColor:string;
 @Input() buttonConfig:any;
 @Input() displayText:string;
+@Input() btn_shape:any;
 
 styleConfig={
   success: {
@@ -86,36 +87,31 @@ styleConfig={
   constructor() { }
 
   ngOnInit() {
-    console.log(this.buttonConfig);
-    if(this.buttonConfig && this.buttonConfig.buttonStyle.shape=='circle' && this.buttonConfig.buttonStyle.width=='' && this.buttonConfig.buttonStyle.height==''){
-      this.styleConfig.info.borderRadius="50%";
-      this.styleConfig.info.width ="60px";
-      this.styleConfig.info.height="60px";
+// getting the button shape from the input
+this.btn_shape=this.buttonConfig.buttonStyle.fp_btn_type;
+if(this.buttonConfig && this.buttonConfig.buttonStyle.shape=='circle' && this.buttonConfig.buttonStyle.width=='' && this.buttonConfig.buttonStyle.height==''){
+      this.styleConfig[this.btn_shape].borderRadius="50%";
+      this.styleConfig[this.btn_shape].width ="60px";
+      this.styleConfig[this.btn_shape].height="60px";
     
-      this.styleConfig.success.borderRadius="50%";
-      this.styleConfig.success.width ="60px";
-      this.styleConfig.success.height="60px";
-  
-      this.styleConfig.warning.borderRadius="50%";
-      this.styleConfig.warning.width ="60px";
-      this.styleConfig.warning.height="60px";
+      
     }
-       if(this.buttonConfig.buttonStyle.width!=''){
-      this.styleConfig.info.width=this.buttonConfig.buttonStyle.width;
+  if(this.buttonConfig.buttonStyle.width!=''){
+      this.styleConfig[this.btn_shape].width=this.buttonConfig.buttonStyle.width;
          }
     if(this.buttonConfig.buttonStyle.height!=''){
-      this.styleConfig.info.height=this.buttonConfig.buttonStyle.height;
+      this.styleConfig[this.btn_shape].height=this.buttonConfig.buttonStyle.height;
    
   } 
   if( this.buttonConfig.buttonStyle.shape!='' && this.buttonConfig.buttonStyle.height!='') {
-    this.styleConfig.info.borderRadius="50%";
-    this.styleConfig.info.height=this.buttonConfig.buttonStyle.height;
-    this.styleConfig.info.width=this.buttonConfig.buttonStyle.height;
+    this.styleConfig[this.btn_shape].borderRadius="50%";
+    this.styleConfig[this.btn_shape].height=this.buttonConfig.buttonStyle.height;
+    this.styleConfig[this.btn_shape].width=this.buttonConfig.buttonStyle.height;
   } 
   if( this.buttonConfig.buttonStyle.shape=='circle' && this.buttonConfig.buttonStyle.width!='') {
-    this.styleConfig.info.borderRadius="50%";
-    this.styleConfig.info.width=this.buttonConfig.buttonStyle.width;
-    this.styleConfig.info.height=this.buttonConfig.buttonStyle.width;
+    this.styleConfig[this.btn_shape].borderRadius="50%";
+    this.styleConfig[this.btn_shape].width=this.buttonConfig.buttonStyle.width;
+    this.styleConfig[this.btn_shape].height=this.buttonConfig.buttonStyle.width;
     
       } 
   }
